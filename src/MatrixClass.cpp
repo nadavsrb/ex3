@@ -54,12 +54,17 @@
             u_int32_t col = 0;
             double value = 0;
             bool isAfterDot = false;
+            bool isPossitive = true;
             
             //if isAfterDot = true show how much bifore the dot
             double pow = 10;
             for (auto it = line.cbegin() ; it != line.cend(); ++it) {
 		        if(*it == ',') {
                     //setting the value
+                    if(!isPossitive) {
+                        value *= -1;
+                        isPossitive = true;//for the next number
+                    }
                     ErrorCodeException::throwErrorIfNeeded(
                     matrix_setValue(_matrix, row, col, value));
 
@@ -76,6 +81,11 @@
                     continue;
                 }
 
+                if(*it == '-') {
+                    isPossitive = false;
+                    continue;
+                }
+
                 int num = *it - '0'; //changing the char to int
                 
 
@@ -87,6 +97,10 @@
                 }
             }
             //setting the value of the last index in the line
+            if(!isPossitive) {
+                value *= -1;
+                isPossitive = true;//for the next number
+            }
             ErrorCodeException::throwErrorIfNeeded(
             matrix_setValue(_matrix, row, col, value));
 
