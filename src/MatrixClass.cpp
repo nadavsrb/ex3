@@ -11,6 +11,92 @@
         ErrorCodeException::throwErrorIfNeeded(matrix_copy(&_matrix, source._matrix));
     }
 
+    MatrixClass::MatrixClass(string filePath) {
+        ifstream matrixFile;
+        matrixFile.open(filePath);
+        
+        string line;
+        u_int32_t numOfRow = 0;
+        u_int32_t numOfCol = 0;
+
+//*********checking how many rows & colums in the matrix
+        getline(matrixFile,line);
+        numOfRow++; //the first row
+
+        //num of cols
+        for (auto it = line.cbegin() ; it != line.cend(); ++it) {
+		    if(*it == ',') {
+                ++numOfCol;
+            } 
+        }
+        //the num of ',' is 1 less than the num of matrix
+        ++numOfCol;
+        
+        //continue calculating the height of the matrix
+        while(getline(matrixFile, line)) {
+            ++numOfRow;
+        }
+//********end checking how many rows & colums in the matrix
+        
+        //creating the matrix & throwing exception if needed
+        ErrorCodeException::throwErrorIfNeeded(matrix_create(&_matrix, numOfRow, numOfCol));
+
+
+        //setting the file
+        matrixFile.clear();
+        matrixFile.seekg(0);
+
+        //Intlizing the matrix
+        u_int32_t row = 0;
+        while(getline(matrixFile, line)) {
+            line.erase(remove_if(line.begin(), line.end(), isspace), line.end());
+
+            u_int32_t col = 0;
+            double value = 0;
+            bool isAfterDot = false;
+            
+            //if isAfterDot = true show how much bifore the dot
+            double pow = 10;
+            for (auto it = line.cbegin() ; it != line.cend(); ++it) {
+		        if(*it == ',') {
+                    //setting the value
+                    ErrorCodeException::throwErrorIfNeeded(
+                    matrix_setValue(_matrix, row, col, value));
+
+                    //setting var
+                    value = 0;
+                    isAfterDot = false;
+                    ++col;
+                    continue;
+                }
+
+                if(*it == '.') {
+                    isAfterDot = true;
+                    pow = 10;
+                    continue;
+                }
+
+                int num = *it - '0'; //changing the char to int
+                
+
+                if(!isAfterDot){
+                    value = value * 10 + num;
+                } else {
+                    value = value + num / pow;
+                    pow *= 10;
+                }
+            }
+            //setting the value of the last index in the line
+            ErrorCodeException::throwErrorIfNeeded(
+            matrix_setValue(_matrix, row, col, value));
+
+            ++row;
+        }
+
+
+        matrixFile.close();
+    }
+
     MatrixClass& MatrixClass::operator=(const MatrixClass& source){
 
         //Trying to destroy the matrix in the field (if not intalized yet would do nothing)
@@ -171,9 +257,12 @@
         uint32_t width = matrix.getHeight();
 
         for(uint32_t row = 0; row < height; ++row) {
-            for(uint32_t col = 0; col < width; ++col) {
-                stream<<matrix(row, col)<<"|";
-                }
+            for(uint32_t col = 0; col < width - 1; ++col) { //to all the middle values.
+                stream<<matrix(row, col)<<",";
+            }
+        //to the end of the row values
+        //must be one because the size of the matrix are positive
+        stream<<matrix(row, width - 1);
 
         stream<<endl;
         }

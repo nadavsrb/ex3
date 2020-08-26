@@ -1,9 +1,11 @@
-#include "bmp_tester.hpp"
+#include "MatrixClass.hpp"
+#include <iostream>
+
+using namespace std;
 
 int main()
 {
-    //convert_to_grayscale
-    testing::bmp::rotate_image("lena.bmp",
-    "result.bmp");
+    MatrixClass matrix("matrix2.txt");
+    cout<<matrix;
     return 0;
 }
