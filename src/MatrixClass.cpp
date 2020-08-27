@@ -63,6 +63,7 @@
 
             u_int32_t col = 0;
             string valueInString = "";
+            u_int32_t numOfValuesPerRow = 0;
             
             for (auto it = line.cbegin() ; it != line.cend(); ++it) {
 		        if (*it == ',') {
@@ -77,6 +78,7 @@
                     try{
                         ErrorCodeException::throwErrorIfNeeded(
                         matrix_setValue(_matrix, row, col, stod(valueInString)));
+                        ++numOfValuesPerRow;
                     } catch (const ErrorCodeException& e){
                         matrix_destroy(_matrix);
                         matrixFile.close();
@@ -125,10 +127,17 @@
             try{
                 ErrorCodeException::throwErrorIfNeeded(
                 matrix_setValue(_matrix, row, col, stod(valueInString)));
+                ++numOfValuesPerRow;
             }catch (const ErrorCodeException& e){
                 matrix_destroy(_matrix);
                 matrixFile.close();
                 throw e;
+            }
+
+            if(numOfValuesPerRow < numOfCol){
+                matrix_destroy(_matrix);
+                matrixFile.close();
+                throw std::runtime_error("Found a raw with less values than needed");
             }
         }
         matrixFile.close();
