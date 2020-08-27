@@ -34,10 +34,6 @@
                 ++numOfCol;
             }
         }
-        // if no ',' were found, there is no matrix
-        if (numOfCol == 0) {
-            throw std::runtime_error("No ',' were found in the file. Can not convert into matrix.");
-        }
 
         //the num of ',' is 1 less than the num of matrix
         ++numOfCol;
@@ -57,14 +53,14 @@
         matrixFile.seekg(0);
 
         //Intlizing the matrix
-        for (u_int32_t row = 0; getline(matrixFile, line);) {
+        for (u_int32_t row = 0; getline(matrixFile, line); ++row) {
             line.erase(remove_if(line.begin(), line.end(), isspace), line.end());
 
             u_int32_t col = 0;
             string valueInString = "";
             
             for (auto it = line.cbegin() ; it != line.cend(); ++it) {
-		        if(*it == ',') {
+		        if (*it == ',') {
                     //setting the value
                     if(valueInString == "") {
                         throw std::runtime_error("Found a ',' without a number before it. Can not convert into matrix.");
@@ -76,16 +72,34 @@
                     valueInString = "";
                     ++col;
                     continue;
-                }                
+                }
 
-                // if we reached an unknown character...
+                // if we reached an unknown character
                 if (*it != '.' && *it != '-' && !(*it >= '0' && *it <= '9')) {
                     throw std::runtime_error("Found an unknown character in the file. Can not convert into matrix.");
                 }
 
                 valueInString += *it;
+
+                // if we read two character in a number and both are not digits
+                if (valueInString.length() > 1 &&
+                !(valueInString[valueInString.length() - 1] >= '0' && valueInString[valueInString.length() - 1] <= '9') &&
+                !(valueInString[valueInString.length() - 2] >= '0' && valueInString[valueInString.length() - 2] <= '9')) {
+                    throw std::runtime_error("Found unknown combination on characters. Can not convert into matrix.");
+                }
             }
             //setting the value of the last index in the line
+            if(valueInString == "") {
+                throw std::runtime_error("Found a ',' without a number before it. Can not convert into matrix.");
+            }
+
+            // if we read two character in a number and both are not digits
+            if (valueInString.length() > 1 &&
+            !(valueInString[valueInString.length() - 1] >= '0' && valueInString[valueInString.length() - 1] <= '9') &&
+            !(valueInString[valueInString.length() - 2] >= '0' && valueInString[valueInString.length() - 2] <= '9')) {
+                throw std::runtime_error("Found unknown combination on characters. Can not convert into matrix.");
+            }
+
             ErrorCodeException::throwErrorIfNeeded(
             matrix_setValue(_matrix, row, col, stod(valueInString)));
         }
