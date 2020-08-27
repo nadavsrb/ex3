@@ -17,6 +17,7 @@
         
         // checking if the file is empty
         if (matrixFile.peek() == std::ifstream::traits_type::eof()) {
+            matrixFile.close();
             throw std::runtime_error("The file in empty. Can not convert into matrix.");
         }
 
@@ -45,8 +46,12 @@
 //********end checking how many rows & colums in the matrix
         
         //creating the matrix & throwing exception if needed
-        ErrorCodeException::throwErrorIfNeeded(matrix_create(&_matrix, numOfRow, numOfCol));
-
+        try{
+            ErrorCodeException::throwErrorIfNeeded(matrix_create(&_matrix, numOfRow, numOfCol));
+        } catch (const ErrorCodeException& e){
+            matrixFile.close();
+            throw e;
+        }
 
         //setting the file
         matrixFile.clear();
@@ -63,11 +68,20 @@
 		        if (*it == ',') {
                     //setting the value
                     if(valueInString == "") {
+                        matrix_destroy(_matrix);
+                        matrixFile.close();
                         throw std::runtime_error("Found a ',' without a number before it. Can not convert into matrix.");
                     }
+
                     //setting var
-                    ErrorCodeException::throwErrorIfNeeded(
-                    matrix_setValue(_matrix, row, col, stod(valueInString)));
+                    try{
+                        ErrorCodeException::throwErrorIfNeeded(
+                        matrix_setValue(_matrix, row, col, stod(valueInString)));
+                    } catch (const ErrorCodeException& e){
+                        matrix_destroy(_matrix);
+                        matrixFile.close();
+                        throw e;
+                    }
 
                     valueInString = "";
                     ++col;
@@ -76,6 +90,8 @@
 
                 // if we reached an unknown character
                 if (*it != '.' && *it != '-' && !(*it >= '0' && *it <= '9')) {
+                    matrix_destroy(_matrix);
+                    matrixFile.close();
                     throw std::runtime_error("Found an unknown character in the file. Can not convert into matrix.");
                 }
 
@@ -85,23 +101,35 @@
                 if (valueInString.length() > 1 &&
                 !(valueInString[valueInString.length() - 1] >= '0' && valueInString[valueInString.length() - 1] <= '9') &&
                 !(valueInString[valueInString.length() - 2] >= '0' && valueInString[valueInString.length() - 2] <= '9')) {
+                    matrix_destroy(_matrix);
+                    matrixFile.close();
                     throw std::runtime_error("Found unknown combination on characters. Can not convert into matrix.");
                 }
             }
             //setting the value of the last index in the line
             if(valueInString == "") {
-                throw std::runtime_error("Found a ',' without a number before it. Can not convert into matrix.");
+                matrix_destroy(_matrix);
+                matrixFile.close();
+                throw std::runtime_error("Found a ',' without a number after it. Can not convert into matrix.");
             }
 
             // if we read two character in a number and both are not digits
             if (valueInString.length() > 1 &&
             !(valueInString[valueInString.length() - 1] >= '0' && valueInString[valueInString.length() - 1] <= '9') &&
             !(valueInString[valueInString.length() - 2] >= '0' && valueInString[valueInString.length() - 2] <= '9')) {
+                matrix_destroy(_matrix);
+                matrixFile.close();
                 throw std::runtime_error("Found unknown combination on characters. Can not convert into matrix.");
             }
-
-            ErrorCodeException::throwErrorIfNeeded(
-            matrix_setValue(_matrix, row, col, stod(valueInString)));
+            
+            try{
+                ErrorCodeException::throwErrorIfNeeded(
+                matrix_setValue(_matrix, row, col, stod(valueInString)));
+            }catch (const ErrorCodeException& e){
+                matrix_destroy(_matrix);
+                matrixFile.close();
+                throw e;
+            }
         }
         matrixFile.close();
     }
