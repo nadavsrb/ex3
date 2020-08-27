@@ -40,7 +40,7 @@ public:
 	 * 
 	 * @param[in] source The matrix to copy.
 	 */
-	MatrixClass(string filePath);
+	MatrixClass(const string& filePath);
 
 	/**
 	 * @brief assignment opperator (copy assignment).

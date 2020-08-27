@@ -11,10 +11,15 @@
         ErrorCodeException::throwErrorIfNeeded(matrix_copy(&_matrix, source._matrix));
     }
 
-    MatrixClass::MatrixClass(string filePath) {
+    MatrixClass::MatrixClass(const string& filePath) {
         ifstream matrixFile;
         matrixFile.open(filePath);
         
+        // checking if the file is empty
+        if (matrixFile.peek() == std::ifstream::traits_type::eof()) {
+            throw std::runtime_error("The file in empty. Can not convert into matrix.");
+        }
+
         string line;
         u_int32_t numOfRow = 0;
         u_int32_t numOfCol = 0;
@@ -27,8 +32,13 @@
         for (auto it = line.cbegin() ; it != line.cend(); ++it) {
 		    if(*it == ',') {
                 ++numOfCol;
-            } 
+            }
         }
+        // if no ',' were found, there is no matrix
+        if (numOfCol == 0) {
+            throw std::runtime_error("No ',' were found in the file. Can not convert into matrix.");
+        }
+
         //the num of ',' is 1 less than the num of matrix
         ++numOfCol;
         
@@ -47,67 +57,38 @@
         matrixFile.seekg(0);
 
         //Intlizing the matrix
-        u_int32_t row = 0;
-        while(getline(matrixFile, line)) {
+        for (u_int32_t row = 0; getline(matrixFile, line);) {
             line.erase(remove_if(line.begin(), line.end(), isspace), line.end());
 
             u_int32_t col = 0;
-            double value = 0;
-            bool isAfterDot = false;
-            bool isPossitive = true;
+            string valueInString = "";
             
-            //if isAfterDot = true show how much bifore the dot
-            double pow = 10;
             for (auto it = line.cbegin() ; it != line.cend(); ++it) {
 		        if(*it == ',') {
                     //setting the value
-                    if(!isPossitive) {
-                        value *= -1;
-                        isPossitive = true;//for the next number
+                    if(valueInString == "") {
+                        throw std::runtime_error("Found a ',' without a number before it. Can not convert into matrix.");
                     }
-                    ErrorCodeException::throwErrorIfNeeded(
-                    matrix_setValue(_matrix, row, col, value));
-
                     //setting var
-                    value = 0;
-                    isAfterDot = false;
+                    ErrorCodeException::throwErrorIfNeeded(
+                    matrix_setValue(_matrix, row, col, stod(valueInString)));
+
+                    valueInString = "";
                     ++col;
                     continue;
+                }                
+
+                // if we reached an unknown character...
+                if (*it != '.' && *it != '-' && !(*it >= '0' && *it <= '9')) {
+                    throw std::runtime_error("Found an unknown character in the file. Can not convert into matrix.");
                 }
 
-                if(*it == '.') {
-                    isAfterDot = true;
-                    pow = 10;
-                    continue;
-                }
-
-                if(*it == '-') {
-                    isPossitive = false;
-                    continue;
-                }
-
-                int num = *it - '0'; //changing the char to int
-                
-
-                if(!isAfterDot){
-                    value = value * 10 + num;
-                } else {
-                    value = value + num / pow;
-                    pow *= 10;
-                }
+                valueInString += *it;
             }
             //setting the value of the last index in the line
-            if(!isPossitive) {
-                value *= -1;
-                isPossitive = true;//for the next number
-            }
             ErrorCodeException::throwErrorIfNeeded(
-            matrix_setValue(_matrix, row, col, value));
-
-            ++row;
+            matrix_setValue(_matrix, row, col, stod(valueInString)));
         }
-
-
         matrixFile.close();
     }
 
