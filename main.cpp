@@ -1,5 +1,6 @@
 #include "MatrixClass.hpp"
 #include "bmp_tester.hpp"
+#include "crc32FileReader.hpp"
 #include <string>
 #include <iostream>
 
