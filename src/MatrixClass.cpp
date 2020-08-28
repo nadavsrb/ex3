@@ -14,6 +14,9 @@
     MatrixClass::MatrixClass(const string& filePath) {
         ifstream matrixFile;
         matrixFile.open(filePath);
+        if (!matrixFile) {
+            throw std::system_error();
+        }
         
         // checking if the file is empty
         if (matrixFile.peek() == std::ifstream::traits_type::eof()) {
