@@ -46,10 +46,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: head/sys/libkern/crc32.c 233517 2012-03-26 18:22:04Z marius $");
-
 #include <sys/param.h>
-#include <sys/systm.h>
 
 const uint32_t crc32_tab[] = {
 	0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419, 0x706af48f,
@@ -207,7 +204,7 @@ static const uint32_t crc32Table[256] = {
 static uint32_t
 singletable_crc32c(uint32_t crc, const void *buf, size_t size)
 {
-	const uint8_t *p = buf;
+	const uint8_t *p = (uint8_t*) buf;
 
 
 	while (size--)
