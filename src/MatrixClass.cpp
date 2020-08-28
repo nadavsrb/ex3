@@ -11,6 +11,141 @@
         ErrorCodeException::throwErrorIfNeeded(matrix_copy(&_matrix, source._matrix));
     }
 
+    MatrixClass::MatrixClass(const string& filePath) {
+        ifstream matrixFile;
+        matrixFile.open(filePath);
+        if (!matrixFile) {
+            throw std::system_error();
+        }
+        
+        // checking if the file is empty
+        if (matrixFile.peek() == std::ifstream::traits_type::eof()) {
+            matrixFile.close();
+            throw std::runtime_error("The file in empty. Can not convert into matrix.");
+        }
+
+        string line;
+        u_int32_t numOfRow = 0;
+        u_int32_t numOfCol = 0;
+
+//*********checking how many rows & colums in the matrix
+        getline(matrixFile,line);
+        numOfRow++; //the first row
+
+        //num of cols
+        for (auto it = line.cbegin() ; it != line.cend(); ++it) {
+		    if(*it == ',') {
+                ++numOfCol;
+            }
+        }
+
+        //the num of ',' is 1 less than the num of matrix
+        ++numOfCol;
+        
+        //continue calculating the height of the matrix
+        while(getline(matrixFile, line)) {
+            ++numOfRow;
+        }
+//********end checking how many rows & colums in the matrix
+        
+        //creating the matrix & throwing exception if needed
+        try{
+            ErrorCodeException::throwErrorIfNeeded(matrix_create(&_matrix, numOfRow, numOfCol));
+        } catch (const ErrorCodeException& e){
+            matrixFile.close();
+            throw e;
+        }
+
+        //setting the file
+        matrixFile.clear();
+        matrixFile.seekg(0);
+
+        //Intlizing the matrix
+        for (u_int32_t row = 0; getline(matrixFile, line); ++row) {
+            line.erase(remove_if(line.begin(), line.end(), isspace), line.end());
+
+            u_int32_t col = 0;
+            string valueInString = "";
+            u_int32_t numOfValuesPerRow = 0;
+            
+            for (auto it = line.cbegin() ; it != line.cend(); ++it) {
+		        if (*it == ',') {
+                    //setting the value
+                    if(valueInString == "") {
+                        matrix_destroy(_matrix);
+                        matrixFile.close();
+                        throw std::runtime_error("Found a ',' without a number before it. Can not convert into matrix.");
+                    }
+
+                    //setting var
+                    try{
+                        ErrorCodeException::throwErrorIfNeeded(
+                        matrix_setValue(_matrix, row, col, stod(valueInString)));
+                        ++numOfValuesPerRow;
+                    } catch (const ErrorCodeException& e){
+                        matrix_destroy(_matrix);
+                        matrixFile.close();
+                        throw e;
+                    }
+
+                    valueInString = "";
+                    ++col;
+                    continue;
+                }
+
+                // if we reached an unknown character
+                if (*it != '.' && *it != '-' && !(*it >= '0' && *it <= '9')) {
+                    matrix_destroy(_matrix);
+                    matrixFile.close();
+                    throw std::runtime_error("Found an unknown character in the file. Can not convert into matrix.");
+                }
+
+                valueInString += *it;
+
+                // if we read two character in a number and both are not digits
+                if (valueInString.length() > 1 &&
+                !(valueInString[valueInString.length() - 1] >= '0' && valueInString[valueInString.length() - 1] <= '9') &&
+                !(valueInString[valueInString.length() - 2] >= '0' && valueInString[valueInString.length() - 2] <= '9')) {
+                    matrix_destroy(_matrix);
+                    matrixFile.close();
+                    throw std::runtime_error("Found unknown combination on characters. Can not convert into matrix.");
+                }
+            }
+            //setting the value of the last index in the line
+            if(valueInString == "") {
+                matrix_destroy(_matrix);
+                matrixFile.close();
+                throw std::runtime_error("Found a ',' without a number after it. Can not convert into matrix.");
+            }
+
+            // if we read two character in a number and both are not digits
+            if (valueInString.length() > 1 &&
+            !(valueInString[valueInString.length() - 1] >= '0' && valueInString[valueInString.length() - 1] <= '9') &&
+            !(valueInString[valueInString.length() - 2] >= '0' && valueInString[valueInString.length() - 2] <= '9')) {
+                matrix_destroy(_matrix);
+                matrixFile.close();
+                throw std::runtime_error("Found unknown combination on characters. Can not convert into matrix.");
+            }
+            
+            try{
+                ErrorCodeException::throwErrorIfNeeded(
+                matrix_setValue(_matrix, row, col, stod(valueInString)));
+                ++numOfValuesPerRow;
+            }catch (const ErrorCodeException& e){
+                matrix_destroy(_matrix);
+                matrixFile.close();
+                throw e;
+            }
+
+            if(numOfValuesPerRow < numOfCol){
+                matrix_destroy(_matrix);
+                matrixFile.close();
+                throw std::runtime_error("Found a raw with less values than needed");
+            }
+        }
+        matrixFile.close();
+    }
+
     MatrixClass& MatrixClass::operator=(const MatrixClass& source){
 
         //Trying to destroy the matrix in the field (if not intalized yet would do nothing)
@@ -171,9 +306,12 @@
         uint32_t width = matrix.getHeight();
 
         for(uint32_t row = 0; row < height; ++row) {
-            for(uint32_t col = 0; col < width; ++col) {
-                stream<<matrix(row, col)<<"|";
-                }
+            for(uint32_t col = 0; col < width - 1; ++col) { //to all the middle values.
+                stream<<matrix(row, col)<<",";
+            }
+        //to the end of the row values
+        //must be one because the size of the matrix are positive
+        stream<<matrix(row, width - 1);
 
         stream<<endl;
         }

@@ -2,9 +2,14 @@
 #include "Matrix.h"
 #include "ErrorCodeException.hpp"
 
-#include <memory>
+#include <string>
 #include <cstdint>
+#include <fstream>
+#include <algorithm>
+
 using std::uint32_t;
+using std::string;
+using std::ifstream;
 
 class MatrixClass{
 //Fields
@@ -27,6 +32,15 @@ public:
 	 * @param[in] source The matrix to copy.
 	 */
 	MatrixClass(const MatrixClass& source);
+
+	/**
+	 * @brief Constructor, a new Matrix Class object from file.txt
+	 * that contains a matrix.
+	 * (copy Constructor)
+	 * 
+	 * @param[in] source The matrix to copy.
+	 */
+	MatrixClass(const string& filePath);
 
 	/**
 	 * @brief assignment opperator (copy assignment).
