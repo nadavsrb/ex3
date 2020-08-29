@@ -5,6 +5,6 @@
 using namespace std;
 
 int main(){
-    cout<<crc32("matrix1.txt")<<endl;
+    cout<<crc32("matrix2.txt")<<endl;
     return 0;
 }
