@@ -1,28 +1,21 @@
-#include "crc32.h"
-#include <iostream>
-#include <string>
-#include <fstream>
-
-namespace std {
+#include "crc32FileReader.hpp"
 
 uint32_t crc32(const string& filePath) {
-    std::ifstream inp {filePath, std::ios_base::binary};
+    std::ifstream inp;
+    inp.open(filePath);
 
     // checking for system error (file doesn't open)
     if (!inp) {
         throw std::system_error();
     }
+    
+    inp.seekg(0,std::ios_base::end);
 
-    // checking if the file is empty
-    if (inp.peek() == std::ifstream::traits_type::eof()) {
-        inp.close();
-        throw std::runtime_error("The file in empty. Can not convert into matrix.");
-    }
-    unsigned char buffer[(unsigned int) inp.tellg()];
-    inp.read((char*)&buffer, sizeof(buffer));
-    inp.close();
+    unsigned int length = inp.tellg();
+    inp.seekg (0, std::ios_base::beg);
 
-    return calculate_crc32c(0, buffer, (unsigned int) inp.tellg());
-}
+    unsigned char* buffer = new unsigned char [length];
+    inp.read((char*)buffer, length);
 
+    return calculate_crc32c(0, buffer, length);
 }

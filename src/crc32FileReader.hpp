@@ -2,6 +2,8 @@
 
 #include <fstream>
 #include <string>
+#include <vector>
+#include "crc32.hpp"
 
 using std::uint32_t;
 using std::string;

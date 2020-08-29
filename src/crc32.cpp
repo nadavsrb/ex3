@@ -1,6 +1,4 @@
-
-#include "crc32.h"
-
+#include "crc32.hpp"
 /*-
  *  COPYRIGHT (C) 1986 Gary S. Brown.  You may use this program, or
  *  code or tables extracted from it, as desired without restriction.
@@ -673,8 +671,7 @@ static const uint32_t sctp_crc_tableil8_o88[256] =
  */
 
 
-static uint32_t
-crc32c_sb8_64_bit(uint32_t crc,
+static uint32_t crc32c_sb8_64_bit(uint32_t crc,
     const unsigned char *p_buf,
     uint32_t length,
     uint32_t init_bytes)
@@ -730,8 +727,7 @@ crc32c_sb8_64_bit(uint32_t crc,
 	return crc;
 }
 
-static uint32_t
-multitable_crc32c(uint32_t crc32c,
+static uint32_t multitable_crc32c(uint32_t crc32c,
     const unsigned char *buffer,
     unsigned int length)
 {
@@ -744,8 +740,7 @@ multitable_crc32c(uint32_t crc32c,
 	return (crc32c_sb8_64_bit(crc32c, buffer, length, to_even_word));
 }
 
-uint32_t
-calculate_crc32c(uint32_t crc32c,
+uint32_t calculate_crc32c(uint32_t crc32c,
     const unsigned char *buffer,
     unsigned int length)
 {
