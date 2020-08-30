@@ -106,6 +106,10 @@ CacheOperation::CacheOperation(const int argc, const char *argv[]) {
     _cacheString += "\n";
 }
 
+bool CacheOperation::isClear() const {
+    return _cacheCode == CLEAR;
+}
+
 string CacheOperation::getCacheString() const {
     return _cacheString;
 }

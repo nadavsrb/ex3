@@ -42,9 +42,12 @@ void CacheManager::performOperation(int argc, const char *argv[]) {
 
     // performs the operation and writes the operation line into the cache file
     auto operation = make_unique<CacheOperation>(argc, argv);
-    operation.writeToOutputFile();
-    string cache = readFileContent(CACHE_FILE);
+    operation->writeToOutputFile();
+    string cache = readFileContent(CACHE_FILE), cacheCopy = readFileContent(CACHE_FILE);
     cache.erase(0, CACHE_LINE_LENGTH - 1);
-    cache = CACHE_LINE + operation->getCacheString() + cache;
+    cache = CACHE_LINE + operation->getCacheString();
+    if (!operation->isClear()) {
+        cache += cacheCopy;
+    }
     writeFileContent(CACHE_FILE, cache);
 }

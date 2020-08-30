@@ -26,6 +26,7 @@ class CacheOperation {
 public:
     CacheOperation(const int argc, const char *argv[]);
 
+    bool isClear() const;
     string getCacheString() const;
 
 private:
