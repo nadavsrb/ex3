@@ -43,13 +43,13 @@
         ++numOfCol;
         
         //continue calculating the height of the matrix
-        while(getline(matrixFile, line)) {
+        while (getline(matrixFile, line)) {
             ++numOfRow;
         }
 //********end checking how many rows & colums in the matrix
         
         //creating the matrix & throwing exception if needed
-        try{
+        try {
             ErrorCodeException::throwErrorIfNeeded(matrix_create(&_matrix, numOfRow, numOfCol));
         } catch (const ErrorCodeException& e){
             matrixFile.close();

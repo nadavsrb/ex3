@@ -1,4 +1,5 @@
 #include "CacheOperation.hpp"
+#include "CacheManager.hpp"
 
 #define PRINT "stdout"
 
@@ -70,7 +71,7 @@ CacheOperation::CacheOperation(const int argc, const char *argv[]) {
     } else if (strcmp(argv[0], "cache") == 0) {
         if (strcmp(argv[1], "search") == 0) {
             _cacheCode = SEARCH;
-            _itemSearched = make_unique<CacheOperation>(argc - 1, argv + 1);
+            _itemSearched = make_shared<CacheOperation>(argc - 1, argv + 1);
         }else if (strcmp(argv[1], "clear") == 0) {
             _cacheCode = CLEAR;
         } else {
@@ -95,8 +96,8 @@ CacheOperation::CacheOperation(const int argc, const char *argv[]) {
         }
 
         //adding the output file path
-            _cacheString += " ";
-            _cacheString += _outputFilePath;
+        _cacheString += " ";
+        _cacheString += _outputFilePath;
     }
 
     //adding the time & date
@@ -139,12 +140,15 @@ void CacheOperation::writeToOutputFile() const{
     } else if (_cacheCode == HASH_CRC32) {
         string result = "";
         result += crc32(_inputFilesPath.at(0));
+
         if (_cacheString.compare(PRINT)) {
             cout << result << endl;
         } else {
             writeFileContent(_outputFilePath, result);
         }
     } else if (_cacheCode == SEARCH) {
-
+        cout << CacheManager::search(_itemSearched) << endl;
     }
+
+    // note that the CLEAR operation is performed in the CachManager module
 }

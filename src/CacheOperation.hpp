@@ -40,5 +40,5 @@ private:
     string _cacheString = "";
     vector<string> _inputFilesPath;
     string _outputFilePath = "";
-    unique_ptr<CacheOperation> _itemSearched; //for search method
+    shared_ptr<CacheOperation> _itemSearched; //for search method
 };
