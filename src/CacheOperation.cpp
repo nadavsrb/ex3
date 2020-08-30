@@ -80,28 +80,36 @@ CacheOperation::CacheOperation(const int argc, const char *argv[]) {
         throw UNKNOWN_COMMAND;
     }
 
-    //adding the time & date
-    CurrentTime ct = CurrentTime();
-    _cacheString += ct.getTime();
-    _cacheString+= " ";
 
     //adding the method
     _cacheString += _cacheCode;
     if (_cacheCode == SEARCH) {
-         _cacheString+= " ";
+         _cacheString += " ";
          _cacheString += _itemSearched->getCacheString();
-    } else if(_cacheCode != CLEAR){//not a cashe method
+    } else if (_cacheCode != CLEAR) {
 
         //adding the input files path
         for (vector<string>::iterator it = _inputFilesPath.begin(); it < _inputFilesPath.end(); ++it) {
-            _cacheString+= " ";
+            _cacheString += " ";
             _cacheString += *it;
         }
 
         //adding the output file path
-            _cacheString+= " ";
-            _cacheString+= _outputFilePath;
+            _cacheString += " ";
+            _cacheString += _outputFilePath;
     }
+
+    //adding the time & date
+    _cacheString += " ";
+    CurrentTime ct = CurrentTime();
+    _cacheString += ct.getTime();
+
+    // end of line
+    _cacheString += "\n";
+}
+
+bool CacheOperation::isClear() const {
+    return _cacheCode == CLEAR;
 }
 
 string CacheOperation::getCacheString() const {
@@ -137,6 +145,6 @@ void CacheOperation::writeToOutputFile() const{
             writeFileContent(_outputFilePath, result);
         }
     } else if (_cacheCode == SEARCH) {
-        
+
     }
 }
