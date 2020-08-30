@@ -299,6 +299,27 @@
         return *this * (1 / scalar);
     }
 
+    string MatrixClass::toString() const{
+        //var to use
+        uint32_t height = getHeight();
+        uint32_t width = getHeight();
+
+        string s = "";
+
+        for(uint32_t row = 0; row < height; ++row) {
+            for(uint32_t col = 0; col < width - 1; ++col) { //to all the middle values.
+                s+= std::to_string((*this)(row, col)) + ",";
+            }
+        //to the end of the row values
+        //must be one because the size of the matrix are positive
+        s +=  std::to_string((*this)(row, width - 1));
+
+        s += "\n";
+        }
+
+        return s;
+    }
+
 //friends functins
     std::ostream& operator<<(std::ostream& stream, const MatrixClass& matrix){
         //var to use

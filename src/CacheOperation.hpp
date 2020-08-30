@@ -6,6 +6,8 @@
 #include <string.h>
 #include <iostream>
 #include  "CurrentTime.hpp"
+#include "MatrixClass.hpp"
+#include "file_reading.hpp"
 
 #define NUMBER_OF_ARGUMENTS_ERROR runtime_error("Invalid input! Number of arguments does not suit to the chosen operation.")
 #define UNKNOWN_COMMAND runtime_error("Invalid input! Unknown command.")
@@ -28,6 +30,8 @@ public:
 
     bool isClear() const;
     string getCacheString() const;
+
+    void writeToOutputFile() const; //if the methode isn't cashe methode
 
 private:
     CacheOperationCode _cacheCode;

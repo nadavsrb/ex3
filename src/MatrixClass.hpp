@@ -191,6 +191,13 @@ public:
 	 */
 	MatrixClass& operator/(double scalar) const;
 
+	/**
+	 * @brief make a string that represent the matrix.
+	 * 
+	 * @return string that represent the matrix.
+	 */
+	string toString() const;
+
 //friends functins
 
 	/**
