@@ -2,6 +2,7 @@
 
 #include <string>
 #include <memory>
+#include <vector>
 #include <string.h>
 #include <iostream>
 
@@ -28,7 +29,8 @@ public:
 
 private:
     CacheOperationCode _cacheCode;
-    string _cacheString;
-    string _filesArray[3];
+    string _cacheString = "";
+    vector<string> _inputFilesPath;
+    string _outputFilePath = "";
     weak_ptr<CacheOperation> _itemSearched;
 };
