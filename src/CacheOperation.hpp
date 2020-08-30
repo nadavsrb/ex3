@@ -5,9 +5,11 @@
 #include <vector>
 #include <string.h>
 #include <iostream>
-#include  "CurrentTime.hpp"
+#include "CurrentTime.hpp"
 #include "MatrixClass.hpp"
 #include "file_reading.hpp"
+#include "bmp_tester.hpp"
+#include "crc32FileReader.hpp"
 
 #define NUMBER_OF_ARGUMENTS_ERROR runtime_error("Invalid input! Number of arguments does not suit to the chosen operation.")
 #define UNKNOWN_COMMAND runtime_error("Invalid input! Unknown command.")
