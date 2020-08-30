@@ -1,11 +1,4 @@
 #include "CacheOperation.hpp"
-#include <string.h>
-#include <iostream>
-
-#define NUMBER_OF_ARGUMENTS_ERROR runtime_error("Invalid input! Number of arguments does not suit to the chosen operation.")
-#define UNKNOWN_COMMAND runtime_error("Invalid input! Unknown command.")
-
-using namespace std;
 
 void copyToString(string& str, const char *charArray) {
     str = "";
@@ -17,19 +10,17 @@ void copyToString(string& str, const char *charArray) {
 CacheOperation::CacheOperation(const int argc, const char *argv[]) {
     if (argc < 1) {
         cerr << "Invalid input! Too few arguments." << endl;
-    } else if (argv[0] == "clear") {
-       _cacheCode = CLEAR;
     } else if (argc == 1) {
         throw NUMBER_OF_ARGUMENTS_ERROR;
-    } else if (argv[0] == "matrix") {
+    } else if (strcmp(argv[0], "matrix") == 0) {
         if (argc != 5) {
             throw NUMBER_OF_ARGUMENTS_ERROR;
-        } else if (argv[1] == "multiply") {
+        } else if (strcmp(argv[1], "multiply") == 0) {
             _cacheCode = MATRIX_MULT;
             copyToString(_filesArray[0], argv[2]);
             copyToString(_filesArray[1], argv[3]);
             copyToString(_filesArray[2], argv[4]);
-        } else if (argv[1] == "add") {
+        } else if (strcmp(argv[1], "add") == 0) {
             _cacheCode = MATRIX_ADD;
             copyToString(_filesArray[0], argv[2]);
             copyToString(_filesArray[1], argv[3]);
@@ -37,34 +28,36 @@ CacheOperation::CacheOperation(const int argc, const char *argv[]) {
         } else {
             throw UNKNOWN_COMMAND;
         }
-    } else if (argv[0] == "image") {
+    } else if (strcmp(argv[0], "image") == 0) {
         if (argc != 4) {
             throw NUMBER_OF_ARGUMENTS_ERROR;
-        } else if (argv[1] == "rotate") {
+        } else if (strcmp(argv[1], "rotate") == 0) {
             _cacheCode = IMAGE_ROTATE;
             copyToString(_filesArray[0], argv[2]);
             copyToString(_filesArray[1], argv[3]);
-        } else if (argv[1] == "convert") {
+        } else if (strcmp(argv[1], "convert") == 0) {
             _cacheCode = IMAGE_CONVERT;
             copyToString(_filesArray[0], argv[2]);
             copyToString(_filesArray[1], argv[3]);
         } else {
             throw UNKNOWN_COMMAND;
         }
-    } else if (argv[0] == "hash") {
+    } else if (strcmp(argv[0], "hash") == 0) {
         if (argc != 4) {
             throw NUMBER_OF_ARGUMENTS_ERROR;
-        } else if (argv[1] == "crc32") {
+        } else if (strcmp(argv[1], "crc32") == 0) {
             _cacheCode = HASH_CRC32;
             copyToString(_filesArray[0], argv[2]);
             copyToString(_filesArray[1], argv[3]);
         } else {
             throw UNKNOWN_COMMAND;
         }
-    } else if (argv[0] == "cache") {
-        if (argv[1] == "search") {
+    } else if (strcmp(argv[0], "cache") == 0) {
+        if (strcmp(argv[1], "search") == 0) {
             _cacheCode = SEARCH;
             _itemSearched = make_shared<CacheOperation>(argc - 1, argv + 1);
+        }else if (strcmp(argv[1], "clear") == 0) {
+            _cacheCode = CLEAR;
         } else {
             throw UNKNOWN_COMMAND;
         }

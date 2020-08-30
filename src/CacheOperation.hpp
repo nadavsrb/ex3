@@ -2,6 +2,11 @@
 
 #include <string>
 #include <memory>
+#include <string.h>
+#include <iostream>
+
+#define NUMBER_OF_ARGUMENTS_ERROR runtime_error("Invalid input! Number of arguments does not suit to the chosen operation.")
+#define UNKNOWN_COMMAND runtime_error("Invalid input! Unknown command.")
 
 using namespace std;
 
@@ -23,6 +28,7 @@ public:
 
 private:
     CacheOperationCode _cacheCode;
+    string _cacheString;
     string _filesArray[3];
     weak_ptr<CacheOperation> _itemSearched;
 };
