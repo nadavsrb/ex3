@@ -750,3 +750,14 @@ uint32_t calculate_crc32c(uint32_t crc32c,
 		return (multitable_crc32c(crc32c, buffer, length));
 	}
 }
+
+uint32_t crc32(const void *buf, size_t size)
+{
+ 	const uint8_t *p = (uint8_t *)buf;
+	uint32_t crc;
+
+	crc = ~0U;
+ 	while (size--)
+ 		crc = crc32_tab[(crc ^ *p++) & 0xFF] ^ (crc >> 8);
+ 	return crc ^ ~0U;
+}
