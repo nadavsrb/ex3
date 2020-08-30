@@ -1,11 +1,13 @@
 #include "CacheOperation.hpp"
 #include <iostream>
-#include <ctime>
-#include  "CurrentTime.hpp"
 
 using namespace std;
 int main() {
-    CurrentTime ct = CurrentTime();
-    cout<<ct.getTime();
+    int length = 5;
+    const char* argv[] = {"matrix", "multiply","matrix1.txt","matrix2.txt","mult_result.txt"};
+
+    CacheOperation co = CacheOperation(length, argv);
+
+    co.writeToOutputFile();
     return 0;
 }

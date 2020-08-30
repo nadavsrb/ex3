@@ -105,3 +105,14 @@ CacheOperation::CacheOperation(const int argc, const char *argv[]) {
 string CacheOperation::getCacheString() const {
     return _cacheString;
 }
+
+void CacheOperation::writeToOutputFile() const{
+    if(_cacheCode == MATRIX_MULT) {
+        MatrixClass m1 = MatrixClass(_inputFilesPath.at(0));
+        MatrixClass m2 = MatrixClass(_inputFilesPath.at(1));
+
+        m1 *= m2;
+
+        writeFileContent(_outputFilePath, m1.toString());
+    }
+}
