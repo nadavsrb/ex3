@@ -116,8 +116,8 @@ string CacheOperation::getCacheString() const {
 
 void CacheOperation::writeToOutputFile() const{
     if(_cacheCode == MATRIX_MULT) {
-        MatrixClass m1 = MatrixClass(_inputFilesPath.at(0));
-        MatrixClass m2 = MatrixClass(_inputFilesPath.at(1));
+        auto m1 = MatrixClass(_inputFilesPath.at(0));
+        auto m2 = MatrixClass(_inputFilesPath.at(1));
 
         m1 *= m2;
 
