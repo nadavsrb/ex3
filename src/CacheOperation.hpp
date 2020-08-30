@@ -5,6 +5,7 @@
 #include <vector>
 #include <string.h>
 #include <iostream>
+#include  "CurrentTime.hpp"
 
 #define NUMBER_OF_ARGUMENTS_ERROR runtime_error("Invalid input! Number of arguments does not suit to the chosen operation.")
 #define UNKNOWN_COMMAND runtime_error("Invalid input! Unknown command.")

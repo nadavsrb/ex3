@@ -68,7 +68,7 @@ CacheOperation::CacheOperation(const int argc, const char *argv[]) {
     } else if (strcmp(argv[0], "cache") == 0) {
         if (strcmp(argv[1], "search") == 0) {
             _cacheCode = SEARCH;
-            _itemSearched = make_shared<CacheOperation>(argc - 1, argv + 1);
+            //_itemSearched = make_shared<CacheOperation>(argc - 1, argv + 1);
         }else if (strcmp(argv[1], "clear") == 0) {
             _cacheCode = CLEAR;
         } else {
@@ -78,10 +78,16 @@ CacheOperation::CacheOperation(const int argc, const char *argv[]) {
         throw UNKNOWN_COMMAND;
     }
 
+    //adding the time & date
+    CurrentTime ct = CurrentTime();
+    _cacheString += ct.getTime();
+    _cacheString+= " ";
+
+    //adding the method
     _cacheString += _cacheCode;
     if (_cacheCode == SEARCH) {
          _cacheString+= " ";
-         _cacheString += _itemSearched->getCacheString();
+         //_cacheString += _itemSearched->getCacheString();
     } else if(_cacheCode != CLEAR){//not a cashe method
 
         //adding the input files path
