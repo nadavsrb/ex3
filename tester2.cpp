@@ -27,12 +27,12 @@ int main() {
     const char* argv5[] = {"image", "rotate","lena-color.bmp", "rotate.bmp"};
      CacheManager::performOperation(length5, argv5);
 
-    int length6 = 7;
-    const char* argv6[] = {"cache", "search", "matrix", "multiply","matrix1.txt", "matrix2.txt","result-matrix.txt"};
+    int length6 = 6;
+    const char* argv6[] = {"cache", "search", "matrix", "multiply","matrix1.txt", "matrix2.txt"};
      CacheManager::performOperation(length6, argv6);
 
-    int length7 = 7;
-    const char* argv7[] = {"cache", "search", "matrix", "multiply","matrix1.txt", "matrix1.txt","stdout"};
+    int length7 = 6;
+    const char* argv7[] = {"cache", "search", "matrix", "multiply","matrix1.txt", "matrix1.txt"};
      CacheManager::performOperation(length7, argv7);
      
     return 0;

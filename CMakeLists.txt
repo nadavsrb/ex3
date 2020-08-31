@@ -21,9 +21,9 @@ link_directories(${CMAKE_SOURCE_DIR})
 
 
 file(GLOB My_Source_Files src/*.cpp)
-add_executable(ex2.out tester2.cpp ${My_Source_Files})
-set_target_properties(ex2.out PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../src/bin)
-target_link_libraries(ex2.out matrix)
+add_executable(ex3.out tester2.cpp ${My_Source_Files})
+set_target_properties(ex3.out PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../src/bin)
+target_link_libraries(ex3.out matrix)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

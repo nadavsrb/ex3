@@ -12,7 +12,7 @@ string copyToString(const char *charArray) {
     return str;
 }
 
-CacheOperation::CacheOperation(const int argc, const char *argv[], bool isSearched = false) {
+CacheOperation::CacheOperation(const int argc, const char *argv[], bool isSearched /*= false*/) {
     int argsExpected = argc;
     if (isSearched) {
         argsExpected++;
@@ -139,6 +139,9 @@ string CacheOperation::getCacheString() const {
 }
 
 string CacheOperation::getOutputFileType() const {
+    if(_outputFilePath == "stdout") {
+        return "text";
+    }
     return _outputFilePath.substr(_outputFilePath.find_last_of('.') + 1, _outputFilePath.size() - 1);
 }
 
