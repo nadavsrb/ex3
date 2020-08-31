@@ -59,7 +59,7 @@ void checkCacheFileExists() {
 }
 
 void createBeckupFile(const CacheOperation& operation, unsigned int index) {
-    string fileName = std::to_string(index) + " " + operation.getOutputFileType();
+    string fileName = "src/bin/cashe/files/" + std::to_string(index) + " " + operation.getOutputFileType();
     const auto cachefd = open(fileName.c_str(), O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
     if (cachefd < 0) {
         throw system_error{errno, system_category()};
