@@ -34,8 +34,10 @@ public:
     bool isSearch() const;
     
     string getCacheString() const;
+    string getOutputFileType() const;
 
-    void writeToOutputFile() const; //if the methode isn't cashe methode
+    void writeToOutputFile() const; //if the methode isn't a cache methode
+    void CacheOperation::writeToFile(const string& fileName) const;
 
 private:
     CacheOperationCode _cacheCode;

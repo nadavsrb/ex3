@@ -58,6 +58,15 @@ void checkCacheFileExists() {
     close(cachefd);
 }
 
+void createBeckupFile(const CacheOperation& operation, unsigned int index) {
+    string fileName = std::to_string(index) + " " + operation.getOutputFileType();
+    const auto cachefd = open(fileName.c_str(), O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+    if (cachefd < 0) {
+        throw system_error{errno, system_category()};
+    }
+    operation.writeToFile(fileName);
+}
+
 uint32_t getCashFileIndex() {
     ifstream cacheFile;
     cacheFile.open(CACHE_FILE);
@@ -68,7 +77,7 @@ uint32_t getCashFileIndex() {
     string line;
 
     getline(cacheFile, line); //the title
-    if(cacheFile.peek() == std::ifstream::traits_type::eof()) {
+    if (cacheFile.peek() == std::ifstream::traits_type::eof()) {
         cacheFile.close();
         return 0;
     }
@@ -86,21 +95,20 @@ void CacheManager::performOperation(int argc, const char *argv[]) {
     operation->writeToOutputFile();
 
     // writes the operation line into the cache file
-    string cacheCopy = ""; 
-    if (!operation->isClear() && !operation->isSearch()) {
-        cacheCopy += readFileContent(CACHE_FILE);
-        cacheCopy.erase(0, CACHE_LINE_LENGTH);
-        string cache = CACHE_LINE + operation->getCacheString();
-        cache += "|" + std::to_string(getCashFileIndex());
+    string cacheCopy = readFileContent(CACHE_FILE);
+    cacheCopy.erase(0, CACHE_LINE_LENGTH);
+    string cache = CACHE_LINE + operation->getCacheString();
+    if (operation->isClear()) {
+        writeFileContent(CACHE_FILE, cache);
+    } else if (!operation->isClear() && !operation->isSearch()) {
+        unsigned int index = getCashFileIndex();
+        cache += "|" + std::to_string(index);
         cache += "\n";//end of line
         cache += cacheCopy;
 
         writeFileContent(CACHE_FILE, cache);
-    } else if(operation->isClear()) {
-        int errorRemove = remove(CACHE_FILE);
-        if (errorRemove < 0) {
-          throw system_error{errno, system_category()}; 
-        }
+
+        createBeckupFile(*operation, index);
     }
 }
 
@@ -128,5 +136,5 @@ string CacheManager::search(const shared_ptr<CacheOperation>& operation) {
         }
     }
 
-    return ""; //didn't fund
+    return ""; //didn't find
 }

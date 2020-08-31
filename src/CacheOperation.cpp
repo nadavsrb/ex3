@@ -133,11 +133,21 @@ bool CacheOperation::isSearch() const {
     return _cacheCode == SEARCH;
 }
 
+
 string CacheOperation::getCacheString() const {
     return _cacheString;
 }
 
-void CacheOperation::writeToOutputFile() const{
+string CacheOperation::getOutputFileType() const {
+    return _outputFilePath.substr(_outputFilePath.find_last_of('.') + 1, _outputFilePath.size() - 1);
+}
+
+
+void CacheOperation::writeToOutputFile() const {
+    writeToFile(_outputFilePath);
+}
+
+void CacheOperation::writeToFile(const string& fileName) const {
     if (_cacheCode == MATRIX_MULT || _cacheCode == MATRIX_ADD) {
         auto m1 = make_unique<MatrixClass>(_inputFilesPath.at(0));
         auto m2 = make_unique<MatrixClass>(_inputFilesPath.at(1));
@@ -148,23 +158,23 @@ void CacheOperation::writeToOutputFile() const{
             *m1 += *m2;
         }
 
-        if (_outputFilePath.compare(PRINT) == 0) {
+        if (fileName.compare(PRINT) == 0) {
             cout << *m1;
         } else {
-            writeFileContent(_outputFilePath, m1->toString());
+            writeFileContent(fileName, m1->toString());
         }
     } else if (_cacheCode == IMAGE_CONVERT) {
-        testing::bmp::convert_to_grayscale(_inputFilesPath.at(0), _outputFilePath);
+        testing::bmp::convert_to_grayscale(_inputFilesPath.at(0), fileName);
     } else if (_cacheCode == IMAGE_ROTATE) {
-        testing::bmp::rotate_image(_inputFilesPath.at(0), _outputFilePath);
+        testing::bmp::rotate_image(_inputFilesPath.at(0), fileName);
     } else if (_cacheCode == HASH_CRC32) {
         string result = "";
         result += std::to_string(crc32(_inputFilesPath.at(0)));
 
-        if (_outputFilePath.compare(PRINT)  == 0) {
+        if (fileName.compare(PRINT)  == 0) {
             cout << result << endl;
         } else {
-            writeFileContent(_outputFilePath, result);
+            writeFileContent(fileName, result);
         }
     } else if (_cacheCode == SEARCH) {
         string search = CacheManager::search(_itemSearched);
