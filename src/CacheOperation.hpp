@@ -28,7 +28,7 @@ typedef enum {
 
 class CacheOperation {
 public:
-    CacheOperation(const int argc, const char *argv[], bool isSearched = false);
+    CacheOperation(const int argc, const char *argv[], bool isSearched);
 
     bool isClear() const;
     bool isSearch() const;
@@ -37,7 +37,7 @@ public:
     string getOutputFileType() const;
 
     void writeToOutputFile() const; //if the methode isn't a cache methode
-    void CacheOperation::writeToFile(const string& fileName) const;
+    void writeToFile(const string& fileName) const;
 
 private:
     CacheOperationCode _cacheCode;
