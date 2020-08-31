@@ -71,7 +71,7 @@ CacheOperation::CacheOperation(const int argc, const char *argv[]) {
     } else if (strcmp(argv[0], "cache") == 0) {
         if (strcmp(argv[1], "search") == 0) {
             _cacheCode = SEARCH;
-            _itemSearched = make_shared<CacheOperation>(argc - 1, argv + 1);
+            _itemSearched = make_shared<CacheOperation>(argc - 2, &argv[2]);
         }else if (strcmp(argv[1], "clear") == 0) {
             _cacheCode = CLEAR;
         } else {
@@ -83,10 +83,12 @@ CacheOperation::CacheOperation(const int argc, const char *argv[]) {
 
 
     //adding the method
-    _cacheString += _cacheCode;
+    _cacheString += std::to_string(_cacheCode);
     if (_cacheCode == SEARCH) {
          _cacheString += " ";
          _cacheString += _itemSearched->getCacheString();
+         //delete the operation searche date & time & \n & " "
+         _cacheString.erase(_cacheString.length() - CurrentTime::TIME_STRING_LENGTH - 2, CurrentTime::TIME_STRING_LENGTH + 2);
     } else if (_cacheCode != CLEAR) {
 
         //adding the input files path
@@ -129,7 +131,7 @@ void CacheOperation::writeToOutputFile() const{
         }
 
         if (_outputFilePath.compare(PRINT) == 0) {
-            cout << *m1 << endl;
+            cout << *m1;
         } else {
             writeFileContent(_outputFilePath, m1->toString());
         }

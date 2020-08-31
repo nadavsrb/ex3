@@ -1,0 +1,8 @@
+CacheManager is running!
+6 0 matrix1.txt matrix2.txt stdout 31/07/20 15:05
+2 lena-color.bmp rotate.bmp 31/07/20 15:05
+3 lena-color.bmp convert.bmp 31/07/20 15:05
+1 matrix1.txt matrix2.txt stdout 31/07/20 15:05
+0 matrix1.txt matrix2.txt stdout 31/07/20 15:05
+4 matrix1.txt stdout 31/07/20 15:05
+5 31/07/20 15:05

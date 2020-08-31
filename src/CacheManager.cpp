@@ -26,21 +26,22 @@ using namespace std;
  */
 void checkCacheFileExists() {
     // opening the cache file
-    const auto cachefd = open(CACHE_FILE, O_CREAT, S_IRUSR | S_IWUSR);
+    const auto cachefd = open(CACHE_FILE, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
     if (cachefd < 0) {
         throw system_error{errno, system_category()};
     }
 
     // to specify that we are in our cache manager file we make sure that the folowing line in the first one
     // or the file is empty (and we will write the line)
-    char cacheID[CACHE_LINE_LENGTH];
+    char cacheID[CACHE_LINE_LENGTH + 1];
+    cacheID[CACHE_LINE_LENGTH] = '\0';
 
-    int errorID = read(cachefd, cacheID, sizeof(cacheID));
+    int errorID = read(cachefd, cacheID, CACHE_LINE_LENGTH);
     if (errorID == 0) { // empty file
         int errorWriting = write(cachefd, CACHE_LINE, CACHE_LINE_LENGTH);
         if (errorWriting < 0) {
           close(cachefd);
-          throw runtime_error("Failed writing id title to 'Cache__DONT_TOUCH_THIS_FILE.txt'");  
+          throw system_error{errno, system_category()}; 
         }
     } else if (errorID > 0 && (strcmp(cacheID, CACHE_LINE) != 0)) { // the file does not start with our line
         close(cachefd);
@@ -60,17 +61,19 @@ void CacheManager::performOperation(int argc, const char *argv[]) {
     operation->writeToOutputFile();
 
     // writes the operation line into the cache file
-    string cacheCopy = readFileContent(CACHE_FILE);
+    string cacheCopy = ""; 
+    if (!operation->isClear()) {
+        cacheCopy += readFileContent(CACHE_FILE);
+    }
+
     cacheCopy.erase(0, CACHE_LINE_LENGTH);
     string cache = CACHE_LINE + operation->getCacheString();
-    if (!operation->isClear()) {
-        cache += cacheCopy;
-    }
+    cache += cacheCopy;
 
     writeFileContent(CACHE_FILE, cache);
 }
 
-string CacheManager::search(const shared_ptr<CacheOperation>& operation) {
+string CacheManager::search(const shared_ptr<CacheOperation>& operation) {    
     ifstream cacheFile;
     cacheFile.open(CACHE_FILE);
     if (!cacheFile) {

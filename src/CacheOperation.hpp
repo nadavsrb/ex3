@@ -17,13 +17,13 @@
 using namespace std;
 
 typedef enum {
-    MATRIX_MULT,
-    MATRIX_ADD,
-    IMAGE_ROTATE,
-    IMAGE_CONVERT,
-    HASH_CRC32,
-    CLEAR,
-    SEARCH
+    MATRIX_MULT = 0,
+    MATRIX_ADD = 1,
+    IMAGE_ROTATE = 2,
+    IMAGE_CONVERT = 3,
+    HASH_CRC32 = 4,
+    CLEAR = 5,
+    SEARCH = 6
 } CacheOperationCode;
 
 class CacheOperation {
