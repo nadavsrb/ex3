@@ -314,7 +314,9 @@
         //must be one because the size of the matrix are positive
         s +=  std::to_string((*this)(row, width - 1));
 
-        s += "\n";
+        if(row != height -1) {
+            s += "\n";
+        }
         }
 
         return s;

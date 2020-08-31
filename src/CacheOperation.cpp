@@ -90,11 +90,18 @@ CacheOperation::CacheOperation(const int argc, const char *argv[]) {
          //delete the operation searche date & time & \n & " "
          _cacheString.erase(_cacheString.length() - CurrentTime::TIME_STRING_LENGTH - 2, CurrentTime::TIME_STRING_LENGTH + 2);
     } else if (_cacheCode != CLEAR) {
-
         //adding the input files path
-        for (vector<string>::iterator it = _inputFilesPath.begin(); it < _inputFilesPath.end(); ++it) {
-            _cacheString += " ";
-            _cacheString += std::to_string(crc32(*it));
+        if(_cacheCode == MATRIX_MULT || _cacheCode == MATRIX_ADD) {
+            for (vector<string>::iterator it = _inputFilesPath.begin(); it < _inputFilesPath.end(); ++it) {
+                _cacheString += " ";
+                MatrixClass matrix(*it);
+                _cacheString += std::to_string(crc32FromString(matrix.toString())); //don't see " "
+            }
+        }else {
+            for (vector<string>::iterator it = _inputFilesPath.begin(); it < _inputFilesPath.end(); ++it) {
+                _cacheString += " ";
+                _cacheString += std::to_string(crc32(*it));
+            }
         }
 
     }
@@ -147,7 +154,12 @@ void CacheOperation::writeToOutputFile() const{
             writeFileContent(_outputFilePath, result);
         }
     } else if (_cacheCode == SEARCH) {
-        cout << CacheManager::search(_itemSearched) << endl;
+        string search = CacheManager::search(_itemSearched);
+        if(search == "") {
+             cout << "result wasn't found in cache" << endl;
+        } else {
+            cout << "result found in cache – saved on " << search.substr(0, CurrentTime::TIME_STRING_LENGTH) << endl;
+        }
     }
 
     // note that the CLEAR operation is performed in the CachManager module

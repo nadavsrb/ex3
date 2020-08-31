@@ -16,3 +16,10 @@ using std::string;
  * @return uint32_t 
  */
 uint32_t crc32(const string& filePath);
+/**
+ * @brief Performs the crc32 algorithem.
+ * 
+ * @param s - the input in string
+ * @return uint32_t 
+ */
+uint32_t crc32FromString(const string& file);

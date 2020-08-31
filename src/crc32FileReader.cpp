@@ -10,15 +10,19 @@ uint32_t crc32(const string& filePath) {
     //for making the windows text file like linux txt file
     s.erase(std::remove(s.begin(), s.end(), '\r'), s.end());
 
+    return crc32FromString(s);
+}
+
+uint32_t crc32FromString(const string& file) {
     //because of /0
-    unsigned int length = s.length() + 1;
+    unsigned int length = file.length() + 1;
 
    // declaring character array 
     char *buffer = new char[length];
   
     // copying the contents of the 
     // string to char array 
-    strcpy(buffer, s.c_str());
+    strcpy(buffer, file.c_str());
 
     return crc32((unsigned char *) buffer, length -1);
 }

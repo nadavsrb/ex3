@@ -13,8 +13,9 @@
 #include "CacheManager.hpp"
 #include "file_reading.hpp"
 
-#define CACHE_FILE "Cache__DONT_TOUCH_THIS_FILE.txt"
+#define CACHE_FILE "cashe/Cache__DONT_TOUCH_THIS_FILE.txt"
 #define CACHE_LINE "CacheManager is running!\n"
+#define FILES_DIR "CacheManager is running!\n"
 #define CACHE_LINE_LENGTH 25
 
 using namespace std;
@@ -25,6 +26,10 @@ using namespace std;
  * 
  */
 void checkCacheFileExists() {
+    //make the dir cache
+    mkdir("cashe", 0777);
+    //make the dir for the cache files
+    mkdir("cashe/files", 0777);
     // opening the cache file
     const auto cachefd = open(CACHE_FILE, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
     if (cachefd < 0) {
@@ -69,6 +74,7 @@ uint32_t getCashFileIndex() {
     }
 
     getline(cacheFile, line);
+    cacheFile.close();
     return std::stoi(line.substr(line.find("|") + 1)) + 1;
 }
 
@@ -118,9 +124,9 @@ string CacheManager::search(const shared_ptr<CacheOperation>& operation) {
         }
         // all checks completed
         if (line.at(i) == ',') {
-            return "result found in cache – saved on " + line.substr(i + 1, CurrentTime::TIME_STRING_LENGTH);
+            return line.substr(i + 1);
         }
     }
 
-    return "result wasn't found in cache";
+    return ""; //didn't fund
 }

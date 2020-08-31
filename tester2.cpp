@@ -12,7 +12,7 @@ int main() {
      CacheManager::performOperation(length1, argv1);
 
      int length2 = 5;
-    const char* argv2[] = {"matrix", "multiply","matrix1.txt", "matrix2.txt","stdout"};
+    const char* argv2[] = {"matrix", "multiply","matrix1.txt", "matrix2.txt","result-matrix.txt"};
      CacheManager::performOperation(length2, argv2);
 
      int length3 = 5;
@@ -28,8 +28,12 @@ int main() {
      CacheManager::performOperation(length5, argv5);
 
     int length6 = 7;
-    const char* argv6[] = {"cache", "search", "matrix", "multiply","matrix1.txt", "matrix2.txt","stdout"};
+    const char* argv6[] = {"cache", "search", "matrix", "multiply","matrix1.txt", "matrix2.txt","result-matrix.txt"};
      CacheManager::performOperation(length6, argv6);
+
+    int length7 = 7;
+    const char* argv7[] = {"cache", "search", "matrix", "multiply","matrix1.txt", "matrix1.txt","stdout"};
+     CacheManager::performOperation(length7, argv7);
      
     return 0;
 }
