@@ -62,15 +62,19 @@ void CacheManager::performOperation(int argc, const char *argv[]) {
 
     // writes the operation line into the cache file
     string cacheCopy = ""; 
-    if (!operation->isClear()) {
+    if (!operation->isClear() && !operation->isSearch()) {
         cacheCopy += readFileContent(CACHE_FILE);
+        cacheCopy.erase(0, CACHE_LINE_LENGTH);
+        string cache = CACHE_LINE + operation->getCacheString();
+        cache += cacheCopy;
+
+        writeFileContent(CACHE_FILE, cache);
+    } else if(operation->isClear()) {
+        int errorRemove = remove(CACHE_FILE);
+        if (errorRemove < 0) {
+          throw system_error{errno, system_category()}; 
+        }
     }
-
-    cacheCopy.erase(0, CACHE_LINE_LENGTH);
-    string cache = CACHE_LINE + operation->getCacheString();
-    cache += cacheCopy;
-
-    writeFileContent(CACHE_FILE, cache);
 }
 
 string CacheManager::search(const shared_ptr<CacheOperation>& operation) {    

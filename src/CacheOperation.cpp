@@ -115,6 +115,10 @@ bool CacheOperation::isClear() const {
     return _cacheCode == CLEAR;
 }
 
+bool CacheOperation::isSearch() const {
+    return _cacheCode == SEARCH;
+}
+
 string CacheOperation::getCacheString() const {
     return _cacheString;
 }

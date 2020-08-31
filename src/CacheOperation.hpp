@@ -31,6 +31,8 @@ public:
     CacheOperation(const int argc, const char *argv[]);
 
     bool isClear() const;
+    bool isSearch() const;
+    
     string getCacheString() const;
 
     void writeToOutputFile() const; //if the methode isn't cashe methode
