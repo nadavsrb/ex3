@@ -20,6 +20,7 @@
 #define CACHE_LINE_LENGTH 26
 #define CACHE_DIR "src/bin/cache"
 #define CACHE_FILES_DIR "src/bin/cache/files"
+#define CACHE_FILES_DIR_ "src/bin/cache/files/"
 
 using namespace std;
 
@@ -101,10 +102,9 @@ void CacheManager::performOperation(int argc, const char *argv[]) {
         string result = search(*operation), replace, fileName;
         replace = result.substr(0, result.find_last_of('|') - 1);
         unsigned int index = stoi(result.substr(result.find_last_of('|') + 1, result.size() - 1));
-        fileName = CACHE_FILES_DIR + '/' + to_string(index) + '.' + operation->getOutputFileType();
+        fileName = CACHE_FILES_DIR_ + to_string(index) + '.' + operation->getOutputFileType();
 
-        string s = readFileContent(fileName);
-        operation->writeToOutputFile(s);
+        operation->writeToOutputFile(readFileContent(fileName));
 
         // changing the time & date
         replace.erase(replace.find_first_of(',') + 1, replace.size() - 1);
