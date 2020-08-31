@@ -2,6 +2,7 @@
 #include <sys/types.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <filesystem>
 
 #include <errno.h>
 #include <iostream>
@@ -13,7 +14,7 @@
 #include "CacheManager.hpp"
 #include "file_reading.hpp"
 
-#define CACHE_FILE "src/bin/cashe/Cache__DONT_TOUCH_THIS_FILE.txt"
+#define CACHE_FILE "src/bin/cache/Cache__DONT_TOUCH_THIS_FILE.txt"
 #define CACHE_LINE "CacheManager is running!\n"
 #define FILES_DIR "CacheManager is running!\n"
 #define CACHE_LINE_LENGTH 25
@@ -27,9 +28,9 @@ using namespace std;
  */
 void checkCacheFileExists() {
     //make the dir cache
-    mkdir("src/bin/cashe", 0777);
+    mkdir("src/bin/cache", 0777);
     //make the dir for the cache files
-    mkdir("src/bin/cashe/files", 0777);
+    mkdir("src/bin/cache/files", 0777);
     // opening the cache file
     const auto cachefd = open(CACHE_FILE, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
     if (cachefd < 0) {
@@ -59,7 +60,7 @@ void checkCacheFileExists() {
 }
 
 void createBeckupFile(const CacheOperation& operation, unsigned int index) {
-    string fileName = "src/bin/cashe/files/" + std::to_string(index) + "." + operation.getOutputFileType();
+    string fileName = "src/bin/cache/files/" + std::to_string(index) + "." + operation.getOutputFileType();
     const auto cachefd = open(fileName.c_str(), O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
     if (cachefd < 0) {
         throw system_error{errno, system_category()};
@@ -97,10 +98,10 @@ void CacheManager::performOperation(int argc, const char *argv[]) {
     // writes the operation line into the cache file
     string cacheCopy = "";
     if (operation->isClear()) {
-        int errorRemove = remove(CACHE_FILE);
-        if (errorRemove < 0) {
-          throw system_error{errno, system_category()}; 
-        }
+    if (std::filesystem::remove_all("src/bin/cache") == false) {
+        throw system_error();
+
+    }
     } else if (!operation->isSearch()) {
         cacheCopy += readFileContent(CACHE_FILE);
         cacheCopy.erase(0, CACHE_LINE_LENGTH);
