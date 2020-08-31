@@ -13,7 +13,7 @@
 #include "CacheManager.hpp"
 #include "file_reading.hpp"
 
-#define CACHE_FILE "cashe/Cache__DONT_TOUCH_THIS_FILE.txt"
+#define CACHE_FILE "src/bin/cashe/Cache__DONT_TOUCH_THIS_FILE.txt"
 #define CACHE_LINE "CacheManager is running!\n"
 #define FILES_DIR "CacheManager is running!\n"
 #define CACHE_LINE_LENGTH 25
@@ -27,9 +27,9 @@ using namespace std;
  */
 void checkCacheFileExists() {
     //make the dir cache
-    mkdir("cashe", 0777);
+    mkdir("src/bin/cashe", 0777);
     //make the dir for the cache files
-    mkdir("cashe/files", 0777);
+    mkdir("src/bin/cashe/files", 0777);
     // opening the cache file
     const auto cachefd = open(CACHE_FILE, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
     if (cachefd < 0) {
