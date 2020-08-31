@@ -1,8 +1,6 @@
 #include "CacheOperation.hpp"
 #include "CacheManager.hpp"
 
-#define PRINT "stdout"
-
 string copyToString(const char *charArray) {
     string str = "";
     for (unsigned int i = 0; charArray[i] != '\0'; ++i) {
@@ -139,7 +137,7 @@ string CacheOperation::getCacheString() const {
 }
 
 string CacheOperation::getOutputFileType() const {
-    if(_outputFilePath == "stdout") {
+    if(_outputFilePath == PRINT) {
         return "txt";
     }
     return _outputFilePath.substr(_outputFilePath.find_last_of('.') + 1, _outputFilePath.size() - 1);
@@ -148,6 +146,14 @@ string CacheOperation::getOutputFileType() const {
 
 void CacheOperation::writeToOutputFile() const {
     writeToFile(_outputFilePath);
+}
+
+void CacheOperation::writeToOutputFile(const string& content) const {
+    if (!_outputFilePath.compare(PRINT)) {
+        cout << content << endl;
+    } else {
+        writeFileContent(_outputFilePath, content);
+    }
 }
 
 void CacheOperation::writeToFile(const string& fileName) const {
@@ -180,7 +186,7 @@ void CacheOperation::writeToFile(const string& fileName) const {
             writeFileContent(fileName, result);
         }
     } else if (_cacheCode == SEARCH) {
-        string search = CacheManager::search(_itemSearched);
+        string search = CacheManager::search(*_itemSearched);
         if(search == "") {
              cout << "result wasn't found in cache" << endl;
         } else {

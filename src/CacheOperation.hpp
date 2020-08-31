@@ -13,6 +13,7 @@
 
 #define NUMBER_OF_ARGUMENTS_ERROR runtime_error("Invalid input! Number of arguments does not suit to the chosen operation.")
 #define UNKNOWN_COMMAND runtime_error("Invalid input! Unknown command.")
+#define PRINT "stdout"
 
 using namespace std;
 
@@ -37,6 +38,7 @@ public:
     string getOutputFileType() const;
 
     void writeToOutputFile() const; //if the methode isn't a cache methode
+    void writeToOutputFile(const string& content) const;
     void writeToFile(const string& fileName) const;
 
 private:

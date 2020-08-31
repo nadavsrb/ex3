@@ -15,9 +15,11 @@
 #include "file_reading.hpp"
 
 #define CACHE_FILE "src/bin/cache/Cache__DONT_TOUCH_THIS_FILE.txt"
-#define CACHE_LINE "CacheManager is running!\n"
-#define FILES_DIR "CacheManager is running!\n"
-#define CACHE_LINE_LENGTH 25
+#define CACHE_LINE "Cache Manager is running!\n"
+#define FILES_DIR "Cache Manager is running!\n"
+#define CACHE_LINE_LENGTH 26
+#define CACHE_DIR "src/bin/cache"
+#define CACHE_FILES_DIR "src/bin/cache/files"
 
 using namespace std;
 
@@ -28,9 +30,9 @@ using namespace std;
  */
 void checkCacheFileExists() {
     //make the dir cache
-    mkdir("src/bin/cache", 0777);
+    mkdir(CACHE_DIR, 0777);
     //make the dir for the cache files
-    mkdir("src/bin/cache/files", 0777);
+    mkdir(CACHE_FILES_DIR, 0777);
     // opening the cache file
     const auto cachefd = open(CACHE_FILE, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
     if (cachefd < 0) {
@@ -93,16 +95,42 @@ void CacheManager::performOperation(int argc, const char *argv[]) {
 
     // performs the operation
     auto operation = make_unique<CacheOperation>(argc, argv);
+
+    if (search(*operation).compare("")) {
+        // first we will find the cache file that suits to the operation and copy it to our destination file
+        string result = search(*operation), replace, fileName;
+        replace = result.substr(0, result.find_last_of('|') - 1);
+        unsigned int index = stoi(result.substr(result.find_last_of('|') + 1, result.size() - 1));
+        fileName = CACHE_FILES_DIR + '/' + to_string(index) + '.' + operation->getOutputFileType();
+
+        string s = readFileContent(fileName);
+        operation->writeToOutputFile(s);
+
+        // changing the time & date
+        replace.erase(replace.find_first_of(',') + 1, replace.size() - 1);
+        CurrentTime ct = CurrentTime();
+        replace += ct.getTime() + '|' + to_string(index);
+
+        // replace the date (the whole line) in the cache file
+        string cache = readFileContent(CACHE_FILE);
+        cache.replace(cache.find(result), result.size(), replace);
+        writeFileContent(CACHE_FILE, cache);
+
+        return;
+    }
+
+    if (operation->isClear()) {
+        if (!std::filesystem::remove_all(CACHE_DIR)) {
+            throw system_error();
+        }
+        return;
+    }
+
     operation->writeToOutputFile();
 
     // writes the operation line into the cache file
     string cacheCopy = "";
-    if (operation->isClear()) {
-    if (std::filesystem::remove_all("src/bin/cache") == false) {
-        throw system_error();
-
-    }
-    } else if (!operation->isSearch()) {
+    if (!operation->isSearch()) {
         cacheCopy += readFileContent(CACHE_FILE);
         cacheCopy.erase(0, CACHE_LINE_LENGTH);
         string cache = CACHE_LINE + operation->getCacheString();
@@ -117,7 +145,7 @@ void CacheManager::performOperation(int argc, const char *argv[]) {
     }
 }
 
-string CacheManager::search(const shared_ptr<CacheOperation>& operation) {    
+string CacheManager::search(const CacheOperation& operation) {    
     ifstream cacheFile;
     cacheFile.open(CACHE_FILE);
     if (!cacheFile) {
@@ -126,7 +154,7 @@ string CacheManager::search(const shared_ptr<CacheOperation>& operation) {
 
     // checks if every begining of a line is similar to the CacheString of the operation
     // if it finds the similar one it will return something to print
-    string line, operationLine = operation->getCacheString();
+    string line, operationLine = operation.getCacheString();
     unsigned int i;
     getline(cacheFile, line); //the title
     while (getline(cacheFile, line)) {

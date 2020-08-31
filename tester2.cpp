@@ -31,9 +31,9 @@ int main() {
     const char* argv6[] = {"cache", "search", "matrix", "multiply","matrix1.txt", "matrix2.txt"};
      CacheManager::performOperation(length6, argv6);
 
-    int length7 = 6;
-    const char* argv7[] = {"cache", "search", "matrix", "multiply","matrix1.txt", "matrix1.txt"};
-     CacheManager::performOperation(length7, argv7);
+    int length7 = 5;
+    const char* argv7[] = {"matrix", "multiply","matrix1.txt", "matrix1.txt", "stdout"};
+    CacheManager::performOperation(length7, argv7);
      
     return 0;
 }
