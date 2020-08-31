@@ -103,9 +103,6 @@ CacheOperation::CacheOperation(const int argc, const char *argv[]) {
     _cacheString += ",";
     CurrentTime ct = CurrentTime();
     _cacheString += ct.getTime();
-
-    // end of line
-    _cacheString += "\n";
 }
 
 bool CacheOperation::isClear() const {

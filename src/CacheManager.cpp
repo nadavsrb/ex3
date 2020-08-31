@@ -53,6 +53,25 @@ void checkCacheFileExists() {
     close(cachefd);
 }
 
+uint32_t getCashFileIndex() {
+    ifstream cacheFile;
+    cacheFile.open(CACHE_FILE);
+    if (!cacheFile) {
+        throw std::system_error();
+    }
+
+    string line;
+
+    getline(cacheFile, line); //the title
+    if(cacheFile.peek() == std::ifstream::traits_type::eof()) {
+        cacheFile.close();
+        return 0;
+    }
+
+    getline(cacheFile, line);
+    return std::stoi(line.substr(line.find("|") + 1)) + 1;
+}
+
 void CacheManager::performOperation(int argc, const char *argv[]) {
     checkCacheFileExists();
 
@@ -66,6 +85,8 @@ void CacheManager::performOperation(int argc, const char *argv[]) {
         cacheCopy += readFileContent(CACHE_FILE);
         cacheCopy.erase(0, CACHE_LINE_LENGTH);
         string cache = CACHE_LINE + operation->getCacheString();
+        cache += "|" + std::to_string(getCashFileIndex());
+        cache += "\n";//end of line
         cache += cacheCopy;
 
         writeFileContent(CACHE_FILE, cache);
