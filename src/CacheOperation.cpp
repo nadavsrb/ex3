@@ -123,12 +123,12 @@ void CacheOperation::writeToOutputFile() const{
         auto m2 = make_unique<MatrixClass>(_inputFilesPath.at(1));
 
         if (_cacheCode == MATRIX_MULT) {
-            *m1 += *m2;
+            *m1 *= *m2;
         } else {
             *m1 += *m2;
         }
 
-        if (_outputFilePath.compare(PRINT)) {
+        if (_outputFilePath.compare(PRINT) == 0) {
             cout << *m1 << endl;
         } else {
             writeFileContent(_outputFilePath, m1->toString());
@@ -139,9 +139,9 @@ void CacheOperation::writeToOutputFile() const{
         testing::bmp::rotate_image(_inputFilesPath.at(0), _outputFilePath);
     } else if (_cacheCode == HASH_CRC32) {
         string result = "";
-        result += crc32(_inputFilesPath.at(0));
+        result += std::to_string(crc32(_inputFilesPath.at(0)));
 
-        if (_cacheString.compare(PRINT)) {
+        if (_outputFilePath.compare(PRINT)  == 0) {
             cout << result << endl;
         } else {
             writeFileContent(_outputFilePath, result);

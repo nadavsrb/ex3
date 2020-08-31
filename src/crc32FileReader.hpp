@@ -4,6 +4,7 @@
 #include <string>
 #include "crc32.hpp"
 #include "file_reading.hpp"
+#include <algorithm>
 
 using std::uint32_t;
 using std::string;
