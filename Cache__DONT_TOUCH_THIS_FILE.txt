@@ -1,6 +1,6 @@
 CacheManager is running!
-2 lena-color.bmp rotate.bmp 31/07/20 15:35
-3 lena-color.bmp convert.bmp 31/07/20 15:35
-1 matrix1.txt matrix2.txt stdout 31/07/20 15:35
-0 matrix1.txt matrix2.txt stdout 31/07/20 15:35
-4 matrix1.txt stdout 31/07/20 15:35
+2 1165159260,31/07/20 16:30
+3 2261352183,31/07/20 16:30
+1 3435008045 3224253458,31/07/20 16:30
+0 3435008045 3224253458,31/07/20 16:30
+4 3435008045,31/07/20 16:30

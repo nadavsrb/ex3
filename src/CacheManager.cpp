@@ -87,19 +87,17 @@ string CacheManager::search(const shared_ptr<CacheOperation>& operation) {
     // checks if every begining of a line is similar to the CacheString of the operation
     // if it finds the similar one it will return something to print
     string line, operationLine = operation->getCacheString();
-    //deleting the time & date & \n form operation (because of the \n there is +1).
-    operationLine.erase(operationLine.length() - CurrentTime::TIME_STRING_LENGTH - 1, CurrentTime::TIME_STRING_LENGTH + 1);
     unsigned int i;
     getline(cacheFile, line); //the title
     while (getline(cacheFile, line)) {
-        for (i = 0 ; i < line.size() && i < operationLine.size(); ++i) {
+        for (i = 0 ; i < line.size() && i < operationLine.size() && line[i] != ','; ++i) {
             if (line[i] != operationLine[i]) {
                 break;
             }
         }
         // all checks completed
-        if (i == operationLine.size()) {
-            return "result found in cache – saved on " + line.substr(i);
+        if (line.at(i) == ',') {
+            return "result found in cache – saved on " + line.substr(i + 1, CurrentTime::TIME_STRING_LENGTH);
         }
     }
 

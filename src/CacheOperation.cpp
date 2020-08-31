@@ -94,16 +94,13 @@ CacheOperation::CacheOperation(const int argc, const char *argv[]) {
         //adding the input files path
         for (vector<string>::iterator it = _inputFilesPath.begin(); it < _inputFilesPath.end(); ++it) {
             _cacheString += " ";
-            _cacheString += *it;
+            _cacheString += std::to_string(crc32(*it));
         }
 
-        //adding the output file path
-        _cacheString += " ";
-        _cacheString += _outputFilePath;
     }
 
     //adding the time & date
-    _cacheString += " ";
+    _cacheString += ",";
     CurrentTime ct = CurrentTime();
     _cacheString += ct.getTime();
 
