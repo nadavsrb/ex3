@@ -28,7 +28,7 @@ typedef enum {
 
 class CacheOperation {
 public:
-    CacheOperation(const int argc, const char *argv[]);
+    CacheOperation(const int argc, const char *argv[], bool isSearched = false);
 
     bool isClear() const;
     bool isSearch() const;

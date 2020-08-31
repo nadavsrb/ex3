@@ -12,13 +12,18 @@ string copyToString(const char *charArray) {
     return str;
 }
 
-CacheOperation::CacheOperation(const int argc, const char *argv[]) {
+CacheOperation::CacheOperation(const int argc, const char *argv[], bool isSearched = false) {
+    int argsExpected = argc;
+    if (isSearched) {
+        argsExpected++;
+    }
+
     if (argc < 1) {
         cerr << "Invalid input! Too few arguments." << endl;
     } else if (argc == 1) {
         throw NUMBER_OF_ARGUMENTS_ERROR;
     } else if (strcmp(argv[0], "matrix") == 0) {
-        if (argc != 5) {
+        if (argsExpected != 5) {
             throw NUMBER_OF_ARGUMENTS_ERROR;
         }
 
@@ -34,9 +39,12 @@ CacheOperation::CacheOperation(const int argc, const char *argv[]) {
         //saves the data from the command
         _inputFilesPath.push_back(copyToString(argv[2]));
         _inputFilesPath.push_back(copyToString(argv[3]));
-        _outputFilePath = copyToString(argv[4]);
+
+        if (!isSearched) {
+            _outputFilePath = copyToString(argv[4]);
+        }
     } else if (strcmp(argv[0], "image") == 0) {
-        if (argc != 4) {
+        if (argsExpected != 4) {
             throw NUMBER_OF_ARGUMENTS_ERROR;
         }
         
@@ -51,9 +59,12 @@ CacheOperation::CacheOperation(const int argc, const char *argv[]) {
 
         //saves the data from the command
         _inputFilesPath.push_back(copyToString(argv[2]));
-        _outputFilePath = copyToString(argv[3]);
+
+        if (!isSearched) {
+            _outputFilePath = copyToString(argv[3]);
+        }
     } else if (strcmp(argv[0], "hash") == 0) {
-        if (argc != 4) {
+        if (argsExpected != 4) {
             throw NUMBER_OF_ARGUMENTS_ERROR;
         }
         
@@ -66,13 +77,16 @@ CacheOperation::CacheOperation(const int argc, const char *argv[]) {
 
         //saves the data from the command
         _inputFilesPath.push_back(copyToString(argv[2]));
-        _outputFilePath = copyToString(argv[3]);
+
+        if (!isSearched) {
+            _outputFilePath = copyToString(argv[3]);
+        }
 
     } else if (strcmp(argv[0], "cache") == 0) {
         if (strcmp(argv[1], "search") == 0) {
             _cacheCode = SEARCH;
-            _itemSearched = make_shared<CacheOperation>(argc - 2, &argv[2]);
-        }else if (strcmp(argv[1], "clear") == 0) {
+            _itemSearched = make_shared<CacheOperation>(argc - 2, &argv[2], true);
+        } else if (strcmp(argv[1], "clear") == 0) {
             _cacheCode = CLEAR;
         } else {
             throw UNKNOWN_COMMAND;
@@ -91,19 +105,18 @@ CacheOperation::CacheOperation(const int argc, const char *argv[]) {
          _cacheString.erase(_cacheString.length() - CurrentTime::TIME_STRING_LENGTH - 2, CurrentTime::TIME_STRING_LENGTH + 2);
     } else if (_cacheCode != CLEAR) {
         //adding the input files path
-        if(_cacheCode == MATRIX_MULT || _cacheCode == MATRIX_ADD) {
+        if (_cacheCode == MATRIX_MULT || _cacheCode == MATRIX_ADD) {
             for (vector<string>::iterator it = _inputFilesPath.begin(); it < _inputFilesPath.end(); ++it) {
                 _cacheString += " ";
                 MatrixClass matrix(*it);
                 _cacheString += std::to_string(crc32FromString(matrix.toString())); //don't see " "
             }
-        }else {
+        } else {
             for (vector<string>::iterator it = _inputFilesPath.begin(); it < _inputFilesPath.end(); ++it) {
                 _cacheString += " ";
                 _cacheString += std::to_string(crc32(*it));
             }
         }
-
     }
 
     //adding the time & date
