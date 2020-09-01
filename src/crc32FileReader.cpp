@@ -7,13 +7,10 @@ using namespace std;
 uint32_t crc32(const string& filePath) {
     string s = readFileContent(filePath);
 
-    //for making the windows text file like linux txt file
-    s.erase(std::remove(s.begin(), s.end(), '\r'), s.end());
-
     return crc32FromString(s);
 }
 
-uint32_t crc32FromString(const string& file) {
+uint32_t crc32FromString(string file) {
     //because of /0
     unsigned int length = file.length() + 1;
 

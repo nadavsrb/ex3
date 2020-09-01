@@ -1,2 +1,0 @@
-Cache Manager is running!
-2 2261352183,01/09/20 19:59|0

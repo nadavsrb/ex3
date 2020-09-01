@@ -1,13 +1,28 @@
 #include "CacheOperation.hpp"
 #include <iostream>
+#include "crc32FileReader.hpp"
 
 using namespace std;
 int main() {
-    int length = 5;
-    const char* argv[] = {"matrix", "multiply","matrix1.txt","matrix2.txt","mult_result.txt"};
-
-    CacheOperation co = CacheOperation(length, argv);
-
-    co.writeToOutputFile();
+    cout<<crc32("lena-color.bmp")<<endl;
+    cout<<crc32("lena-color.bmp")<<endl;
+    cout<<crc32("lena-color.bmp")<<endl;
+    cout<<crc32("lena-color.bmp")<<endl;
+    cout<<crc32("lena-color.bmp")<<endl;
+    cout<<crc32("lena-color.bmp")<<endl;
+    cout<<crc32("lena-color.bmp")<<endl;
+    cout<<crc32("lena-color.bmp")<<endl;
+    cout<<crc32("lena-color.bmp")<<endl;
+    cout<<crc32("lena-color.bmp")<<endl;
+    cout<<crc32("lena-color.bmp")<<endl;
+    cout<<crc32("lena-color.bmp")<<endl;
+    cout<<crc32("lena-color.bmp")<<endl;
+    cout<<crc32("lena-color.bmp")<<endl;
+    cout<<crc32("lena-color.bmp")<<endl;
+    cout<<crc32("lena-color.bmp")<<endl;
+    cout<<crc32("lena-color.bmp")<<endl;
+    cout<<crc32("lena-color.bmp")<<endl;
+    cout<<crc32("lena-color.bmp")<<endl;
+    cout<<crc32("lena-color.bmp")<<endl;
     return 0;
 }
