@@ -1,0 +1,87 @@
+[
+{
+  "directory": "/home/tseela/AP1/ex3/build",
+  "command": "/bin/g++-9   -I/home/tseela/AP1/ex3 -I/home/tseela/AP1/ex3/lib -I/home/tseela/AP1/ex3/src  -g   -Wall -Wextra -pedantic -Werror -Wnon-virtual-dtor -Wshadow -std=gnu++17 -o CMakeFiles/ex3.out.dir/tester2.cpp.o -c /home/tseela/AP1/ex3/tester2.cpp",
+  "file": "/home/tseela/AP1/ex3/tester2.cpp"
+},
+{
+  "directory": "/home/tseela/AP1/ex3/build",
+  "command": "/bin/g++-9   -I/home/tseela/AP1/ex3 -I/home/tseela/AP1/ex3/lib -I/home/tseela/AP1/ex3/src  -g   -Wall -Wextra -pedantic -Werror -Wnon-virtual-dtor -Wshadow -std=gnu++17 -o CMakeFiles/ex3.out.dir/src/BMArrayParserToMatrixes.cpp.o -c /home/tseela/AP1/ex3/src/BMArrayParserToMatrixes.cpp",
+  "file": "/home/tseela/AP1/ex3/src/BMArrayParserToMatrixes.cpp"
+},
+{
+  "directory": "/home/tseela/AP1/ex3/build",
+  "command": "/bin/g++-9   -I/home/tseela/AP1/ex3 -I/home/tseela/AP1/ex3/lib -I/home/tseela/AP1/ex3/src  -g   -Wall -Wextra -pedantic -Werror -Wnon-virtual-dtor -Wshadow -std=gnu++17 -o CMakeFiles/ex3.out.dir/src/BMArrayWithColorPattle.cpp.o -c /home/tseela/AP1/ex3/src/BMArrayWithColorPattle.cpp",
+  "file": "/home/tseela/AP1/ex3/src/BMArrayWithColorPattle.cpp"
+},
+{
+  "directory": "/home/tseela/AP1/ex3/build",
+  "command": "/bin/g++-9   -I/home/tseela/AP1/ex3 -I/home/tseela/AP1/ex3/lib -I/home/tseela/AP1/ex3/src  -g   -Wall -Wextra -pedantic -Werror -Wnon-virtual-dtor -Wshadow -std=gnu++17 -o CMakeFiles/ex3.out.dir/src/BMPHeaderParser.cpp.o -c /home/tseela/AP1/ex3/src/BMPHeaderParser.cpp",
+  "file": "/home/tseela/AP1/ex3/src/BMPHeaderParser.cpp"
+},
+{
+  "directory": "/home/tseela/AP1/ex3/build",
+  "command": "/bin/g++-9   -I/home/tseela/AP1/ex3 -I/home/tseela/AP1/ex3/lib -I/home/tseela/AP1/ex3/src  -g   -Wall -Wextra -pedantic -Werror -Wnon-virtual-dtor -Wshadow -std=gnu++17 -o CMakeFiles/ex3.out.dir/src/BMPParser.cpp.o -c /home/tseela/AP1/ex3/src/BMPParser.cpp",
+  "file": "/home/tseela/AP1/ex3/src/BMPParser.cpp"
+},
+{
+  "directory": "/home/tseela/AP1/ex3/build",
+  "command": "/bin/g++-9   -I/home/tseela/AP1/ex3 -I/home/tseela/AP1/ex3/lib -I/home/tseela/AP1/ex3/src  -g   -Wall -Wextra -pedantic -Werror -Wnon-virtual-dtor -Wshadow -std=gnu++17 -o CMakeFiles/ex3.out.dir/src/CacheManager.cpp.o -c /home/tseela/AP1/ex3/src/CacheManager.cpp",
+  "file": "/home/tseela/AP1/ex3/src/CacheManager.cpp"
+},
+{
+  "directory": "/home/tseela/AP1/ex3/build",
+  "command": "/bin/g++-9   -I/home/tseela/AP1/ex3 -I/home/tseela/AP1/ex3/lib -I/home/tseela/AP1/ex3/src  -g   -Wall -Wextra -pedantic -Werror -Wnon-virtual-dtor -Wshadow -std=gnu++17 -o CMakeFiles/ex3.out.dir/src/CacheOperation.cpp.o -c /home/tseela/AP1/ex3/src/CacheOperation.cpp",
+  "file": "/home/tseela/AP1/ex3/src/CacheOperation.cpp"
+},
+{
+  "directory": "/home/tseela/AP1/ex3/build",
+  "command": "/bin/g++-9   -I/home/tseela/AP1/ex3 -I/home/tseela/AP1/ex3/lib -I/home/tseela/AP1/ex3/src  -g   -Wall -Wextra -pedantic -Werror -Wnon-virtual-dtor -Wshadow -std=gnu++17 -o CMakeFiles/ex3.out.dir/src/Color.cpp.o -c /home/tseela/AP1/ex3/src/Color.cpp",
+  "file": "/home/tseela/AP1/ex3/src/Color.cpp"
+},
+{
+  "directory": "/home/tseela/AP1/ex3/build",
+  "command": "/bin/g++-9   -I/home/tseela/AP1/ex3 -I/home/tseela/AP1/ex3/lib -I/home/tseela/AP1/ex3/src  -g   -Wall -Wextra -pedantic -Werror -Wnon-virtual-dtor -Wshadow -std=gnu++17 -o CMakeFiles/ex3.out.dir/src/ColorTableParser.cpp.o -c /home/tseela/AP1/ex3/src/ColorTableParser.cpp",
+  "file": "/home/tseela/AP1/ex3/src/ColorTableParser.cpp"
+},
+{
+  "directory": "/home/tseela/AP1/ex3/build",
+  "command": "/bin/g++-9   -I/home/tseela/AP1/ex3 -I/home/tseela/AP1/ex3/lib -I/home/tseela/AP1/ex3/src  -g   -Wall -Wextra -pedantic -Werror -Wnon-virtual-dtor -Wshadow -std=gnu++17 -o CMakeFiles/ex3.out.dir/src/CurrentTime.cpp.o -c /home/tseela/AP1/ex3/src/CurrentTime.cpp",
+  "file": "/home/tseela/AP1/ex3/src/CurrentTime.cpp"
+},
+{
+  "directory": "/home/tseela/AP1/ex3/build",
+  "command": "/bin/g++-9   -I/home/tseela/AP1/ex3 -I/home/tseela/AP1/ex3/lib -I/home/tseela/AP1/ex3/src  -g   -Wall -Wextra -pedantic -Werror -Wnon-virtual-dtor -Wshadow -std=gnu++17 -o CMakeFiles/ex3.out.dir/src/DIBHeaderParser.cpp.o -c /home/tseela/AP1/ex3/src/DIBHeaderParser.cpp",
+  "file": "/home/tseela/AP1/ex3/src/DIBHeaderParser.cpp"
+},
+{
+  "directory": "/home/tseela/AP1/ex3/build",
+  "command": "/bin/g++-9   -I/home/tseela/AP1/ex3 -I/home/tseela/AP1/ex3/lib -I/home/tseela/AP1/ex3/src  -g   -Wall -Wextra -pedantic -Werror -Wnon-virtual-dtor -Wshadow -std=gnu++17 -o CMakeFiles/ex3.out.dir/src/ErrorCodeException.cpp.o -c /home/tseela/AP1/ex3/src/ErrorCodeException.cpp",
+  "file": "/home/tseela/AP1/ex3/src/ErrorCodeException.cpp"
+},
+{
+  "directory": "/home/tseela/AP1/ex3/build",
+  "command": "/bin/g++-9   -I/home/tseela/AP1/ex3 -I/home/tseela/AP1/ex3/lib -I/home/tseela/AP1/ex3/src  -g   -Wall -Wextra -pedantic -Werror -Wnon-virtual-dtor -Wshadow -std=gnu++17 -o CMakeFiles/ex3.out.dir/src/MatrixClass.cpp.o -c /home/tseela/AP1/ex3/src/MatrixClass.cpp",
+  "file": "/home/tseela/AP1/ex3/src/MatrixClass.cpp"
+},
+{
+  "directory": "/home/tseela/AP1/ex3/build",
+  "command": "/bin/g++-9   -I/home/tseela/AP1/ex3 -I/home/tseela/AP1/ex3/lib -I/home/tseela/AP1/ex3/src  -g   -Wall -Wextra -pedantic -Werror -Wnon-virtual-dtor -Wshadow -std=gnu++17 -o CMakeFiles/ex3.out.dir/src/bmp_tester.cpp.o -c /home/tseela/AP1/ex3/src/bmp_tester.cpp",
+  "file": "/home/tseela/AP1/ex3/src/bmp_tester.cpp"
+},
+{
+  "directory": "/home/tseela/AP1/ex3/build",
+  "command": "/bin/g++-9   -I/home/tseela/AP1/ex3 -I/home/tseela/AP1/ex3/lib -I/home/tseela/AP1/ex3/src  -g   -Wall -Wextra -pedantic -Werror -Wnon-virtual-dtor -Wshadow -std=gnu++17 -o CMakeFiles/ex3.out.dir/src/crc32.cpp.o -c /home/tseela/AP1/ex3/src/crc32.cpp",
+  "file": "/home/tseela/AP1/ex3/src/crc32.cpp"
+},
+{
+  "directory": "/home/tseela/AP1/ex3/build",
+  "command": "/bin/g++-9   -I/home/tseela/AP1/ex3 -I/home/tseela/AP1/ex3/lib -I/home/tseela/AP1/ex3/src  -g   -Wall -Wextra -pedantic -Werror -Wnon-virtual-dtor -Wshadow -std=gnu++17 -o CMakeFiles/ex3.out.dir/src/crc32FileReader.cpp.o -c /home/tseela/AP1/ex3/src/crc32FileReader.cpp",
+  "file": "/home/tseela/AP1/ex3/src/crc32FileReader.cpp"
+},
+{
+  "directory": "/home/tseela/AP1/ex3/build",
+  "command": "/bin/g++-9   -I/home/tseela/AP1/ex3 -I/home/tseela/AP1/ex3/lib -I/home/tseela/AP1/ex3/src  -g   -Wall -Wextra -pedantic -Werror -Wnon-virtual-dtor -Wshadow -std=gnu++17 -o CMakeFiles/ex3.out.dir/src/file_reading.cpp.o -c /home/tseela/AP1/ex3/src/file_reading.cpp",
+  "file": "/home/tseela/AP1/ex3/src/file_reading.cpp"
+}
+]
