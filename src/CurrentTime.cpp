@@ -19,7 +19,7 @@ CurrentTime::CurrentTime(){
 
    _time += getString(ltm->tm_mday);
    _time += "/";
-   _time += getString(ltm->tm_mon);
+   _time += getString(ltm->tm_mon + 1);
    _time += "/";
    _time += std::to_string(ltm->tm_year).substr(1, 2); //the year is from 1900
    _time += " ";

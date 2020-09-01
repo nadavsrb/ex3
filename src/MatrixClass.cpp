@@ -302,10 +302,9 @@
     string MatrixClass::toString() const{
         //var to use
         uint32_t height = getHeight();
-        uint32_t width = getHeight();
+        uint32_t width = getWidth();
 
         string s = "";
-
         for(uint32_t row = 0; row < height; ++row) {
             for(uint32_t col = 0; col < width - 1; ++col) { //to all the middle values.
                 s+= std::to_string((*this)(row, col)) + ",";
@@ -318,7 +317,6 @@
             s += "\n";
         }
         }
-
         return s;
     }
 
@@ -326,7 +324,7 @@
     std::ostream& operator<<(std::ostream& stream, const MatrixClass& matrix){
         //var to use
         uint32_t height = matrix.getHeight();
-        uint32_t width = matrix.getHeight();
+        uint32_t width = matrix.getWidth();
 
         for(uint32_t row = 0; row < height; ++row) {
             for(uint32_t col = 0; col < width - 1; ++col) { //to all the middle values.

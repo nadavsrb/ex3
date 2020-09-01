@@ -8,7 +8,7 @@
   }
 
   void ErrorCodeException::printErrorMessage() const{
-		cout<<error_getErrorMessage(_errorCode)<<endl; 
+		cerr<<error_getErrorMessage(_errorCode)<<endl; 
 	}
 
   void ErrorCodeException::throwErrorIfNeeded(ErrorCode er){

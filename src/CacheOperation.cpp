@@ -37,9 +37,11 @@ CacheOperation::CacheOperation(const int argc, const char *argv[], bool isSearch
         //saves the data from the command
         _inputFilesPath.push_back(copyToString(argv[2]));
         _inputFilesPath.push_back(copyToString(argv[3]));
-
         if (!isSearched) {
             _outputFilePath = copyToString(argv[4]);
+            if(_outputFilePath.find('.') == std::string::npos && _outputFilePath.compare("stdout") != 0) {
+                throw runtime_error("Output file must be with type: name + . + type or stdout");
+            }
         }
     } else if (strcmp(argv[0], "image") == 0) {
         if (argsExpected != 4) {
@@ -60,6 +62,9 @@ CacheOperation::CacheOperation(const int argc, const char *argv[], bool isSearch
 
         if (!isSearched) {
             _outputFilePath = copyToString(argv[3]);
+            if(_outputFilePath.find('.') == std::string::npos) {
+                throw runtime_error("Output file must be with type: name + . + type");
+            }
         }
     } else if (strcmp(argv[0], "hash") == 0) {
         if (argsExpected != 4) {
@@ -75,9 +80,11 @@ CacheOperation::CacheOperation(const int argc, const char *argv[], bool isSearch
 
         //saves the data from the command
         _inputFilesPath.push_back(copyToString(argv[2]));
-
         if (!isSearched) {
             _outputFilePath = copyToString(argv[3]);
+            if(_outputFilePath.find('.') == std::string::npos && _outputFilePath.compare("stdout") != 0) {
+                throw runtime_error("Output file must be with type: name + . + type or stdout");
+            }
         }
 
     } else if (strcmp(argv[0], "cache") == 0) {
@@ -92,7 +99,6 @@ CacheOperation::CacheOperation(const int argc, const char *argv[], bool isSearch
     } else {
         throw UNKNOWN_COMMAND;
     }
-
 
     //adding the method
     _cacheString += std::to_string(_cacheCode);

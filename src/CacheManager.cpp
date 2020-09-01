@@ -96,20 +96,20 @@ void CacheManager::performOperation(int argc, const char *argv[]) {
 
     // performs the operation
     auto operation = make_unique<CacheOperation>(argc, argv);
-
-    if (search(*operation).compare("")) {
+    string result = search(*operation);
+    if (result.compare("") != 0) {
         // first we will find the cache file that suits to the operation and copy it to our destination file
-        string result = search(*operation), replace, fileName;
-        replace = result.substr(0, result.find_last_of('|') - 1);
-        unsigned int index = stoi(result.substr(result.find_last_of('|') + 1, result.size() - 1));
+        string replace, fileName;
+        replace = result.substr(0, result.find_last_of('|'));
+        unsigned int index = stoi(result.substr(result.find_last_of('|') + 1));
         fileName = CACHE_FILES_DIR_ + to_string(index) + '.' + operation->getOutputFileType();
 
         operation->writeToOutputFile(readFileContent(fileName));
 
         // changing the time & date
-        replace.erase(replace.find_first_of(',') + 1, replace.size() - 1);
+        replace.erase(replace.find_first_of(',') + 1);
         CurrentTime ct = CurrentTime();
-        replace += ct.getTime() + '|' + to_string(index);
+        replace += ct.getTime() + '|' + std::to_string(index);
 
         // replace the date (the whole line) in the cache file
         string cache = readFileContent(CACHE_FILE);
@@ -125,7 +125,6 @@ void CacheManager::performOperation(int argc, const char *argv[]) {
         }
         return;
     }
-
     operation->writeToOutputFile();
 
     // writes the operation line into the cache file
