@@ -39,8 +39,8 @@ CacheOperation::CacheOperation(const int argc, const char *argv[], bool isSearch
         _inputFilesPath.push_back(copyToString(argv[3]));
         if (!isSearched) {
             _outputFilePath = copyToString(argv[4]);
-            if(_outputFilePath.find('.') == std::string::npos && _outputFilePath.compare("stdout") != 0) {
-                throw runtime_error("Output file must be with type: name + . + type or stdout");
+            if(_outputFilePath.find(".txt") == std::string::npos && _outputFilePath.compare("stdout") != 0) {
+                throw runtime_error("Output file for matrix must be with type: name + .txt or stdout");
             }
         }
     } else if (strcmp(argv[0], "image") == 0) {
@@ -62,8 +62,8 @@ CacheOperation::CacheOperation(const int argc, const char *argv[], bool isSearch
 
         if (!isSearched) {
             _outputFilePath = copyToString(argv[3]);
-            if(_outputFilePath.find('.') == std::string::npos) {
-                throw runtime_error("Output file must be with type: name + . + type");
+            if(_outputFilePath.find(".bmp") == std::string::npos) {
+                throw runtime_error("Output file of image must be with type: name + .bmp");
             }
         }
     } else if (strcmp(argv[0], "hash") == 0) {
