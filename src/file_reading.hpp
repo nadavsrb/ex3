@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iterator>
 #include <string>
+#include <system_error>
 
 std::string readFileContent(const std::string& filePath);
 

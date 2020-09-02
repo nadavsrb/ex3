@@ -13,7 +13,7 @@ std::string readFileContent(const std::string& filePath) {
   // The file is in a bad state. The error can be retrieved
   //	using the global `errno` in linux (#include <cerrno>).
   if (!in) {
-    // Error here...
+    throw std::runtime_error("File does not exists.");
   }
 
   // Read the file to a vector. This is not the most effecient
@@ -24,7 +24,7 @@ std::string readFileContent(const std::string& filePath) {
   // After reading the file, it should meet EOF (end of file). If
   //  it did not, it means that an error occurred.
   if (!in.eof()) {
-    // Unlikly to happen error here...
+    throw std::system_error();
   }
   return content;
 }
@@ -43,11 +43,11 @@ void writeFileContent(const std::string& filePath, const std::string& content) {
 
   // The file is in a bad state.
   if (!out) {
-    // Error here...
+    throw std::runtime_error("File does not exists.");
   }
 
   out.write(content.data(), static_cast<std::streamsize>(content.length()));
   if (!out) {
-    // Unlikly to happen error here...
+    throw std::system_error();
   }
 }
