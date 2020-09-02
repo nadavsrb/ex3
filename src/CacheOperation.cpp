@@ -144,7 +144,7 @@ string CacheOperation::getOutputFileType() const {
     if(_outputFilePath == PRINT) {
         return "txt";
     }
-    return _outputFilePath.substr(_outputFilePath.find_last_of('.') + 1, _outputFilePath.size() - 1);
+    return _outputFilePath.substr(_outputFilePath.find_last_of('.') + 1);
 }
 
 
@@ -191,7 +191,7 @@ void CacheOperation::writeToFile(const string& fileName) const {
         }
     } else if (_cacheCode == SEARCH) {
         string search = CacheManager::search(*_itemSearched);
-        if(search == "") {
+        if (search == "") {
              cout << "result wasn't found in cache" << endl;
         } else {
             cout << "result found in cache – saved on " << search.substr(0, CurrentTime::TIME_STRING_LENGTH) << endl;
