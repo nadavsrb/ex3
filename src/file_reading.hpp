@@ -4,6 +4,7 @@
 #include <iterator>
 #include <string>
 #include <system_error>
+#include <errno.h>
 
 std::string readFileContent(const std::string& filePath);
 

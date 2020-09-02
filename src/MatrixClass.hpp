@@ -2,6 +2,7 @@
 #include "Matrix.h"
 #include "ErrorCodeException.hpp"
 
+#include <errno.h>
 #include <string>
 #include <cstdint>
 #include <fstream>
