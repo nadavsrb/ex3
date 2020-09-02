@@ -13,7 +13,7 @@ std::string readFileContent(const std::string& filePath) {
   // The file is in a bad state. The error can be retrieved
   //	using the global `errno` in linux (#include <cerrno>).
   if (!in) {
-    throw std::runtime_error("File does not exists.");
+    throw std::runtime_error("File does not exist.");
   }
 
   // Read the file to a vector. This is not the most effecient
@@ -43,7 +43,7 @@ void writeFileContent(const std::string& filePath, const std::string& content) {
 
   // The file is in a bad state.
   if (!out) {
-    throw std::runtime_error("File does not exists.");
+    throw std::runtime_error("File does not exist.");
   }
 
   out.write(content.data(), static_cast<std::streamsize>(content.length()));
