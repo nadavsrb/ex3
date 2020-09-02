@@ -24,6 +24,7 @@ std::string readFileContent(const std::string& filePath) {
   // After reading the file, it should meet EOF (end of file). If
   //  it did not, it means that an error occurred.
   if (in.eof()) {
+    in.close();
     throw std::system_error(errno, std::system_category());
   }
   return content;
@@ -48,6 +49,7 @@ void writeFileContent(const std::string& filePath, const std::string& content) {
 
   out.write(content.data(), static_cast<std::streamsize>(content.length()));
   if (!out) {
+    out.close();
     throw std::system_error(errno, std::system_category());
   }
 }
