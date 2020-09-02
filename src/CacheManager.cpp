@@ -74,8 +74,8 @@ void createBeckupFile(const CacheOperation& operation, unsigned int index) {
 uint32_t getCashFileIndex() {
     ifstream cacheFile;
     cacheFile.open(CACHE_FILE);
-    if (!cacheFile) {
-        throw std::system_error();
+    if (cacheFile.fail()) {
+        throw std::system_error(errno, system_category());
     }
 
     string line;
@@ -121,7 +121,7 @@ void CacheManager::performOperation(int argc, const char *argv[]) {
 
     if (operation->isClear()) {
         if (!std::filesystem::remove_all(CACHE_DIR)) {
-            throw system_error();
+            throw system_error(errno, system_category());
         }
         return;
     }
@@ -147,8 +147,8 @@ void CacheManager::performOperation(int argc, const char *argv[]) {
 string CacheManager::search(const CacheOperation& operation) {    
     ifstream cacheFile;
     cacheFile.open(CACHE_FILE);
-    if (!cacheFile) {
-        throw std::system_error();
+    if (cacheFile.fail()) {
+        throw std::system_error(errno, system_category());
     }
 
     // checks if every begining of a line is similar to the CacheString of the operation

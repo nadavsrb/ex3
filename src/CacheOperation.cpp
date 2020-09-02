@@ -16,9 +16,7 @@ CacheOperation::CacheOperation(const int argc, const char *argv[], bool isSearch
         argsExpected++;
     }
 
-    if (argc < 1) {
-        cerr << "Invalid input! Too few arguments." << endl;
-    } else if (argc == 1) {
+    if (argc <= 1) {
         throw NUMBER_OF_ARGUMENTS_ERROR;
     } else if (strcmp(argv[0], "matrix") == 0) {
         if (argsExpected != 5) {
