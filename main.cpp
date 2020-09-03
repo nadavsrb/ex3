@@ -5,8 +5,8 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-    try{
-        if(argc == 1) {
+    try {
+        if (argc == 1) {
             throw runtime_error("Error: must get arguments");
         }
         CacheManager::performOperation(argc - 1, (const char **)&argv[1]);
