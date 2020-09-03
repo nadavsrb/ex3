@@ -91,12 +91,10 @@ uint32_t getCashFileIndex() {
     return std::stoi(line.substr(line.find("|") + 1)) + 1;
 }
 
-void CacheManager::performOperation(int argc, const char *argv[]) {
+void CacheManager::performOperation(const CacheOperation& operation) {
     checkCacheFileExists();
 
-    // performs the operation
-    auto operation = make_unique<CacheOperation>(argc, argv);
-    string result = search(*operation);
+    string result = search(operation);
     if (result.compare("") != 0) {
         // first we will find the cache file that suits to the operation and copy it to our destination file
         string replace, fileName;
@@ -131,6 +129,10 @@ void CacheManager::performOperation(int argc, const char *argv[]) {
         cacheCopy += readFileContent(CACHE_FILE);
         cacheCopy.erase(0, CACHE_LINE_LENGTH);
         string cache = CACHE_LINE + operation->getCacheString();
+        //adding the time & date
+        cache += ",";
+        CurrentTime ct = CurrentTime();
+        cache += ct.getTime();
         unsigned int index = getCashFileIndex();
         cache += "|" + std::to_string(index);
         cache += "\n";//end of line
@@ -152,7 +154,6 @@ string CacheManager::search(const CacheOperation& operation) {
     // checks if every begining of a line is similar to the CacheString of the operation
     // if it finds the similar one it will return something to print
     string line, operationLine = operation.getCacheString();
-    unsigned int lastToCompare = operationLine.find(',');
     getline(cacheFile, line); //the title
     while (getline(cacheFile, line)) {
         if (line.substr(0, line.find(',')).compare(operationLine.substr(0, lastToCompare)) == 0) {
