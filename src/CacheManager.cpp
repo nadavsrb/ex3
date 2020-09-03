@@ -24,6 +24,10 @@
 
 using namespace std;
 
+CacheManager::CacheManager(Operation* op) {
+    _operation = op;
+}
+
 /**
  * @brief throws an error if the user added a file named like our cache file.
  * if the cache file does not exist the function creates a new one.
@@ -62,13 +66,13 @@ void checkCacheFileExists() {
     close(cachefd);
 }
 
-void createBeckupFile(Operation& operation, unsigned int index) {
-    string fileName = "src/bin/cache/files/" + std::to_string(index) + "." + operation.getOutputFileType();
+void createBeckupFile(const Operation& _operation, unsigned int index) {
+    string fileName = "src/bin/cache/files/" + std::to_string(index) + "." + _operation.getOutputFileType();
     const auto cachefd = open(fileName.c_str(), O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
     if (cachefd < 0) {
         throw system_error{errno, system_category()};
     }
-    operation.writeToFile(fileName);
+    _operation.writeToFile(fileName);
 }
 
 uint32_t getCashFileIndex() {
@@ -91,7 +95,7 @@ uint32_t getCashFileIndex() {
     return std::stoi(line.substr(line.find("|") + 1)) + 1;
 }
 
-void CacheManager::performOperation(Operation* operation, bool isSearched, bool isClear) {
+void CacheManager::performOperation(bool isSearched, bool isClear) {
     checkCacheFileExists();
 
     if (isClear) {
@@ -101,14 +105,14 @@ void CacheManager::performOperation(Operation* operation, bool isSearched, bool 
         return;
     }
 
-    string result = search(operation);
+    string result = search();
     if (result.compare("") != 0) {
         // first we will find the cache file that suits to the operation and copy it to our destination file
         string replace, fileName;
         unsigned int index = stoi(result.substr(result.find_last_of('|') + 1));
-        fileName = CACHE_FILES_DIR_ + to_string(index) + '.' + operation->getOutputFileType();
+        fileName = CACHE_FILES_DIR_ + to_string(index) + '.' + _operation->getOutputFileType();
 
-        operation->writeToOutputFile(readFileContent(fileName));
+        _operation->writeToOutputFile(readFileContent(fileName));
 
         // changing the time & date
         CurrentTime ct = CurrentTime();
@@ -122,14 +126,14 @@ void CacheManager::performOperation(Operation* operation, bool isSearched, bool 
         return;
     }
 
-    operation->writeToOutputFile();
+    _operation->writeToOutputFile();
 
     // writes the operation line into the cache file
     string cacheCopy = "";
     if (!isSearched) {
         cacheCopy += readFileContent(CACHE_FILE);
         cacheCopy.erase(0, CACHE_LINE_LENGTH);
-        string cache = CACHE_LINE + operation->getCacheString();
+        string cache = CACHE_LINE + _operation->getCacheString();
         //adding the time & date
         cache += ",";
         CurrentTime ct = CurrentTime();
@@ -141,9 +145,9 @@ void CacheManager::performOperation(Operation* operation, bool isSearched, bool 
 
         writeFileContent(CACHE_FILE, cache);
 
-        createBeckupFile(*operation, index);
+        createBeckupFile(*_operation, index);
     } else {
-        string search = CacheManager::search(operation);
+        string search = CacheManager::search();
         if (search == "") {
              cout << "result wasn't found in cache" << endl;
         } else {
@@ -152,7 +156,7 @@ void CacheManager::performOperation(Operation* operation, bool isSearched, bool 
     }
 }
 
-string CacheManager::search(Operation* operation) {    
+string CacheManager::search() {    
     ifstream cacheFile;
     cacheFile.open(CACHE_FILE);
     if (cacheFile.fail()) {
@@ -161,7 +165,7 @@ string CacheManager::search(Operation* operation) {
 
     // checks if every begining of a line is similar to the CacheString of the operation
     // if it finds the similar one it will return something to print
-    string line, operationLine = operation->getCacheString();
+    string line, operationLine = _operation->getCacheString();
     int lastToCompare = operationLine.find_last_of(',') - 1;
     getline(cacheFile, line); //the title
     while (getline(cacheFile, line)) {

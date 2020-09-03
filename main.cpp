@@ -56,7 +56,8 @@ int main(int argc, char *argv[]) {
         if (argc == 1) {
             throw runtime_error("Error: must get arguments");
         }
-        CacheManager::performOperation(operation, isSearch, isClear);
+        CacheManager cm = CacheManager(operation);
+        cm.performOperation(isSearch, isClear);
     } catch (const exception& e1) {
         cerr<<e1.what()<<endl;
     } catch (const ErrorCodeException& e2) {

@@ -1,10 +1,14 @@
 #pragma once
 
 #include "Operation.hpp"
+#include <string>
 
 using namespace std;
+class Operation;
+class CacheManager {
+public:
+    CacheManager(Operation* op);
 
-namespace CacheManager {
     /**
      * @brief Does an operation.
      * 
@@ -12,7 +16,7 @@ namespace CacheManager {
      * @param isSearched - is the operation is searched or not.
      * @param isClear - if the operation is clear or not.
      */
-    void performOperation(Operation* operation, bool isSearched, bool isClear);
+    void performOperation(bool isSearched, bool isClear);
 
     /**
      * @brief Search an operation in the cache.
@@ -20,5 +24,8 @@ namespace CacheManager {
      * @param operation
      * @return string 
      */
-    string search(Operation* operation);
-}
+    string search();
+
+private:
+    Operation* _operation;
+};

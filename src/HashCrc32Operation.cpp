@@ -35,6 +35,10 @@
         return "hash_crc32";
     }
 
+    string HashCrc32Operation::getCacheString() const {
+        return _cacheString;
+    }
+
     void HashCrc32Operation::writeToFile(const string& fileName) const {
         string result = "";
         result += std::to_string(crc32(_inputFilesPath.at(0)));
