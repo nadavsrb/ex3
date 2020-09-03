@@ -21,7 +21,10 @@ link_directories(${CMAKE_SOURCE_DIR})
 
 
 file(GLOB My_Source_Files src/*.cpp)
-add_executable(ex3.out main.cpp ${My_Source_Files})
+add_executable(ex3.out main.cpp src/file_reading.cpp src/MatrixClass.cpp src/ErrorCodeException.cpp 
+src/DIBHeaderParser.cpp src/CurrentTime.cpp src/crc32FileReader.cpp src/crc32.cpp src/ColorTableParser.cpp 
+src/Color.cpp src/CacheOperation.cpp src/CacheManager.cpp src/BMPParser.cpp src/BMPHeaderParser.cpp 
+src/bmp_tester.cpp src/BMArrayWithColorPattle.cpp src/BMArrayParserToMatrixes.cpp)
 set_target_properties(ex3.out PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../src/bin)
 target_link_libraries(ex3.out matrix)
 
