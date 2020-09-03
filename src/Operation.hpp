@@ -25,12 +25,13 @@ public:
     
     virtual string getOutputFileType() = 0;
     virtual string getCacheCode() = 0;
+    virtual string getNumOfArgs() = 0;
 
     virtual void writeToOutputFile() = 0; //if the methode isn't a cache methode
     virtual void writeToOutputFile(const string& content) = 0;
     virtual void writeToFile(const string& fileName) = 0;
 
-private:
+protected:
     string _cacheString = "";
     vector<string> _inputFilesPath;
     string _inputFilePath;

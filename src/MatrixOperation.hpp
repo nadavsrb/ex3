@@ -1,6 +1,6 @@
 #include "Operation.hpp"
 
-class MatrixOperation :: public Operation {
+class MatrixOperation : public Operation {
 public:
     MatrixOperation(const int argc, const char *argv[], bool isSearched = false);
     
