@@ -4,6 +4,7 @@
 #include "ImageRotateOperation.hpp"
 #include "MatrixֹMultOperation.hpp"
 #include "MatrixֹAddOperation.hpp"
+#include "HashCrc32Operation.hpp"
 #include "ErrorCodeException.hpp"
 #include <iostream>
 
@@ -14,7 +15,8 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
 
-    int startIndex = 0;
+    int startIndex = 1;
+    argc -= 1;
     if(argc < 2) {
         throw NUMBER_OF_ARGUMENTS_ERROR;
     }
@@ -34,28 +36,23 @@ int main(int argc, char *argv[]) {
         }
     }else if (strcmp(argv[startIndex],"matrix") == 0) {
         if (strcmp(argv[startIndex + 1],"multiply") == 0) {
-            operation =  new MatrixMultOperation(argc - 2,  (const char**) &argv[2], isSearch);
+            operation =  new MatrixMultOperation(argc - 2,  (const char**) &argv[startIndex + 2], isSearch);
         } else if (strcmp(argv[startIndex + 1],"add") == 0) {
-            operation =  new MatrixAddOperation(argc - 2, (const char**)  &argv[2], isSearch);
+            operation =  new MatrixAddOperation(argc - 2, (const char**)  &argv[startIndex + 2], isSearch);
         }
     } else if (strcmp(argv[startIndex],"hash") == 0) {
         if (strcmp(argv[startIndex + 1],"crc32") == 0) {
-            operation =  new MatrixAddOperation(argc - 2,(const char**)  &argv[2], isSearch);
+            operation =  new HashCrc32Operation(argc - 2,(const char**)  &argv[startIndex + 2], isSearch);
         }
     }else if(strcmp(argv[startIndex],"img") == 0) {
         if (strcmp(argv[startIndex + 1],"rotate") == 0) {
-            operation =  new ImageRotateOperation(argc - 2, (const char**) &argv[2], isSearch);
+            operation =  new ImageRotateOperation(argc - 2, (const char**) &argv[startIndex + 2], isSearch);
         } else if (strcmp(argv[startIndex + 1],"convert") == 0) {
-            operation =  new ImageConvertOperation(argc - 2, (const char**) &argv[2], isSearch);
+            operation =  new ImageConvertOperation(argc - 2, (const char**) &argv[startIndex + 2], isSearch);
         }
     } else {
         throw UNKNOWN_COMMAND;
     }
-
-
-        if (argc == 1) {
-            throw runtime_error("Error: must get arguments");
-        }
         CacheManager cm = CacheManager(operation);
         cm.performOperation(isSearch, isClear);
     } catch (const exception& e1) {

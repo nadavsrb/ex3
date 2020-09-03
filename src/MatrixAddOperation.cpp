@@ -24,6 +24,13 @@ MatrixAddOperation::MatrixAddOperation(const int argc, const char *argv[], bool 
             throw runtime_error("Matrix output file must be with type '.txt' or be 'stdout'.");
         }
     }
+
+    _cacheString = "matrix_add";
+    for (auto file: _inputFilesPath) {
+                _cacheString += " ";
+                MatrixClass matrix(file);
+                _cacheString += std::to_string(crc32FromString(matrix.toString())); //don't see " "
+    }
 }
 
 string MatrixAddOperation::getOutputFileType() const { return "txt"; }
@@ -31,7 +38,7 @@ string MatrixAddOperation::getOutputFileType() const { return "txt"; }
 string MatrixAddOperation::getCacheCode() const { return "matrix multiply"; }
 
 string MatrixAddOperation::getCacheString() const { 
-    return "matrix_add " + to_string(crc32(_inputFilesPath.at(0))) + " " + to_string(crc32(_inputFilesPath.at(1)));
+    return _cacheString;
 }
 
 void MatrixAddOperation::writeToFile(const string& fileName) const {

@@ -97,10 +97,19 @@ uint32_t getCashFileIndex() {
 
 void CacheManager::performOperation(bool isSearched, bool isClear) {
     checkCacheFileExists();
-
     if (isClear) {
         if (!std::filesystem::remove_all(CACHE_DIR)) {
             throw system_error(errno, system_category());
+        }
+        return;
+    }
+
+    if (isSearched) {
+        string search = this->search();
+        if (search == "") {
+             cout << "result wasn't found in cache" << endl;
+        } else {
+            cout << "result found in cache – saved on " << search.substr(0, CurrentTime::TIME_STRING_LENGTH) << endl;
         }
         return;
     }
@@ -146,13 +155,6 @@ void CacheManager::performOperation(bool isSearched, bool isClear) {
         writeFileContent(CACHE_FILE, cache);
 
         createBeckupFile(*_operation, index);
-    } else {
-        string search = CacheManager::search();
-        if (search == "") {
-             cout << "result wasn't found in cache" << endl;
-        } else {
-            cout << "result found in cache – saved on " << search.substr(0, CurrentTime::TIME_STRING_LENGTH) << endl;
-        }
     }
 }
 

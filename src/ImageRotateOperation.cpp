@@ -24,6 +24,8 @@ ImageRotateOperation::ImageRotateOperation(const int argc, const char *argv[], b
             throw runtime_error("Image files must be with type '.bmp'.");
         }
     }
+
+    _cacheString = "image_rotate " + to_string(crc32(_inputFilesPath.at(0)));
 }
 
 string ImageRotateOperation::getOutputFileType() const { return "bmp"; }
@@ -31,7 +33,8 @@ string ImageRotateOperation::getOutputFileType() const { return "bmp"; }
 string ImageRotateOperation::getCacheCode() const { return "image_rotate"; }
 
 string ImageRotateOperation::getCacheString() const { 
-    return "image_rotate " + to_string(crc32(_inputFilesPath.at(0)));
+    return _cacheString;
+;
 }
 
 void ImageRotateOperation::writeToFile(const string& fileName) const {

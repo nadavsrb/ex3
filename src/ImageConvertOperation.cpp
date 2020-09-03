@@ -24,6 +24,8 @@ ImageConvertOperation::ImageConvertOperation(const int argc, const char *argv[],
             throw runtime_error("Image files must be with type '.bmp'.");
         }
     }
+
+    _cacheString = "image_convert " + to_string(crc32(_inputFilesPath.at(0)));
 }
 
 string ImageConvertOperation::getOutputFileType() const { return "bmp"; }
@@ -31,7 +33,7 @@ string ImageConvertOperation::getOutputFileType() const { return "bmp"; }
 string ImageConvertOperation::getCacheCode() const { return "image_convert"; }
 
 string ImageConvertOperation::getCacheString() const { 
-    return "image_convert " + to_string(crc32(_inputFilesPath.at(0)));
+    return _cacheString;
 }
 
 void ImageConvertOperation::writeToFile(const string& fileName) const {

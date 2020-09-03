@@ -66,5 +66,5 @@ public:
 protected:
     string _cacheString = "";
     vector<string> _inputFilesPath;
-    string _outputFilePath;
+    string _outputFilePath = "";//no output file
 };
