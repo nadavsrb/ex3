@@ -1,9 +1,9 @@
 #include "Operation.hpp"
-#include "MatrixClass.hpp"
+#include "bmp_tester.hpp"
 
-class MatrixAddOperation : public Operation {
+class ImageRotateOperation : public Operation {
 public:
-    MatrixAddOperation(const int argc, const char *argv[], bool isSearched = false);
+    ImageRotateOperation(const int argc, const char *argv[], bool isSearched = false);
     
     string getOutputFileType() const;
     string getCacheCode() const;

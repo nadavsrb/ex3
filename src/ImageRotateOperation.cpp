@@ -1,6 +1,6 @@
-#include "MatrixֹAddOperation.hpp"
+#include "ImageRotateOperation.hpp"
 
-MatrixAddOperation::MatrixAddOperation(const int argc, const char *argv[], bool isSearched /*= false*/) {
+ImageRotateOperation::ImageRotateOperation(const int argc, const char *argv[], bool isSearched /*= false*/) {
     if (!typed(argv[2], "txt") || !typed(argv[3], "txt")) {
         throw runtime_error("Matrix input files must be with type '.txt'.");
     }
@@ -17,15 +17,15 @@ MatrixAddOperation::MatrixAddOperation(const int argc, const char *argv[], bool 
     }
 }
 
-string MatrixAddOperation::getOutputFileType() const { return "txt"; }
+string ImageRotateOperation::getOutputFileType() const { return "bmp"; }
 
-string MatrixAddOperation::getCacheCode() const { return "matrix multiply"; }
+string ImageRotateOperation::getCacheCode() const { return "image_rotate"; }
 
-string MatrixAddOperation::getCacheString() const { 
-    return "matrix_add " + to_string(crc32(_inputFilesPath.at(0))) + " " + to_string(crc32(_inputFilesPath.at(1)));
+string ImageRotateOperation::getCacheString() const { 
+    return "image_rotate " + to_string(crc32(_inputFilesPath.at(0)));
 }
 
-void MatrixAddOperation::writeToFile(const string& fileName) const {
+void ImageRotateOperation::writeToFile(const string& fileName) const {
     auto matrix1 = make_unique<MatrixClass>(_inputFilesPath.at(0));
     auto matrix2 = make_unique<MatrixClass>(_inputFilesPath.at(1));
 

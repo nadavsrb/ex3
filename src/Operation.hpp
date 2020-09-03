@@ -26,8 +26,8 @@ public:
     virtual string getCacheCode() = 0;
     virtual string getCacheString() = 0;
 
-    virtual void writeToOutputFile() = 0; //if the methode isn't a cache methode
-    virtual void writeToOutputFile(const string& content) = 0;
+    void writeToOutputFile() const; //if the methode isn't a cache methode
+    void writeToOutputFile(const string& content) const;
     virtual void writeToFile(const string& fileName) = 0;
 
 protected:

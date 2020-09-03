@@ -29,16 +29,6 @@ string MatrixMultOperation::getCacheString() const {
     return "matrix_multiply " + to_string(crc32(_inputFilesPath.at(0))) + " " + to_string(crc32(_inputFilesPath.at(1)));
 }
 
-void MatrixMultOperation::writeToOutputFile() const {writeToFile(_outputFilePath); }
-
-void MatrixMultOperation::writeToOutputFile(const string& content) const {
-    if (!_outputFilePath.compare(PRINT)) {
-        cout << content << endl;
-    } else {
-        writeFileContent(_outputFilePath, content);
-    }
-}
-
 void MatrixMultOperation::writeToFile(const string& fileName) const {
     auto matrix1 = make_unique<MatrixClass>(_inputFilesPath.at(0));
     auto matrix2 = make_unique<MatrixClass>(_inputFilesPath.at(1));

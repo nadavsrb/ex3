@@ -9,7 +9,5 @@ public:
     string getCacheCode() const;
     string getCacheString() const;
 
-    void writeToOutputFile() const; //if the methode isn't a cache methode
-    void writeToOutputFile(const string& content) const;
     void writeToFile(const string& fileName) const;
 };
