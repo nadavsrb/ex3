@@ -2,16 +2,19 @@
 
 using namespace std;
 
-    
-string copyToString(const char *charArray) {
-    string str = "";
-    for (unsigned int i = 0; charArray[i] != '\0'; ++i) {
-        str += charArray[i];
-    }
-
-    return str;
-}
-
-bool typed(const string& fileName, const string& type) {
-    return fileName.substr(fileName.find_last_of('.') + 1).compare(type) == 0;
-}
+/**
+ * @brief Copy a string from char* to std::string.
+ * 
+ * @param charArray - the string in char*.
+ * @return string 
+ */
+string copyToString(const char *charArray);
+/**
+ * @brief Checks if a file is typed "type".
+ * 
+ * @param fileName - the name if the file.
+ * @param type - the type we are checking.
+ * @return true 
+ * @return false 
+ */
+bool typed(const string& fileName, const string& type);

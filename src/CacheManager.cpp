@@ -91,7 +91,7 @@ uint32_t getCashFileIndex() {
     return std::stoi(line.substr(line.find("|") + 1)) + 1;
 }
 
-void CacheManager::performOperation(Operation*& operation, bool isSearched, bool isClear) {
+void CacheManager::performOperation(unique_ptr<Operation>& operation, bool isSearched, bool isClear) {
     checkCacheFileExists();
 
     if (isClear) {
@@ -152,7 +152,7 @@ void CacheManager::performOperation(Operation*& operation, bool isSearched, bool
     }
 }
 
-string CacheManager::search(Operation*& operation) {    
+string CacheManager::search(unique_ptr<Operation>& operation) {    
     ifstream cacheFile;
     cacheFile.open(CACHE_FILE);
     if (cacheFile.fail()) {

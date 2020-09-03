@@ -20,14 +20,47 @@ using namespace std;
 
 class Operation {
 public:
+    /**
+     * @brief Get the type of the output file.
+     * 
+     * @return string 
+     */
     virtual string getOutputFileType() = 0;
+    /**
+     * @brief Get the Cache Code of the object (what the user writes to do the action).
+     * 
+     * @return string 
+     */
     virtual string getCacheCode() = 0;
+    /**
+     * @brief Get the Cache String of the object (what we write on our cache file).
+     * 
+     * @return string 
+     */
     virtual string getCacheString() = 0;
 
-    void writeToOutputFile(); //if the methode isn't a cache methode
+    /**
+     * @brief Writes the result to the output file.
+     * 
+     */
+    void writeToOutputFile();
+    /**
+     * @brief Writes to the output file.
+     * 
+     * @param content - what it will write to the file.
+     */
     void writeToOutputFile(const string& content) const;
+    /**
+     * @brief Writes the result of the operation.
+     * 
+     * @param fileName - the name of the file we write to.
+     */
     virtual void writeToFile(const string& fileName) = 0;
 
+    /**
+     * @brief Destroy the Operation object.
+     * 
+     */
     virtual ~Operation() = default;
 
 protected:

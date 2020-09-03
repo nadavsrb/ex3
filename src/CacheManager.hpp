@@ -5,7 +5,7 @@
 using namespace std;
 
 namespace CacheManager {
-    void performOperation(Operation*& operation, bool isSearched, bool isClear);
+    void performOperation(unique_ptr<Operation>& operation, bool isSearched, bool isClear);
 
-    string search(Operation*& operation);
+    string search(unique_ptr<Operation>& operation);
 }
