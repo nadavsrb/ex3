@@ -20,9 +20,6 @@ using namespace std;
 
 class Operation {
 public:
-    virtual bool isClear() { return false; }
-    virtual bool isSearch() { return false; }
-    
     virtual string getOutputFileType() = 0;
     virtual string getCacheCode() = 0;
     virtual string getCacheString() = 0;

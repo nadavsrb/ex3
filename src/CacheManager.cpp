@@ -91,8 +91,15 @@ uint32_t getCashFileIndex() {
     return std::stoi(line.substr(line.find("|") + 1)) + 1;
 }
 
-void CacheManager::performOperation(Operation*& operation) {
+void CacheManager::performOperation(Operation*& operation, bool isSearched, bool isClear) {
     checkCacheFileExists();
+
+    if (isClear) {
+        if (!std::filesystem::remove_all(CACHE_DIR)) {
+            throw system_error(errno, system_category());
+        }
+        return;
+    }
 
     string result = search(operation);
     if (result.compare("") != 0) {
@@ -115,17 +122,11 @@ void CacheManager::performOperation(Operation*& operation) {
         return;
     }
 
-    if (operation->isClear()) {
-        if (!std::filesystem::remove_all(CACHE_DIR)) {
-            throw system_error(errno, system_category());
-        }
-        return;
-    }
     operation->writeToOutputFile();
 
     // writes the operation line into the cache file
     string cacheCopy = "";
-    if (!operation->isSearch()) {
+    if (!isSearched) {
         cacheCopy += readFileContent(CACHE_FILE);
         cacheCopy.erase(0, CACHE_LINE_LENGTH);
         string cache = CACHE_LINE + operation->getCacheString();
@@ -141,6 +142,13 @@ void CacheManager::performOperation(Operation*& operation) {
         writeFileContent(CACHE_FILE, cache);
 
         createBeckupFile(*operation, index);
+    } else {
+        string search = CacheManager::search(operation);
+        if (search == "") {
+             cout << "result wasn't found in cache" << endl;
+        } else {
+            cout << "result found in cache – saved on " << search.substr(0, CurrentTime::TIME_STRING_LENGTH) << endl;
+        }
     }
 }
 
