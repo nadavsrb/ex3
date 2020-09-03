@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Operation.hpp"
 #include "MatrixClass.hpp"
 

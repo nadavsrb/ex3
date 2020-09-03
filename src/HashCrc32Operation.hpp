@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Operation.hpp"
 
 class HashCrc32Operation : public Operation {

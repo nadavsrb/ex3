@@ -1,9 +1,11 @@
-#include "CacheOperation.hpp"
+#pragma once
+
+#include "Operation.hpp"
 
 using namespace std;
 
 namespace CacheManager {
-    void performOperation(int argc, const char *argv[]);
+    void performOperation(Operation*& operation);
 
-    string search(const CacheOperation& operation);
+    string search(Operation*& operation);
 }
