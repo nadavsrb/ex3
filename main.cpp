@@ -34,19 +34,19 @@ int main(int argc, char *argv[]) {
         }
     }else if (strcmp(argv[startIndex],"matrix") == 0) {
         if (strcmp(argv[startIndex + 1],"multiply") == 0) {
-            operation =  new MatrixMultOperation(argc - 2,  &argv[2], isSearch);
+            operation =  new MatrixMultOperation(argc - 2,  (const char**) &argv[2], isSearch);
         } else if (strcmp(argv[startIndex + 1],"add") == 0) {
-            operation =  new MatrixAddOperation(argc - 2,  &argv[2], isSearch);
+            operation =  new MatrixAddOperation(argc - 2, (const char**)  &argv[2], isSearch);
         }
     } else if (strcmp(argv[startIndex],"hash") == 0) {
         if (strcmp(argv[startIndex + 1],"crc32") == 0) {
-            operation =  new MatrixAddOperation(argc - 2,  &argv[2], isSearch);
+            operation =  new MatrixAddOperation(argc - 2,(const char**)  &argv[2], isSearch);
         }
     }else if(strcmp(argv[startIndex],"img") == 0) {
         if (strcmp(argv[startIndex + 1],"rotate") == 0) {
-            operation =  new ImageRotateOperation(argc - 2,  &argv[2], isSearch);
+            operation =  new ImageRotateOperation(argc - 2, (const char**) &argv[2], isSearch);
         } else if (strcmp(argv[startIndex + 1],"convert") == 0) {
-            operation =  new ImageConvertOperation(argc - 2,  &argv[2], isSearch);
+            operation =  new ImageConvertOperation(argc - 2, (const char**) &argv[2], isSearch);
         }
     } else {
         throw UNKNOWN_COMMAND;

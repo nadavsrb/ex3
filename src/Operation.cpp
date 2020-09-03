@@ -1,6 +1,6 @@
 #include "Operation.hpp"
 
-void Operation::writeToOutputFile() {
+void Operation::writeToOutputFile() const {
     writeToFile(_outputFilePath);
 }
 
