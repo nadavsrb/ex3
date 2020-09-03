@@ -12,7 +12,7 @@ namespace CacheManager {
      * @param isSearched - is the operation is searched or not.
      * @param isClear - if the operation is clear or not.
      */
-    void performOperation(unique_ptr<Operation>& operation, bool isSearched, bool isClear);
+    void performOperation(Operation* operation, bool isSearched, bool isClear);
 
     /**
      * @brief Search an operation in the cache.
@@ -20,5 +20,5 @@ namespace CacheManager {
      * @param operation
      * @return string 
      */
-    string search(unique_ptr<Operation>& operation);
+    string search(Operation* operation);
 }
