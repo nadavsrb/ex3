@@ -22,7 +22,7 @@ For each run of the program, we will be asked to do an operation. Each operation
 ## Cache file format
 Our cache file format is:
 
-**\<operation code> <result's hash code>,<date>|<cache backup file's name>**
+**\<operation code> <inputs's hash code>,<date>|<cache backup file's name>**
 - operation code - a number by the folowing struct:
 ```
 typedef enum {
@@ -35,11 +35,11 @@ typedef enum {
     SEARCH = 6
 } CacheOperationCode;
 ```
-- result's hash code - the crc32 hash of the result string
+- inputs's hash code - the crc32 hash of the input files (if there are more then one they will be divided by comma).
 - date
 - cache backup file's name - the names of the backup files are counting numbers (starting with 0) like `3.txt` or `99.bmp`.
 
-When searching an operation we will search it's code and hash. If we find it on the cache file we will copy the backup file's content to the operation's result file and update the line's date instead of adding the cache a new line and making the calculations again.
+When searching an operation we will search it's code and hash. If we find it on the cache file we will copy the backup file of the operation's result file and update the line's date instead of adding the cache a new line and making the calculations again.
 
 This way, the cache reduces the program's running time and its' complexity.
 
