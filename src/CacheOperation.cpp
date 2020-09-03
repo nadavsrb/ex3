@@ -37,7 +37,7 @@ CacheOperation::CacheOperation(const int argc, const char *argv[], bool isSearch
         }
 
         if (!typed(argv[2], "txt") || !typed(argv[3], "txt") || (!typed(argv[4], "txt") && !(copyToString(argv[4]).compare(PRINT) == 0))) {
-            throw runtime_error("Matrix files must be with type '.txt' or 'stdout'.");
+            throw runtime_error("Matrix files must be with type '.txt' or be 'stdout' (only in the output file).");
         }
         
         //saves the data from the command
