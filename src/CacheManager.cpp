@@ -100,16 +100,14 @@ void CacheManager::performOperation(int argc, const char *argv[]) {
     if (result.compare("") != 0) {
         // first we will find the cache file that suits to the operation and copy it to our destination file
         string replace, fileName;
-        replace = result.substr(0, result.find_last_of('|'));
         unsigned int index = stoi(result.substr(result.find_last_of('|') + 1));
         fileName = CACHE_FILES_DIR_ + to_string(index) + '.' + operation->getOutputFileType();
 
         operation->writeToOutputFile(readFileContent(fileName));
 
         // changing the time & date
-        replace.erase(replace.find_first_of(',') + 1);
         CurrentTime ct = CurrentTime();
-        replace += ct.getTime() + '|' + std::to_string(index);
+        replace = ct.getTime() + '|' + std::to_string(index);
 
         // replace the date (the whole line) in the cache file
         string cache = readFileContent(CACHE_FILE);
@@ -154,17 +152,11 @@ string CacheManager::search(const CacheOperation& operation) {
     // checks if every begining of a line is similar to the CacheString of the operation
     // if it finds the similar one it will return something to print
     string line, operationLine = operation.getCacheString();
-    unsigned int i;
+    unsigned int lastToCompare = operationLine.find(',');
     getline(cacheFile, line); //the title
     while (getline(cacheFile, line)) {
-        for (i = 0 ; i < line.size() && i < operationLine.size() && line[i] != ','; ++i) {
-            if (line[i] != operationLine[i]) {
-                break;
-            }
-        }
-        // all checks completed
-        if (line.at(i) == ',') {
-            return line.substr(i + 1);
+        if (line.substr(0, line.find(',')).compare(operationLine.substr(0, lastToCompare)) == 0) {
+            return line.substr(line.find(',') + 1);
         }
     }
 
