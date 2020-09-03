@@ -5,16 +5,31 @@ using namespace std;
 int main() {
     // testing matrix commands
     int length[] = {5, 5, 4, 4, 4};
-    const char* mult_argv[][5] = {
+    const char* argv[][5] = {
         {"matrix", "multiply", "matrix_mult1.txt", "matrix_mult2.txt", "stdout"}, 
         {"matrix", "add", "matrix_add1.txt", "matrix_add2.txt", "stdout"},
-        {"image", "convert", "image_convert.bmp", "stdout"},
-        {"image", "rotate", "image_rotate.bmp", "stdout"},
-        {"hash", "crc32", "crc.txt", "stdout"}};
-    for (unsigned int j = 0; j < 3; ++j) {
+        {"image", "convert", "image_convert.bmp", "result_convert.bmp"},
+        {"image", "rotate", "image_rotate.bmp", "result_rotate.bmp"},
+        {"hash", "crc32", "crc.txt", "stdout"}
+        };
+    const char* search[][6] = {
+        {"cache", "search", "matrix", "multiply", "matrix_mult1.txt", "matrix_mult2.txt"}, 
+        {"cache", "search", "matrix", "add", "matrix_add1.txt", "matrix_add2.txt"},
+        {"cache", "search", "image", "convert", "image_convert.bmp"},
+        {"cache", "search", "image", "rotate", "image_rotate.bmp"},
+        {"cache", "search", "hash", "crc32", "crc.txt"}
+        };
+    for (unsigned int j = 0; j < 2; ++j) {
         for (unsigned int i = 0; i < 5; ++i) {
             try {
-                CacheManager::performOperation(length[i], *(mult_argv + i));
+                CacheManager::performOperation(length[i], *(argv + i));
+            } catch (const exception& ec) {
+                cout << ec.what() << endl;
+            } catch (const ErrorCodeException& e2) {
+                e2.printErrorMessage();
+            }
+            try {
+                CacheManager::performOperation(length[i] + 1, *(search + i));
             } catch (const exception& ec) {
                 cout << ec.what() << endl;
             } catch (const ErrorCodeException& e2) {
