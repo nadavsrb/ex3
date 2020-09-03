@@ -27,7 +27,7 @@ public:
     virtual string getCacheCode() = 0;
     virtual string getCacheString() = 0;
 
-    void writeToOutputFile() const; //if the methode isn't a cache methode
+    void writeToOutputFile(); //if the methode isn't a cache methode
     void writeToOutputFile(const string& content) const;
     virtual void writeToFile(const string& fileName) = 0;
 
