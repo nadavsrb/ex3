@@ -99,9 +99,9 @@ void CacheManager::performOperation(const CacheOperation& operation) {
         // first we will find the cache file that suits to the operation and copy it to our destination file
         string replace, fileName;
         unsigned int index = stoi(result.substr(result.find_last_of('|') + 1));
-        fileName = CACHE_FILES_DIR_ + to_string(index) + '.' + operation->getOutputFileType();
+        fileName = CACHE_FILES_DIR_ + to_string(index) + '.' + operation.getOutputFileType();
 
-        operation->writeToOutputFile(readFileContent(fileName));
+        operation.writeToOutputFile(readFileContent(fileName));
 
         // changing the time & date
         CurrentTime ct = CurrentTime();
@@ -115,20 +115,20 @@ void CacheManager::performOperation(const CacheOperation& operation) {
         return;
     }
 
-    if (operation->isClear()) {
+    if (operation.isClear()) {
         if (!std::filesystem::remove_all(CACHE_DIR)) {
             throw system_error(errno, system_category());
         }
         return;
     }
-    operation->writeToOutputFile();
+    operation.writeToOutputFile();
 
     // writes the operation line into the cache file
     string cacheCopy = "";
-    if (!operation->isSearch()) {
+    if (!operation.isSearch()) {
         cacheCopy += readFileContent(CACHE_FILE);
         cacheCopy.erase(0, CACHE_LINE_LENGTH);
-        string cache = CACHE_LINE + operation->getCacheString();
+        string cache = CACHE_LINE + operation.getCacheString();
         //adding the time & date
         cache += ",";
         CurrentTime ct = CurrentTime();
@@ -140,7 +140,7 @@ void CacheManager::performOperation(const CacheOperation& operation) {
 
         writeFileContent(CACHE_FILE, cache);
 
-        createBeckupFile(*operation, index);
+        createBeckupFile(operation, index);
     }
 }
 
@@ -154,6 +154,7 @@ string CacheManager::search(const CacheOperation& operation) {
     // checks if every begining of a line is similar to the CacheString of the operation
     // if it finds the similar one it will return something to print
     string line, operationLine = operation.getCacheString();
+    int lastToCompare = operationLine.find_last_of(',') - 1;
     getline(cacheFile, line); //the title
     while (getline(cacheFile, line)) {
         if (line.substr(0, line.find(',')).compare(operationLine.substr(0, lastToCompare)) == 0) {

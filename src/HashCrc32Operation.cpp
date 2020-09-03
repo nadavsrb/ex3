@@ -1,6 +1,5 @@
 #include "HashCrc32Operation.hpp"
 
-
     HashCrc32Operation::HashCrc32Operation(const int argc, const char *argv[], bool isSearched /*= false*/) {
         int argsExpected = argc;
         if (isSearched) {
@@ -28,15 +27,15 @@
         }
     }
     
-    string HashCrc32Operation::getOutputFileType(){
+    string HashCrc32Operation::getOutputFileType() const {
         return "txt";
     }
 
-    string HashCrc32Operation::getCacheCode(){
+    string HashCrc32Operation::getCacheCode() const {
         return "hash_crc32";
     }
 
-    void HashCrc32Operation::writeToFile(const string& fileName) {
+    void HashCrc32Operation::writeToFile(const string& fileName) const {
         string result = "";
         result += std::to_string(crc32(_inputFilesPath.at(0)));
 
