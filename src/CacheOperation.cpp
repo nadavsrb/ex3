@@ -64,7 +64,7 @@ CacheOperation::CacheOperation(const int argc, const char *argv[], bool isSearch
             throw UNKNOWN_COMMAND;
         }
 
-        if (!typed(argv[2], "bmp") || !typed(argv[3], "bmp")) {
+        if (!typed(argv[2], "bmp")) {
             throw runtime_error("Image files must be with type '.bmp'.");
         }
 
@@ -72,7 +72,11 @@ CacheOperation::CacheOperation(const int argc, const char *argv[], bool isSearch
         _inputFilesPath.push_back(copyToString(argv[2]));
 
         if (!isSearched) {
-            _outputFilePath = copyToString(argv[3]);
+            if (typed(argv[3], "bmp")) {
+                _outputFilePath = copyToString(argv[3]);
+            } else {
+                throw runtime_error("Image files must be with type '.bmp'.");
+            }
         }
     } else if (strcmp(argv[0], "hash") == 0) {
         if (argsExpected != 4) {
