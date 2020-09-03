@@ -36,12 +36,13 @@
         return "hash_crc32";
     }
 
-    void HashCrc32Operation::writeToOutputFile() {
+    void HashCrc32Operation::writeToFile(const string& fileName) {
+        string result = "";
+        result += std::to_string(crc32(_inputFilesPath.at(0)));
 
+        if (fileName.compare(PRINT)  == 0) {
+            cout << result << endl;
+        } else {
+            writeFileContent(fileName, result);
+        }
     }
-
-    void HashCrc32Operation::writeToOutputFile(const string& content) {
-
-    }
-    
-    void HashCrc32Operation::writeToFile(const string& fileName);
