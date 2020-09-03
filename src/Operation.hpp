@@ -4,6 +4,7 @@
 #include "CurrentTime.hpp"
 #include "StringFunctions.hpp"
 #include "crc32FileReader.hpp"
+#include "file_reading.hpp"
 
 #include <string>
 #include <memory>
@@ -30,9 +31,10 @@ public:
     void writeToOutputFile(const string& content) const;
     virtual void writeToFile(const string& fileName) = 0;
 
+    virtual ~Operation() = default;
+
 protected:
     string _cacheString = "";
     vector<string> _inputFilesPath;
     string _outputFilePath;
-    int _OperationID = 0;
 };
