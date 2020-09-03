@@ -1,16 +1,25 @@
 #include "MatrixֹAddOperation.hpp"
 
 MatrixAddOperation::MatrixAddOperation(const int argc, const char *argv[], bool isSearched /*= false*/) {
-    if (!typed(argv[2], "txt") || !typed(argv[3], "txt")) {
+    int argsExpected = argc;
+    if (isSearched) {
+        argsExpected++;
+    }
+
+    if (argsExpected != 3) {
+        throw NUMBER_OF_ARGUMENTS_ERROR;
+    }
+
+    if (!typed(argv[0], "txt") || !typed(argv[1], "txt")) {
         throw runtime_error("Matrix input files must be with type '.txt'.");
     }
     
     //saves the data from the command
-    _inputFilesPath.push_back(copyToString(argv[2]));
-    _inputFilesPath.push_back(copyToString(argv[3]));
+    _inputFilesPath.push_back(copyToString(argv[0]));
+    _inputFilesPath.push_back(copyToString(argv[1]));
     if (!isSearched) {
-        if (typed(argv[4], "txt") || (copyToString(argv[4]).compare(PRINT) == 0)) {
-            _outputFilePath = copyToString(argv[4]);
+        if (typed(argv[2], "txt") || (copyToString(argv[2]).compare(PRINT) == 0)) {
+            _outputFilePath = copyToString(argv[2]);
         } else {
             throw runtime_error("Matrix output file must be with type '.txt' or be 'stdout'.");
         }

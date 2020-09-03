@@ -1,6 +1,6 @@
-#include "ImageRotateOperation.hpp"
+#include "ImageConvertOperation.hpp"
 
-ImageRotateOperation::ImageRotateOperation(const int argc, const char *argv[], bool isSearched /*= false*/) {
+ImageConvertOperation::ImageConvertOperation(const int argc, const char *argv[], bool isSearched /*= false*/) {
     int argsExpected = argc;
     if (isSearched) {
         argsExpected++;
@@ -26,14 +26,14 @@ ImageRotateOperation::ImageRotateOperation(const int argc, const char *argv[], b
     }
 }
 
-string ImageRotateOperation::getOutputFileType() const { return "bmp"; }
+string ImageConvertOperation::getOutputFileType() const { return "bmp"; }
 
-string ImageRotateOperation::getCacheCode() const { return "image_rotate"; }
+string ImageConvertOperation::getCacheCode() const { return "image_convert"; }
 
-string ImageRotateOperation::getCacheString() const { 
-    return "image_rotate " + to_string(crc32(_inputFilesPath.at(0)));
+string ImageConvertOperation::getCacheString() const { 
+    return "image_convert " + to_string(crc32(_inputFilesPath.at(0)));
 }
 
-void ImageRotateOperation::writeToFile(const string& fileName) const {
-    testing::bmp::rotate_image(_inputFilesPath.at(0), fileName);
+void ImageConvertOperation::writeToFile(const string& fileName) const {
+    testing::bmp::convert_to_grayscale(_inputFilesPath.at(0), fileName);
 }

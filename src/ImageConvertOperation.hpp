@@ -1,9 +1,9 @@
 #include "Operation.hpp"
 #include "bmp_tester.hpp"
 
-class MatrixMultOperation : public Operation {
+class ImageConvertOperation : public Operation {
 public:
-    MatrixMultOperation(const int argc, const char *argv[], bool isSearched = false);
+    ImageConvertOperation(const int argc, const char *argv[], bool isSearched = false);
     
     string getOutputFileType() const;
     string getCacheCode() const;

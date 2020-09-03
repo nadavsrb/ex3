@@ -1,7 +1,12 @@
 #include "MatrixֹMultOperation.hpp"
 
 MatrixMultOperation::MatrixMultOperation(const int argc, const char *argv[], bool isSearched /*= false*/) {
-    if (argc != 3) {
+    int argsExpected = argc;
+    if (isSearched) {
+        argsExpected++;
+    }
+
+    if (argsExpected != 3) {
         throw NUMBER_OF_ARGUMENTS_ERROR;
     }
 
