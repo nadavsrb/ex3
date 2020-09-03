@@ -36,15 +36,19 @@ CacheOperation::CacheOperation(const int argc, const char *argv[], bool isSearch
             throw UNKNOWN_COMMAND;
         }
 
-        if (!typed(argv[2], "txt") || !typed(argv[3], "txt") || (!typed(argv[4], "txt") && !(copyToString(argv[4]).compare(PRINT) == 0))) {
-            throw runtime_error("Matrix files must be with type '.txt' or be 'stdout' (only in the output file).");
+        if (!typed(argv[2], "txt") || !typed(argv[3], "txt")) {
+            throw runtime_error("Matrix input files must be with type '.txt'.");
         }
         
         //saves the data from the command
         _inputFilesPath.push_back(copyToString(argv[2]));
         _inputFilesPath.push_back(copyToString(argv[3]));
         if (!isSearched) {
-            _outputFilePath = copyToString(argv[4]);
+            if (typed(argv[4], "txt") || (copyToString(argv[4]).compare(PRINT) == 0)) {
+                _outputFilePath = copyToString(argv[4]);
+            } else {
+                throw runtime_error("Matrix output file must be with type '.txt' or be 'stdout'.");
+            }
         }
     } else if (strcmp(argv[0], "image") == 0) {
         if (argsExpected != 4) {
