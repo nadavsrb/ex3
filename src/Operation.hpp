@@ -2,6 +2,7 @@
 
 #include "CacheManager.hpp"
 #include "CurrentTime.hpp"
+#include "file_reading.hpp"
 
 #include <string>
 #include <memory>
@@ -18,21 +19,21 @@ using namespace std;
 
 class Operation {
 public:
-    Operation(const int argc, const char *argv[], bool isSearched = false) {}
-    
     virtual bool isClear() { return false; }
     virtual bool isSearch() { return false; }
     
     virtual string getOutputFileType() = 0;
     virtual string getCacheCode() = 0;
-    virtual string getNumOfArgs() = 0;
+    virtual string getCacheString() = 0;
 
-    virtual void writeToOutputFile() = 0; //if the methode isn't a cache methode
-    virtual void writeToOutputFile(const string& content) = 0;
+    void writeToOutputFile() const; //if the methode isn't a cache methode
+    void writeToOutputFile(const string& content) const;
     virtual void writeToFile(const string& fileName) = 0;
+
+    virtual ~Operation() = default;
 
 protected:
     string _cacheString = "";
     vector<string> _inputFilesPath;
-    string _inputFilePath;
+    string _outputFilePath;
 };
