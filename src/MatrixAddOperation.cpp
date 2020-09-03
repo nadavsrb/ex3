@@ -25,7 +25,7 @@ string MatrixAddOperation::getCacheString() const {
     return "matrix_add " + to_string(crc32(_inputFilesPath.at(0))) + " " + to_string(crc32(_inputFilesPath.at(1)));
 }
 
-void MatrixAddOperation::writeToOutputFile() const {writeToFile(_outputFilePath); }
+void MatrixAddOperation::writeToOutputFile() const { writeToFile(_outputFilePath); }
 
 void MatrixAddOperation::writeToOutputFile(const string& content) const {
     if (!_outputFilePath.compare(PRINT)) {

@@ -26,7 +26,7 @@ string MatrixMultOperation::getOutputFileType() const { return "txt"; }
 string MatrixMultOperation::getCacheCode() const { return "matrix multiply"; }
 
 string MatrixMultOperation::getCacheString() const { 
-    return "matrix_multiply " + to_string(crc32(_inputFilesPath.at(0)) + " " + to_string(crc32(_inputFilesPath.at(1))));
+    return "matrix_multiply " + to_string(crc32(_inputFilesPath.at(0))) + " " + to_string(crc32(_inputFilesPath.at(1)));
 }
 
 void MatrixMultOperation::writeToOutputFile() const {writeToFile(_outputFilePath); }
