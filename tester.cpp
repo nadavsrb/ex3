@@ -21,6 +21,7 @@ int main() {
                 e2.printErrorMessage();
             }
         }
+        cout << endl;
     }
 
 /*
