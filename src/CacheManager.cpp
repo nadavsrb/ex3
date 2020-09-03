@@ -1,18 +1,18 @@
+#include "CacheManager.hpp"
+#include "file_reading.hpp"
+
+#include <iostream>
+#include <fstream>
+#include <memory>
+#include <string.h>
+
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <filesystem>
-
 #include <errno.h>
-#include <iostream>
-#include <fstream>
-#include <memory>
 #include <system_error>
-#include <string.h>
-
-#include "CacheManager.hpp"
-#include "file_reading.hpp"
 
 #define CACHE_FILE "src/bin/cache/Cache__DONT_TOUCH_THIS_FILE.txt"
 #define CACHE_LINE "Cache Manager is running!\n"
