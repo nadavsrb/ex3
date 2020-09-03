@@ -1,7 +1,5 @@
 #include "crc32FileReader.hpp"
 
-#include <iostream>
-
 using namespace std;
 
 uint32_t crc32(const string& filePath) {

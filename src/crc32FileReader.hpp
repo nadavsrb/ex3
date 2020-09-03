@@ -1,9 +1,11 @@
 #pragma once
 
-#include <string.h>
-#include <string>
 #include "crc32.hpp"
 #include "file_reading.hpp"
+
+#include <string.h>
+#include <string>
+#include <iostream>
 #include <algorithm>
 
 using std::uint32_t;
