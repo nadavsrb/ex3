@@ -7,9 +7,9 @@ class ImageConvertOperation : public Operation {
 public:
     ImageConvertOperation(const int argc, const char *argv[], bool isSearched = false);
     
-    string getOutputFileType() const;
-    string getCacheCode() const;
-    string getCacheString() const;
+    string getOutputFileType() const override;
+    string getCacheCode() const override;
+    string getCacheString() const override;
 
-    void writeToFile(const string& fileName) const;
+    void writeToFile(const string& fileName) const override;
 };
