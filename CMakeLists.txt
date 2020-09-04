@@ -11,6 +11,7 @@ add_compile_options(-Wall -Wextra -pedantic -Werror -Wnon-virtual-dtor -Wshadow)
 #   the files directory.
 include_directories(${CMAKE_SOURCE_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/lib)
+include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_SOURCE_DIR}/src/files)
 include_directories(${CMAKE_SOURCE_DIR}/src/bmp)
 include_directories(${CMAKE_SOURCE_DIR}/src/hash)
@@ -28,12 +29,13 @@ link_directories(${CMAKE_SOURCE_DIR}/src/matrix)
 link_directories(${CMAKE_SOURCE_DIR}/src/hash)
 link_directories(${CMAKE_SOURCE_DIR}/src/bmp)
 link_directories(${CMAKE_SOURCE_DIR}/src/files)
-link_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_SOURCE_DIR}/src)
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 link_directories(${CMAKE_SOURCE_DIR})
 
 
-file(GLOB My_Source_Files src/*.cpp)
+file(GLOB My_Source_Files src/*.cpp src/cache_manager/operations/*.cpp src/cache_manager/time/*.cpp 
+src/cache_manager/*.cpp src/matrix/*.cpp src/hash/*.cpp src/bmp/*.cpp src/files/*.cpp)
 add_executable(ex3.out main.cpp ${My_Source_Files})
 set_target_properties(ex3.out PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../src/bin)
 target_link_libraries(ex3.out matrix)
