@@ -87,6 +87,7 @@ int main() {
         };
     const char* f[][2] ={{"cache", "clear"}};
     test(2, *(f));
+    test(2, *(f));
     for (int j = 0; j<2; ++j){
         for (unsigned int i = 0; i < 5; ++i) {
             test(length[i], *(argv + i));
