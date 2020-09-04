@@ -1,6 +1,4 @@
 #include "crc32FileReader.hpp"
-#include "StringFunctions.hpp"
-#include <iostream>
 
 using namespace std;
 

@@ -18,8 +18,8 @@ int main(int argc, char *argv[]) {
     --argc;
 
     unique_ptr<Operation> operation;
-    bool isSearch = CacheManager::isSearch(argc, argv + startIndex);
-    bool isClear = CacheManager::isClear(argc, argv + startIndex);
+    bool isSearch = CacheManager::isSearch(argc, (const char**) argv + startIndex);
+    bool isClear = CacheManager::isClear(argc, (const char**) argv + startIndex);
 
     if (isSearch) {
         // first two words are "cache search", moving on to the operation
