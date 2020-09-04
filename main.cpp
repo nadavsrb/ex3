@@ -13,9 +13,9 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-    // first arg in ex3.out and we don't need it
+    // first arg is ex3.out and we don't need it
     int startIndex = 1;
-    argc--;
+    --argc;
 
     unique_ptr<Operation> operation;
     bool isSearch = CacheManager::isSearch(argc, argv + startIndex);
@@ -28,8 +28,10 @@ int main(int argc, char *argv[]) {
     }
     
     try {
-        // to few arguments
-        if (argc < 2 && !isClear) {
+        // to few arguments:
+        //if not clear now we must have name ("matrix"),
+        //operation ("add"), at list one input file.
+        if (argc < 3 && !isClear) { 
             throw NUMBER_OF_ARGUMENTS_ERROR;
         }
 

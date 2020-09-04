@@ -27,8 +27,10 @@ void test(int argc, const char *argv[]) {
     }
     
     try {
-        // to few arguments
-        if (argc < 2 && !isClear) {
+        // to few arguments:
+        //if not clear now we must have name ("matrix"),
+        //operation ("add"), at list one input file.
+        if (argc < 3 && !isClear) { 
             throw NUMBER_OF_ARGUMENTS_ERROR;
         }
 
