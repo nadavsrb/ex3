@@ -43,6 +43,10 @@ string MatrixAddOperation::getCacheCode() const { return "matrix_add"; }
 string MatrixAddOperation::getCacheString() const { return _cacheString; }
 
 void MatrixAddOperation::writeToFile(const string& fileName) const {
+    if(_outputFilePath.compare(NOT_INITIALIZED) == 0) {//no output file
+        return;
+    }
+
     auto matrix1 = make_unique<MatrixClass>(_inputFilesPath.at(0));
     auto matrix2 = make_unique<MatrixClass>(_inputFilesPath.at(1));
 

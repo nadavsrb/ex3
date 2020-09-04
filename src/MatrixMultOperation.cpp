@@ -4,35 +4,40 @@ using namespace OperatorsHelpingFuncs;
 using namespace std;
 
 MatrixMultOperation::MatrixMultOperation(const int argc, const char *argv[], bool isSearched /*= false*/){
+    //fixing the expected args if the operation is from search.
     int argsExpected = argc;
     if (isSearched) {
         argsExpected++;
     }
 
+    //exceptions
     if (argsExpected != 3) {
         throw NUMBER_OF_ARGUMENTS_ERROR;
     }
 
-    if (!typed(argv[0], "txt") || !typed(argv[1], "txt")) {
+    if (!typed(argv[START_INDEX], "txt") || !typed(argv[START_INDEX + 1], "txt")) {
         throw runtime_error("Matrix input files must be with type '.txt'.");
     }
     
     //saves the data from the command
-    _inputFilesPath.push_back(copyToString(argv[0]));
-    _inputFilesPath.push_back(copyToString(argv[1]));
-    if (!isSearched) {
-        if (typed(argv[2], "txt") || (copyToString(argv[2]).compare(PRINT) == 0)) {
-            _outputFilePath = copyToString(argv[2]);
+    _inputFilesPath.push_back(copyToString(argv[START_INDEX]));
+    _inputFilesPath.push_back(copyToString(argv[START_INDEX + 1]));
+    if (!isSearched) { //is it's from searched operation ther isn't output file
+        if (typed(argv[2], "txt") || (copyToString(argv[START_INDEX + 2]).compare(PRINT) == 0)) {
+            _outputFilePath = copyToString(argv[START_INDEX + 2]);
         } else {
             throw runtime_error("Matrix output file must be with type '.txt' or be 'stdout'.");
         }
     }
 
+    //Calculating the _cacheString. At first we would get the matrixes
+    //and from them we are getting the string. we do that for macking
+    //same matrix with spaces would be equals.
     _cacheString = getCacheCode();
     for (auto file: _inputFilesPath) {
         _cacheString += " ";
         MatrixClass matrix(file);
-        _cacheString += std::to_string(crc32FromString(matrix.toString())); //don't see " "
+        _cacheString += to_string(crc32FromString(matrix.toString())); //don't see " "
     }
 }
     
@@ -43,12 +48,18 @@ string MatrixMultOperation::getCacheCode() const { return "matrix_multiply"; }
 string MatrixMultOperation::getCacheString() const { return _cacheString; }
 
 void MatrixMultOperation::writeToFile(const string& fileName) const {
-    auto matrix1 = make_unique<MatrixClass>(_inputFilesPath.at(0));
-    auto matrix2 = make_unique<MatrixClass>(_inputFilesPath.at(1));
+    if(_outputFilePath.compare(NOT_INITIALIZED) == 0) {//no output file
+        return;
+    }
 
+    //creating the matrixes
+    auto matrix1 = make_unique<MatrixClass>(_inputFilesPath.at(START_INDEX));
+    auto matrix2 = make_unique<MatrixClass>(_inputFilesPath.at(START_INDEX + 1));
+
+    //calculating the operation
     *matrix1 *= *matrix2;
 
-    if (fileName.compare(PRINT) == 0) {
+    if (fileName.compare(PRINT) == 0) {//if output file is stdout
         cout << *matrix1;
     } else {
         writeFileContent(fileName, matrix1->toString());

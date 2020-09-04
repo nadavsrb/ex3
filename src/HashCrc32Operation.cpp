@@ -33,6 +33,9 @@ using namespace std;
     string HashCrc32Operation::getCacheString() const { return _cacheString; }
 
     void HashCrc32Operation::writeToFile(const string& fileName) const {
+        if(_outputFilePath.compare(NOT_INITIALIZED) == 0) {//no output file
+            return;
+        }
         string result = "";
         result += std::to_string(crc32(_inputFilesPath.at(0)));
 

@@ -19,6 +19,7 @@
  */
 class Operation {
 public:
+    static constexpr int START_INDEX = 0;
     static constexpr char PRINT[] = "stdout";
     static constexpr char NOT_INITIALIZED[] = "";
 

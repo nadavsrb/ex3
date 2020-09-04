@@ -38,5 +38,8 @@ string ImageConvertOperation::getCacheCode() const { return "image_convert"; }
 string ImageConvertOperation::getCacheString() const { return _cacheString; }
 
 void ImageConvertOperation::writeToFile(const string& fileName) const {
+    if(_outputFilePath.compare(NOT_INITIALIZED) == 0) {//no output file
+        return;
+    }
     testing::bmp::convert_to_grayscale(_inputFilesPath.at(0), fileName);
 }

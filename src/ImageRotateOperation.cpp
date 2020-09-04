@@ -38,5 +38,8 @@ string ImageRotateOperation::getCacheCode() const { return "image_rotate"; }
 string ImageRotateOperation::getCacheString() const { return _cacheString; }
 
 void ImageRotateOperation::writeToFile(const string& fileName) const {
+    if(_outputFilePath.compare(NOT_INITIALIZED) == 0) {//no output file
+        return;
+    }
     testing::bmp::rotate_image(_inputFilesPath.at(0), fileName);
 }
