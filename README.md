@@ -14,7 +14,7 @@ All of the files in `branch master` were taken from [nadav's last project](https
 
 In addition we added the `crc32` module from the helpful files that were given to us in order to complete the assigment. We added a `crc32FileReader` module that uses crc32 algorithm on files.
 # Cache Manager
-For our cache, we created two modules- an object module that symbolizes one operation in the cache and another module that responsible about the file handling in the cache.
+For our cache, we created two objects: a semi-abstract object (`Operation`) that symbolizes one operation in the cache and another object (`CacheManager`) that responsible of the file handling in the cache.
 ## How does it work?
 For each run of the program, we will be asked to do an operation. Each operation will be saved in two ways:
 - a line in the cache file
@@ -23,19 +23,8 @@ For each run of the program, we will be asked to do an operation. Each operation
 Our cache file format is:
 
 **\<operation code> <inputs's hash code>,<date>|<cache backup file's name>**
-- operation code - a number by the folowing struct:
-```
-typedef enum {
-    MATRIX_MULT = 0,
-    MATRIX_ADD = 1,
-    IMAGE_ROTATE = 2,
-    IMAGE_CONVERT = 3,
-    HASH_CRC32 = 4,
-    CLEAR = 5,
-    SEARCH = 6
-} CacheOperationCode;
-```
-- inputs's hash code - the crc32 hash of the input files (if there are more then one they will be divided by comma).
+- operation code - a unique string for every operation which is used to write the operation in the cache file.
+- inputs's hash code - the crc32 hash of the input files (if there are more then one they will be divided by spaces).
 - date
 - cache backup file's name - the names of the backup files are counting numbers (starting with 0) like `3.txt` or `99.bmp`.
 
@@ -43,6 +32,38 @@ When searching an operation we will search it's code and hash. If we find it on 
 
 This way, the cache reduces the program's running time and its' complexity.
 
+# Operation class
+If tou want to add your own operations, you can inherit out `Operation` class and implement out methods:
+```cpp
+/**
+ * @brief Get the type of the output file.
+ * 
+ * @return string 
+ */
+string getOutputFileType() const;
+
+/**
+ * @brief Get the Cache Code of the object (the begining of the CacheString).
+ * 
+ * @return string 
+ */
+string getCacheCode() const;
+
+/**
+ * @brief Get the Cache String of the object (what we write on our cache file).
+ * 
+ * @return string 
+ */
+string getCacheString() const;
+
+/**
+ * @brief Writes the result of the operation.
+ * 
+ * @param fileName - the name of the file we write to.
+ */
+void writeToFile(const string& fileName) const;
+```
+Note that the CacheManager will be able to work with any of your new "sub operations" and still have our search & clear methods.
 
 ## HERE ARE SOME SONGS FOR YOU MICHAEL:
 [Two is better than one - Boys Likes Girls ft. Taylor Swift](https://www.youtube.com/watch?v=4mE3ETiMXrE)
