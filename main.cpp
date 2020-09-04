@@ -1,5 +1,4 @@
 #include "CacheManager.hpp"
-#include "Operation.hpp"
 #include "ImageConvertOperation.hpp"
 #include "ImageRotateOperation.hpp"
 #include "MatrixֹMultOperation.hpp"
