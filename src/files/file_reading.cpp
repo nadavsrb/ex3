@@ -21,6 +21,8 @@ std::string readFileContent(const std::string& filePath) {
     in.close();
     throw std::system_error(errno, std::system_category());
   }
+
+  in.close();
   return content;
 }
 
@@ -39,4 +41,6 @@ void writeFileContent(const std::string& filePath, const std::string& content) {
     out.close();
     throw std::system_error(errno, std::system_category());
   }
+
+  out.close();
 }

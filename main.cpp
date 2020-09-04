@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
         //if not clear now we must have name ("matrix"),
         //operation ("add"), at list one input file.
         if (argc < 3 && !isClear) { 
-            throw NUMBER_OF_ARGUMENTS_ERROR;
+            throw UNKNOWN_COMMAND;
         }
 
         // regular operations
