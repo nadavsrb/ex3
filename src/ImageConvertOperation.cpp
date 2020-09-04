@@ -1,6 +1,6 @@
 #include "ImageConvertOperation.hpp"
 
-ImageConvertOperation::ImageConvertOperation(const int argc, const char *argv[], bool isSearched /*= false*/) {
+ImageConvertOperation::ImageConvertOperation(const int argc, const char *argv[], bool isSearched /*= false*/){
     int argsExpected = argc;
     if (isSearched) {
         argsExpected++;

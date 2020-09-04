@@ -166,8 +166,13 @@ string CacheManager::search() {
     }
 
     // checks if every begining of a line is similar to the CacheString of the operation
-    // if it finds the similar one it will return something to print
-    string line, operationLine = _operation->getCacheString();
+    string line, operationLine;
+    if (_operation != nullptr) {
+        operationLine = _operation->getCacheString();
+    } else {
+        throw runtime_error(UNKNOWN_COMMAND);
+    }
+    
     int lastToCompare = operationLine.find_last_of(',') - 1;
     getline(cacheFile, line); //the title
     while (getline(cacheFile, line)) {

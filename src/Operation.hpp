@@ -20,6 +20,16 @@ using namespace std;
 
 class Operation {
 public:
+    Operation(){};
+    
+    Operation(const Operation& op);
+
+    Operation& operator=(const Operation& op);
+
+    Operation(Operation&& op);
+
+    Operation& operator=(Operation&& op);
+
     /**
      * @brief Get the type of the output file.
      * 

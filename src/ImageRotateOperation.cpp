@@ -1,6 +1,6 @@
 #include "ImageRotateOperation.hpp"
 
-ImageRotateOperation::ImageRotateOperation(const int argc, const char *argv[], bool isSearched /*= false*/) {
+ImageRotateOperation::ImageRotateOperation(const int argc, const char *argv[], bool isSearched /*= false*/){
     int argsExpected = argc;
     if (isSearched) {
         argsExpected++;

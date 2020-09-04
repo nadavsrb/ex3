@@ -1,6 +1,6 @@
 #include "HashCrc32Operation.hpp"
 
-    HashCrc32Operation::HashCrc32Operation(const int argc, const char *argv[], bool isSearched /*= false*/) {
+    HashCrc32Operation::HashCrc32Operation(const int argc, const char *argv[], bool isSearched /*= false*/){
         int argsExpected = argc;
         if (isSearched) {
             argsExpected++;
