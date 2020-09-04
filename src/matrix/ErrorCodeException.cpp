@@ -8,13 +8,14 @@
   }
 
   void ErrorCodeException::printErrorMessage() const{
-		cerr<<error_getErrorMessage(_errorCode)<<endl; 
+    //prints the error messege
+		cerr << error_getErrorMessage(_errorCode) << endl; 
 	}
 
   void ErrorCodeException::throwErrorIfNeeded(ErrorCode er){
     //checking success
     ErrorCodeException exeption = ErrorCodeException(er);
-    if(!exeption.isSuccess()) {
+    if (!exeption.isSuccess()) {
       throw exeption;
     }
   }

@@ -1,11 +1,5 @@
 #include "file_reading.hpp"
 
-/**
- * @brief Read the content of a file at path filePath.
- *
- * @param filePath The relative or absolute path to the file.
- * @return std::string File's content
- */
 std::string readFileContent(const std::string& filePath) {
   // Opens input-only file (ifstream) in binary mode.
   std::ifstream in(filePath, std::ios::binary);
@@ -27,16 +21,11 @@ std::string readFileContent(const std::string& filePath) {
     in.close();
     throw std::system_error(errno, std::system_category());
   }
+
+  in.close();
   return content;
 }
 
-/**
- * @brief Writes content to a file. If the file exists, removes
- *  previos content. Otherwise, creates a new file.
- *
- * @param filePath The relative or absolute path to the file.
- * @param content Content to write.
- */
 void writeFileContent(const std::string& filePath, const std::string& content) {
   // Opens output-only file (ofstream) in binary mode, and truncates all
   //    existing content from the file.
@@ -52,4 +41,6 @@ void writeFileContent(const std::string& filePath, const std::string& content) {
     out.close();
     throw std::system_error(errno, std::system_category());
   }
+
+  out.close();
 }
