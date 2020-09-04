@@ -19,7 +19,7 @@ ${CMAKE_SOURCE_DIR}/cache_manager/operations ${CMAKE_SOURCE_DIR}/cache_manager/t
 # Link directories - tells the linker to look for .so files
 #   in these directories. We want libmatrix.so which is under 
 #   the matrix directory. Note that a full path is required.
-link__directories(${CMAKE_SOURCE_DIR} ${CMAKE_SOURCE_DIR}/files ${CMAKE_SOURCE_DIR}/bmp
+link_directories(${CMAKE_SOURCE_DIR} ${CMAKE_SOURCE_DIR}/files ${CMAKE_SOURCE_DIR}/bmp
 ${CMAKE_SOURCE_DIR}/hash ${CMAKE_SOURCE_DIR}/matrix ${CMAKE_SOURCE_DIR}/cache_manager 
 ${CMAKE_SOURCE_DIR}/cache_manager/operations ${CMAKE_SOURCE_DIR}/cache_manager/time)
 
