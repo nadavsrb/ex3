@@ -13,7 +13,7 @@
 
 using namespace std;
 
-int test(int argc, const char *argv[]) {
+void test(int argc, const char *argv[]) {
     int startIndex = 0;
     if(argc < 3 && !(strcmp(argv[startIndex + 1],"clear") == 0 && argc == 2)) {//..
         throw NUMBER_OF_ARGUMENTS_ERROR;
@@ -70,7 +70,6 @@ int test(int argc, const char *argv[]) {
     if(operation != nullptr){
         delete operation;  
     }
-    return 0;
 }
 
 int main() {
