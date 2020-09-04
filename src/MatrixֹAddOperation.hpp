@@ -1,7 +1,10 @@
 #pragma once
 
+#include "crc32FileReader.hpp"
 #include "Operation.hpp"
 #include "MatrixClass.hpp"
+
+#include <memory>
 
 class MatrixAddOperation : public Operation {
 public:

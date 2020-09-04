@@ -6,10 +6,10 @@
 #include "MatrixֹAddOperation.hpp"
 #include "HashCrc32Operation.hpp"
 #include "ErrorCodeException.hpp"
-#include <iostream>
 
-#define NUMBER_OF_ARGUMENTS_ERROR runtime_error("Invalid input! Number of arguments does not suit to the chosen operation.")
-#define UNKNOWN_COMMAND runtime_error("Invalid input! Unknown command.")
+#include <iostream>
+#include <memory>
+#include <string.h>
 
 using namespace std;
 

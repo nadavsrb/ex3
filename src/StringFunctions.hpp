@@ -1,5 +1,9 @@
 #include <string>
 
+/**
+ * @brief this namespace is a group of functions to
+ * help in the operation and his sub classes. 
+ */
 namespace OperatorsHelpingFuncs {
 
 /**
