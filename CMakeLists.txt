@@ -11,10 +11,23 @@ add_compile_options(-Wall -Wextra -pedantic -Werror -Wnon-virtual-dtor -Wshadow)
 #   the files directory.
 include_directories(${CMAKE_SOURCE_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/lib)
-include_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_SOURCE_DIR}/src/files)
+include_directories(${CMAKE_SOURCE_DIR}/src/bmp)
+include_directories(${CMAKE_SOURCE_DIR}/src/hash)
+include_directories(${CMAKE_SOURCE_DIR}/src/matrix)
+include_directories(${CMAKE_SOURCE_DIR}/src/cache_manager)
+include_directories(${CMAKE_SOURCE_DIR}/src/cache_manager/operations)
+include_directories(${CMAKE_SOURCE_DIR}/src/cache_manager/time)
 # Link directories - tells the linker to look for .so files
 #   in these directories. We want libmatrix.so which is under 
 #   the matrix directory. Note that a full path is required.
+link_directories(${CMAKE_SOURCE_DIR}/src/cache_manager/time)
+link_directories(${CMAKE_SOURCE_DIR}/src/cache_manager/operations)
+link_directories(${CMAKE_SOURCE_DIR}/src/cache_manager)
+link_directories(${CMAKE_SOURCE_DIR}/src/matrix)
+link_directories(${CMAKE_SOURCE_DIR}/src/hash)
+link_directories(${CMAKE_SOURCE_DIR}/src/bmp)
+link_directories(${CMAKE_SOURCE_DIR}/src/files)
 link_directories(${CMAKE_SOURCE_DIR}/src)
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 link_directories(${CMAKE_SOURCE_DIR})
@@ -28,6 +41,3 @@ target_link_libraries(ex3.out matrix)
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
-
-
-
