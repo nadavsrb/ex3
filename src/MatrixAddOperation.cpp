@@ -29,7 +29,7 @@ MatrixAddOperation::MatrixAddOperation(const int argc, const char *argv[], bool 
     for (auto file: _inputFilesPath) {
         _cacheString += " ";
         MatrixClass matrix(file);
-        _cacheString += std::to_string(crc32FromString(file)); //don't see " "
+        _cacheString += std::to_string(crc32FromString(matrix.toString())); //don't see " "
     }
 }
 

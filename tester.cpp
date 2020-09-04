@@ -78,7 +78,7 @@ int main() {
         {"image", "rotate", "image_rotate.bmp", "result_rotate.bmp"},
         {"hash", "crc32", "crc.txt", "stdout"}
         };
-    const char* search[][7] = {
+    const char* search[][6] = {
         {"cache", "search", "matrix", "multiply", "matrix_mult1.txt", "matrix_mult2.txt"}, 
         {"cache", "search", "matrix", "add", "matrix_add1.txt", "matrix_add2.txt"},
         {"cache", "search", "image", "convert", "image_convert.bmp"},
