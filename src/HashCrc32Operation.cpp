@@ -1,6 +1,7 @@
 #include "HashCrc32Operation.hpp"
 
 using namespace OperatorsHelpingFuncs;
+using namespace std;
 
     HashCrc32Operation::HashCrc32Operation(const int argc, const char *argv[], bool isSearched /*= false*/){
         int argsExpected = argc;

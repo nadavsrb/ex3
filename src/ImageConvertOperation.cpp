@@ -1,6 +1,7 @@
 #include "ImageConvertOperation.hpp"
 
 using namespace OperatorsHelpingFuncs;
+using namespace std;
 
 ImageConvertOperation::ImageConvertOperation(const int argc, const char *argv[], bool isSearched /*= false*/){
     int argsExpected = argc;

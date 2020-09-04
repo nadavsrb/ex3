@@ -1,5 +1,6 @@
 #pragma once
 
+#include "crc32FileReader.hpp"
 #include "Operation.hpp"
 #include "bmp_tester.hpp"
 

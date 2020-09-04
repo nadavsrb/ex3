@@ -1,6 +1,7 @@
 #include "MatrixֹMultOperation.hpp"
 
 using namespace OperatorsHelpingFuncs;
+using namespace std;
 
 MatrixMultOperation::MatrixMultOperation(const int argc, const char *argv[], bool isSearched /*= false*/){
     int argsExpected = argc;
