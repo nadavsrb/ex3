@@ -8,6 +8,7 @@
   }
 
   void ErrorCodeException::printErrorMessage() const{
+    //prints the error messege
 		cerr << error_getErrorMessage(_errorCode) << endl; 
 	}
 

@@ -1,25 +1,24 @@
 #pragma once
 
-#include <string.h>
-#include <string>
 #include "crc32.hpp"
 #include "file_reading.hpp"
+
+#include <string.h>
+#include <string>
 #include <algorithm>
 
-using std::uint32_t;
-using std::string;
-
 /**
- * @brief Performs the crc32 algorithem.
+ * @brief Performs the crc32 algorithem on file.
  * 
  * @param filePath - the input bit array is in the file.
- * @return uint32_t 
+ * @return uint32_t the crc32 on the file.
  */
-uint32_t crc32(const string& filePath);
+std::uint32_t crc32(const std::string& filePath);
+
 /**
- * @brief Performs the crc32 algorithem.
+ * @brief Performs the crc32 algorithem on string.
  * 
- * @param s - the input in string
- * @return uint32_t 
+ * @param s - the input in string.
+ * @return uint32_t the crc32 on the string.
  */
-uint32_t crc32FromString(string file);
+std::uint32_t crc32FromString(std::string file);

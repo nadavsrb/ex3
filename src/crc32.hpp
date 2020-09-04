@@ -3,5 +3,11 @@
 #include <stddef.h>
 #include <stdint.h>
 
-uint32_t calculate_crc32c (uint32_t crc32c, const unsigned char *buffer, unsigned int length);
+/**
+ * @brief the fuction to calculat crc32.
+ * 
+ * @param buf the buufer.
+ * @param size of the buffer.
+ * @return uint32_t the crc32 from the buffer.
+ */
 uint32_t crc32(const void *buf, size_t size);

@@ -5,6 +5,7 @@
 using namespace std;
 
 uint32_t crc32(const string& filePath) {
+    //reads the file as needed
     string s = readFileContent(filePath);
     s = s.data();
 
@@ -22,8 +23,10 @@ uint32_t crc32FromString(string file) {
     // string to char array 
     strcpy(buffer, file.c_str());
 
+    //calculating crc32
     uint32_t result = crc32((unsigned char *) buffer, length -1);
 
+    //deletes the buffer 
     delete[] buffer;
     return result;
 }

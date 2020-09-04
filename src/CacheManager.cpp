@@ -1,27 +1,4 @@
 #include "CacheManager.hpp"
-#include "file_reading.hpp"
-#include "CurrentTime.hpp"
-
-#include <iostream>
-#include <fstream>
-#include <memory>
-#include <string.h>
-
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <filesystem>
-#include <errno.h>
-#include <system_error>
-
-#define CACHE_FILE "src/bin/cache/Cache__DONT_TOUCH_THIS_FILE.txt"
-#define CACHE_LINE "Cache Manager is running!\n"
-#define FILES_DIR "Cache Manager is running!\n"
-#define CACHE_LINE_LENGTH 26
-#define CACHE_DIR "src/bin/cache"
-#define CACHE_FILES_DIR "src/bin/cache/files"
-#define CACHE_FILES_DIR_ "src/bin/cache/files/"
 
 using namespace std;
 
@@ -36,28 +13,28 @@ CacheManager::CacheManager(unique_ptr<Operation>& op) {
  */
 void checkCacheFileExists() {
     //make the dir cache
-    mkdir(CACHE_DIR, 0777);
+    mkdir(CacheManager::CACHE_DIR, 0777);
     //make the dir for the cache files
-    mkdir(CACHE_FILES_DIR, 0777);
+    mkdir(CacheManager::CACHE_FILES_DIR, 0777);
     // opening the cache file
-    const auto cachefd = open(CACHE_FILE, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+    const auto cachefd = open(CacheManager::CACHE_FILE, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
     if (cachefd < 0) {
         throw system_error{errno, system_category()};
     }
 
     // to specify that we are in our cache manager file we make sure that the folowing line in the first one
     // or the file is empty (and we will write the line)
-    char cacheID[CACHE_LINE_LENGTH + 1];
-    cacheID[CACHE_LINE_LENGTH] = '\0';
+    char cacheID[CacheManager::CACHE_LINE_LENGTH + 1];
+    cacheID[CacheManager::CACHE_LINE_LENGTH] = '\0';
 
-    int errorID = read(cachefd, cacheID, CACHE_LINE_LENGTH);
+    int errorID = read(cachefd, cacheID, CacheManager::CACHE_LINE_LENGTH);
     if (errorID == 0) { // empty file
-        int errorWriting = write(cachefd, CACHE_LINE, CACHE_LINE_LENGTH);
+        int errorWriting = write(cachefd, CacheManager::CACHE_LINE, CacheManager::CACHE_LINE_LENGTH);
         if (errorWriting < 0) {
           close(cachefd);
           throw system_error{errno, system_category()}; 
         }
-    } else if (errorID > 0 && (strcmp(cacheID, CACHE_LINE) != 0)) { // the file does not start with our line
+    } else if (errorID > 0 && (strcmp(cacheID, CacheManager::CACHE_LINE) != 0)) { // the file does not start with our line
         close(cachefd);
         throw runtime_error("A file named 'Cache__DONT_TOUCH_THIS_FILE.txt' which is not a cache manager allready exists. Changed it's name and run the program again.");
     } else if (errorID < 0) { // a system error
@@ -78,7 +55,7 @@ void createBeckupFile(const Operation& _operation, unsigned int index) {
 
 uint32_t getCashFileIndex() {
     ifstream cacheFile;
-    cacheFile.open(CACHE_FILE);
+    cacheFile.open(CacheManager::CACHE_FILE);
     if (cacheFile.fail()) {
         throw std::system_error(errno, system_category());
     }
@@ -96,7 +73,7 @@ uint32_t getCashFileIndex() {
     return std::stoi(line.substr(line.find("|") + 1)) + 1;
 }
 
-void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*= false*/) {
+void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*= false*/) const {
     checkCacheFileExists();
     if (isClear) {
         if (!std::filesystem::remove_all(CACHE_DIR)) {
@@ -159,7 +136,7 @@ void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*
     }
 }
 
-string CacheManager::search() {    
+string CacheManager::search() const {    
     ifstream cacheFile;
     cacheFile.open(CACHE_FILE);
     if (cacheFile.fail()) {
