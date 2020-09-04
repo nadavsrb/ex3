@@ -15,7 +15,7 @@ using namespace std;
 int main(int argc, char *argv[]) {
     // first arg in ex3.out and we don't need it
     int startIndex = 1;
-    argc -= 1;
+    argc--;
 
     // to few arguments
     if (argc < 3 && !(argc == 2 && strcmp(argv[startIndex + 1], "clear") == 0)) {
