@@ -27,9 +27,7 @@ MatrixMultOperation::MatrixMultOperation(const int argc, const char *argv[], boo
 
     _cacheString = "matrix_multiply";
     for (auto file: _inputFilesPath) {
-                _cacheString += " ";
-                MatrixClass matrix(file);
-                _cacheString += std::to_string(crc32FromString(matrix.toString())); //don't see " "
+        _cacheString += " " + std::to_string(crc32FromString(file)); //don't see " "
     }
 }
     
