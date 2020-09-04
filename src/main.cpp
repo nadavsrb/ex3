@@ -1,8 +1,8 @@
 #include "CacheManager.hpp"
 #include "ImageConvertOperation.hpp"
 #include "ImageRotateOperation.hpp"
-#include "MatrixֹMultOperation.hpp"
-#include "MatrixֹAddOperation.hpp"
+#include "MatrixMultOperation.hpp"
+#include "MatrixAddOperation.hpp"
 #include "HashCrc32Operation.hpp"
 #include "ErrorCodeException.hpp"
 

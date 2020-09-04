@@ -1,4 +1,4 @@
-#include "MatrixֹMultOperation.hpp"
+#include "MatrixMultOperation.hpp"
 
 using namespace OperatorsHelpingFuncs;
 using namespace std;
