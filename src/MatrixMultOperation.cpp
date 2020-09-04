@@ -25,19 +25,19 @@ MatrixMultOperation::MatrixMultOperation(const int argc, const char *argv[], boo
         }
     }
 
-    _cacheString = "matrix_multiply";
+    _cacheString = getCacheCode();
     for (auto file: _inputFilesPath) {
-        _cacheString += " " + std::to_string(crc32FromString(file)); //don't see " "
+        _cacheString += " ";
+        MatrixClass matrix(file);
+        _cacheString += std::to_string(crc32FromString(matrix.toString())); //don't see " "
     }
 }
     
 string MatrixMultOperation::getOutputFileType() const { return "txt"; }
 
-string MatrixMultOperation::getCacheCode() const { return "matrix multiply"; }
+string MatrixMultOperation::getCacheCode() const { return "matrix_multiply"; }
 
-string MatrixMultOperation::getCacheString() const { 
-    return _cacheString;
-}
+string MatrixMultOperation::getCacheString() const { return _cacheString; }
 
 void MatrixMultOperation::writeToFile(const string& fileName) const {
     auto matrix1 = make_unique<MatrixClass>(_inputFilesPath.at(0));

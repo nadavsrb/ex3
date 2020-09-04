@@ -25,17 +25,14 @@ ImageRotateOperation::ImageRotateOperation(const int argc, const char *argv[], b
         }
     }
 
-    _cacheString = "image_rotate " + to_string(crc32(_inputFilesPath.at(0)));
+    _cacheString = getCacheCode() + " " + to_string(crc32(_inputFilesPath.at(0)));
 }
 
 string ImageRotateOperation::getOutputFileType() const { return "bmp"; }
 
 string ImageRotateOperation::getCacheCode() const { return "image_rotate"; }
 
-string ImageRotateOperation::getCacheString() const { 
-    return _cacheString;
-;
-}
+string ImageRotateOperation::getCacheString() const { return _cacheString; }
 
 void ImageRotateOperation::writeToFile(const string& fileName) const {
     testing::bmp::rotate_image(_inputFilesPath.at(0), fileName);

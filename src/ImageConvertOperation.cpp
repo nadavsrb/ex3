@@ -25,16 +25,14 @@ ImageConvertOperation::ImageConvertOperation(const int argc, const char *argv[],
         }
     }
 
-    _cacheString = "image_convert " + to_string(crc32(_inputFilesPath.at(0)));
+    _cacheString = getCacheCode() + " " + to_string(crc32(_inputFilesPath.at(0)));
 }
 
 string ImageConvertOperation::getOutputFileType() const { return "bmp"; }
 
 string ImageConvertOperation::getCacheCode() const { return "image_convert"; }
 
-string ImageConvertOperation::getCacheString() const { 
-    return _cacheString;
-}
+string ImageConvertOperation::getCacheString() const { return _cacheString; }
 
 void ImageConvertOperation::writeToFile(const string& fileName) const {
     testing::bmp::convert_to_grayscale(_inputFilesPath.at(0), fileName);

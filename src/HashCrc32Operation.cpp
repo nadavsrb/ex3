@@ -20,24 +20,14 @@
             }
         }
     
-        _cacheString = getCacheCode();
-        for (auto file: _inputFilesPath) {
-             _cacheString += " ";
-             _cacheString += std::to_string(crc32(file));
-        }
+        _cacheString = getCacheCode() + " " + std::to_string(crc32(_inputFilesPath.at(0)));
     }
     
-    string HashCrc32Operation::getOutputFileType() const {
-        return "txt";
-    }
+    string HashCrc32Operation::getOutputFileType() const { return "txt"; }
 
-    string HashCrc32Operation::getCacheCode() const {
-        return "hash_crc32";
-    }
+    string HashCrc32Operation::getCacheCode() const { return "hash_crc32"; }
 
-    string HashCrc32Operation::getCacheString() const {
-        return _cacheString;
-    }
+    string HashCrc32Operation::getCacheString() const { return _cacheString; }
 
     void HashCrc32Operation::writeToFile(const string& fileName) const {
         string result = "";
