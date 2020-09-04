@@ -24,8 +24,8 @@
 
 using namespace std;
 
-CacheManager::CacheManager(Operation* op) {
-    _operation = op;
+CacheManager::CacheManager(unique_ptr<Operation>& op) {
+    _operation = move(op);
 }
 
 /**
@@ -172,7 +172,7 @@ string CacheManager::search() {
     } else {
         throw runtime_error(UNKNOWN_COMMAND);
     }
-    
+
     int lastToCompare = operationLine.find_last_of(',') - 1;
     getline(cacheFile, line); //the title
     while (getline(cacheFile, line)) {

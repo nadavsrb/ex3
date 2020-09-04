@@ -20,7 +20,7 @@ void test(int argc, const char *argv[]) {
     }
     bool isSearch = false;
     bool isClear = false;
-    Operation* operation = nullptr;
+    unique_ptr<Operation> operation;
     try{
         //cache operations
         if(strcmp(argv[startIndex],"cache") == 0) {
@@ -41,19 +41,19 @@ void test(int argc, const char *argv[]) {
         if(!isClear) {
             if (strcmp(argv[startIndex],"matrix") == 0) {
                 if (strcmp(argv[startIndex + 1],"multiply") == 0) {
-                    operation =  new MatrixMultOperation(argc - 2,  (const char**) &argv[startIndex + 2], isSearch);
+                    operation =  make_unique<MatrixMultOperation>(argc - 2,  (const char**) &argv[startIndex + 2], isSearch);
                 } else if (strcmp(argv[startIndex + 1],"add") == 0) {
-                    operation =  new MatrixAddOperation(argc - 2, (const char**)  &argv[startIndex + 2], isSearch);
+                    operation =  make_unique<MatrixAddOperation>(argc - 2, (const char**)  &argv[startIndex + 2], isSearch);
                 }
             } else if (strcmp(argv[startIndex],"hash") == 0) {
                 if (strcmp(argv[startIndex + 1],"crc32") == 0) {
-                    operation =  new HashCrc32Operation(argc - 2,(const char**)  &argv[startIndex + 2], isSearch);
+                    operation =  make_unique<HashCrc32Operation>(argc - 2,(const char**)  &argv[startIndex + 2], isSearch);
                 }
             }else if(strcmp(argv[startIndex],"image") == 0) {
                 if (strcmp(argv[startIndex + 1],"rotate") == 0) {
-                    operation =  new ImageRotateOperation(argc - 2, (const char**) &argv[startIndex + 2], isSearch);
+                    operation =  make_unique<ImageRotateOperation>(argc - 2, (const char**) &argv[startIndex + 2], isSearch);
                 } else if (strcmp(argv[startIndex + 1],"convert") == 0) {
-                    operation =  new ImageConvertOperation(argc - 2, (const char**) &argv[startIndex + 2], isSearch);
+                    operation =  make_unique<ImageConvertOperation>(argc - 2, (const char**) &argv[startIndex + 2], isSearch);
                 }
             } else {
                throw UNKNOWN_COMMAND;
@@ -65,10 +65,6 @@ void test(int argc, const char *argv[]) {
         cerr<<e1.what()<<endl;
     } catch (const ErrorCodeException& e2) {
         e2.printErrorMessage();
-    }
-
-    if(operation != nullptr){
-        delete operation;  
     }
 }
 

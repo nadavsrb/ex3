@@ -2,12 +2,13 @@
 
 #include "Operation.hpp"
 #include <string>
+#include <memory>
 
 using namespace std;
 class Operation;
 class CacheManager {
 public:
-    CacheManager(Operation* op);
+    CacheManager(unique_ptr<Operation>& op);
 
     /**
      * @brief Does an operation.
@@ -27,5 +28,5 @@ public:
     string search();
 
 private:
-    Operation* _operation;
+    unique_ptr<Operation> _operation;
 };
