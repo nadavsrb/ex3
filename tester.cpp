@@ -78,7 +78,7 @@ int main() {
     const char* argv[][5] = {
         {"matrix", "multiply", "matrix_mult1.txt", "matrix_mult2.txt", "stdout"}, 
         {"matrix", "add", "matrix_add1.txt", "matrix_add2.txt", "stdout"},
-        {"image", "convert", "image_convert.bmp", "result_convert.bmp"},
+        {"image", "convert", "image_convert.bmp", "stdout"},
         {"image", "rotate", "image_rotate.bmp", "result_rotate.bmp"},
         {"hash", "crc32", "crc.txt", "stdout"}
         };
@@ -96,9 +96,8 @@ const char* f[][2] ={{"cache", "clear"}};
             test(length[i], *(argv + i));
             test(length[i]+1, *(search + i));
         }
-        }
         cout << endl;
-
+        }
 /*
     int length = 2;
     const char* argv[] = {"cache", "clear"};
