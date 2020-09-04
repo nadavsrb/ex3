@@ -1,5 +1,7 @@
 #include "ImageRotateOperation.hpp"
 
+using namespace OperatorsHelpingFuncs;
+
 ImageRotateOperation::ImageRotateOperation(const int argc, const char *argv[], bool isSearched /*= false*/){
     int argsExpected = argc;
     if (isSearched) {

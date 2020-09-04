@@ -6,9 +6,7 @@ using namespace std;
 
 uint32_t crc32(const string& filePath) {
     string s = readFileContent(filePath);
-    if(typed(filePath, "bmp")) {
-        s = s.data();
-    }
+    s = s.data();
 
     return crc32FromString(s);
 }
