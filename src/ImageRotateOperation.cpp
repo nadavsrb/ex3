@@ -11,7 +11,7 @@ ImageRotateOperation::ImageRotateOperation(const int argc, const char *argv[], b
     }
 
     //exceptions
-    if (argsExpected != 2) {// 1 input files & 1 output file
+    if (argsExpected != 2) {// 1 input file & 1 output file
         throw NUMBER_OF_ARGUMENTS_ERROR;
     }
 
@@ -22,7 +22,7 @@ ImageRotateOperation::ImageRotateOperation(const int argc, const char *argv[], b
     //saves the data from the command
     _inputFilesPath.push_back(copyToString(argv[START_INDEX]));
 
-     //Calculating the _cacheString.
+     //if not searched operatin intalize the output file.
     if (!isSearched) {
         if (typed(argv[START_INDEX + 1], "bmp")) {
             _outputFilePath = copyToString(argv[START_INDEX + 1]);
@@ -30,7 +30,8 @@ ImageRotateOperation::ImageRotateOperation(const int argc, const char *argv[], b
             throw runtime_error("Image files must be with type '.bmp'.");
         }
     }
-
+    
+    //Calculating the _cacheString.
     _cacheString = getCacheCode() + " " + to_string(crc32(_inputFilesPath.at(START_INDEX)));
 }
 
