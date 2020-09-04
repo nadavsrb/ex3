@@ -21,4 +21,4 @@ std::uint32_t crc32(const std::string& filePath);
  * @param s - the input in string.
  * @return uint32_t the crc32 on the string.
  */
-std::uint32_t crc32FromString(std::string file);
+std::uint32_t crc32FromString(const std::string& file);

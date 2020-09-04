@@ -10,7 +10,7 @@ uint32_t crc32(const string& filePath) {
     return crc32FromString(s);
 }
 
-uint32_t crc32FromString(string file) {
+uint32_t crc32FromString(const string& file) {
     //because of /0
     unsigned int length = file.length() + 1;
 
