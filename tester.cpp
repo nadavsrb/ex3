@@ -15,54 +15,55 @@ using namespace std;
 
 void test(int argc, const char *argv[]) {
     int startIndex = 0;
-    if(argc < 3 && !(strcmp(argv[startIndex + 1],"clear") == 0 && argc == 2)) {//..
-        throw NUMBER_OF_ARGUMENTS_ERROR;
-    }
-    bool isSearch = false;
-    bool isClear = false;
+
     unique_ptr<Operation> operation;
-    try{
-        //cache operations
-        if(strcmp(argv[startIndex],"cache") == 0) {
-            if (strcmp(argv[startIndex + 1],"search") == 0) {
-                isSearch = true;
-                startIndex += 2; //index 0 = cache, index 1 = search - not important from now //..
-                argc -= 2;//..
-                if(argc < 3) {
-                    throw NUMBER_OF_ARGUMENTS_ERROR;
-                }
-            } else if (strcmp(argv[startIndex + 1],"clear") == 0){
-                isClear = true;
-            }else {
-                throw UNKNOWN_COMMAND;
-            }
+    bool isSearch = CacheManager::isSearch(argc, argv + startIndex);
+    bool isClear = CacheManager::isClear(argc, argv + startIndex);
+
+    if (isSearch) {
+        // first two words are "cache search", moving on to the operation
+        startIndex += 2;
+        argc -= 2;
+    }
+    
+    try {
+        // to few arguments
+        if (argc < 2 && !isClear) {
+            throw NUMBER_OF_ARGUMENTS_ERROR;
         }
-        //other operation
-        if(!isClear) {
-            if (strcmp(argv[startIndex],"matrix") == 0) {
-                if (strcmp(argv[startIndex + 1],"multiply") == 0) {
+
+        // regular operations
+        if (!isClear) {
+            // matrix operations
+            if (strcmp(argv[startIndex], "matrix") == 0) {
+                if (strcmp(argv[startIndex + 1], "multiply") == 0) { // matrix multiply
                     operation =  make_unique<MatrixMultOperation>(argc - 2,  (const char**) &argv[startIndex + 2], isSearch);
-                } else if (strcmp(argv[startIndex + 1],"add") == 0) {
+                } else if (strcmp(argv[startIndex + 1], "add") == 0) { // matrix add
                     operation =  make_unique<MatrixAddOperation>(argc - 2, (const char**)  &argv[startIndex + 2], isSearch);
                 }
-            } else if (strcmp(argv[startIndex],"hash") == 0) {
-                if (strcmp(argv[startIndex + 1],"crc32") == 0) {
+            // hash operations
+            } else if (strcmp(argv[startIndex], "hash") == 0) {
+                if (strcmp(argv[startIndex + 1], "crc32") == 0) { // hash crc32
                     operation =  make_unique<HashCrc32Operation>(argc - 2,(const char**)  &argv[startIndex + 2], isSearch);
                 }
-            }else if(strcmp(argv[startIndex],"image") == 0) {
-                if (strcmp(argv[startIndex + 1],"rotate") == 0) {
+            // image operations
+            } else if (strcmp(argv[startIndex], "image") == 0) {
+                if (strcmp(argv[startIndex + 1], "rotate") == 0) { // image rotate
                     operation =  make_unique<ImageRotateOperation>(argc - 2, (const char**) &argv[startIndex + 2], isSearch);
-                } else if (strcmp(argv[startIndex + 1],"convert") == 0) {
+                } else if (strcmp(argv[startIndex + 1], "convert") == 0) { // image convert
                     operation =  make_unique<ImageConvertOperation>(argc - 2, (const char**) &argv[startIndex + 2], isSearch);
                 }
+            // an operation that doesn't exists
             } else {
                throw UNKNOWN_COMMAND;
             }
         }
+
         CacheManager cm(operation);
         cm.performOperation(isSearch, isClear);
+    // if an error was thrown we will send a message in stderr
     } catch (const exception& e1) {
-        cerr<<e1.what()<<endl;
+        cerr << e1.what() << endl;
     } catch (const ErrorCodeException& e2) {
         e2.printErrorMessage();
     }
@@ -71,6 +72,7 @@ void test(int argc, const char *argv[]) {
 int main() {
     // testing matrix commands
     int length[] = {5, 5, 4, 4, 4};
+    int searchl[] = {6, 1, 5, 3, 2};
     const char* argv[][5] = {
         {"matrix", "multiply", "matrix_mult1.txt", "matrix_mult2.txt", "stdout"}, 
         {"matrix", "add", "matrix_add1.txt", "matrix_add2.txt", "stdout"},
@@ -78,12 +80,12 @@ int main() {
         {"image", "rotate", "image_rotate.bmp", "result_rotate.bmp"},
         {"hash", "crc32", "crc.txt", "stdout"}
         };
-    const char* search[][6] = {
+    const char* search[][7] = {
         {"cache", "search", "matrix", "multiply", "matrix_mult1.txt", "matrix_mult2.txt"}, 
-        {"cache", "search", "matrix", "add", "matrix_add1.txt", "matrix_add2.txt"},
-        {"cache", "search", "image", "convert", "image_convert.bmp"},
-        {"cache", "search", "image", "rotate", "image_rotate.bmp"},
-        {"cache", "search", "hash", "crc32", "crc.txt"}
+        {"cache"},
+        {"cache", "search", "matrix", "multiply", "matrix_mult1.txt"},
+        {"cache", "search", "image"},
+        {"cache", "search"}
         };
     const char* f[][2] ={{"cache", "clear"}};
     test(2, *(f));
@@ -91,10 +93,12 @@ int main() {
     for (int j = 0; j<2; ++j){
         for (unsigned int i = 0; i < 5; ++i) {
             test(length[i], *(argv + i));
-            test(length[i]+1, *(search + i));
+            test(searchl[i], *(search + i));
         }
     cout << endl;
     }
+    const char* arg[2] = {"cache", "search"};
+    test(2, arg);
 /*
     int length = 2;
     const char* argv[] = {"cache", "clear"};
