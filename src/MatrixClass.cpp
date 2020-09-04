@@ -12,6 +12,7 @@
     }
 
     MatrixClass::MatrixClass(const string& filePath) {
+        //opening the file
         ifstream matrixFile;
         matrixFile.open(filePath);
         if (matrixFile.fail()) {
@@ -24,29 +25,30 @@
             throw std::runtime_error("The file in empty. Can not convert into matrix.");
         }
 
+        //helping varibles
         string line;
         u_int32_t numOfRow = 0;
         u_int32_t numOfCol = 0;
 
-//*********checking how many rows & colums in the matrix
+    //checking how many rows & colums in the matrix
         getline(matrixFile,line);
         numOfRow++; //the first row
 
         //num of cols
-        for (auto it = line.cbegin() ; it != line.cend(); ++it) {
-		    if(*it == ',') {
+        for (auto c: line) {
+		    if(c == ',') {
                 ++numOfCol;
             }
         }
 
-        //the num of ',' is 1 less than the num of matrix
+        //the num of ',' is 1 less than the num of col in the matrix
         ++numOfCol;
         
         //continue calculating the height of the matrix
         while (getline(matrixFile, line)) {
             ++numOfRow;
         }
-//********end checking how many rows & colums in the matrix
+    //end checking how many rows & colums in the matrix
         
         //creating the matrix & throwing exception if needed
         try {
@@ -62,14 +64,16 @@
 
         //Intlizing the matrix
         for (u_int32_t row = 0; getline(matrixFile, line); ++row) {
+            //removing spaces
             line.erase(remove_if(line.begin(), line.end(), isspace), line.end());
 
+            //helping varibles
             u_int32_t col = 0;
             string valueInString = "";
             u_int32_t numOfValuesPerRow = 0;
             
-            for (auto it = line.cbegin() ; it != line.cend(); ++it) {
-		        if (*it == ',') {
+            for (auto c: line) {
+		        if (c == ',') {
                     //setting the value
                     if(valueInString == "") {
                         matrix_destroy(_matrix);
@@ -94,18 +98,20 @@
                 }
 
                 // if we reached an unknown character
-                if (*it != '.' && *it != '-' && !(*it >= '0' && *it <= '9')) {
+                if (c != '.' && c != '-' && !(c >= '0' && c <= '9')) {
                     matrix_destroy(_matrix);
                     matrixFile.close();
                     throw std::runtime_error("Found an unknown character in the file. Can not convert into matrix.");
                 }
 
-                valueInString += *it;
+                valueInString += c;
 
                 // if we read two character in a number and both are not digits
                 if (valueInString.length() > 1 &&
-                !(valueInString[valueInString.length() - 1] >= '0' && valueInString[valueInString.length() - 1] <= '9') &&
-                !(valueInString[valueInString.length() - 2] >= '0' && valueInString[valueInString.length() - 2] <= '9')) {
+                !(valueInString[valueInString.length() - 1] >= '0' &&
+                 valueInString[valueInString.length() - 1] <= '9') &&
+                !(valueInString[valueInString.length() - 2] >= '0' &&
+                 valueInString[valueInString.length() - 2] <= '9')) {
                     matrix_destroy(_matrix);
                     matrixFile.close();
                     throw std::runtime_error("Found unknown combination on characters. Can not convert into matrix.");
@@ -120,8 +126,10 @@
 
             // if we read two character in a number and both are not digits
             if (valueInString.length() > 1 &&
-            !(valueInString[valueInString.length() - 1] >= '0' && valueInString[valueInString.length() - 1] <= '9') &&
-            !(valueInString[valueInString.length() - 2] >= '0' && valueInString[valueInString.length() - 2] <= '9')) {
+            !(valueInString[valueInString.length() - 1] >= '0' &&
+             valueInString[valueInString.length() - 1] <= '9') &&
+            !(valueInString[valueInString.length() - 2] >= '0' &&
+            valueInString[valueInString.length() - 2] <= '9')) {
                 matrix_destroy(_matrix);
                 matrixFile.close();
                 throw std::runtime_error("Found unknown combination on characters. Can not convert into matrix.");
