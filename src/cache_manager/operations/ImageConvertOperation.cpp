@@ -25,7 +25,7 @@ ImageConvertOperation::ImageConvertOperation(const int argc, const char *argv[],
     //if not searched operatin intalize the output file.
     if (!isSearched) {
         if (typed(argv[START_INDEX], "bmp")) {
-            _outputFilePath = copyToString(argv[START_INDEX]);
+            _outputFilePath = copyToString(argv[START_INDEX + 1]);
         } else {
             throw runtime_error("Image files must be with type '.bmp'.");
         }
