@@ -78,23 +78,22 @@ int main() {
         {"image", "rotate", "image_rotate.bmp", "result_rotate.bmp"},
         {"hash", "crc32", "crc.txt", "stdout"}
         };
-    const char* search[][6] = {
+    const char* search[][7] = {
         {"cache", "search", "matrix", "multiply", "matrix_mult1.txt", "matrix_mult2.txt"}, 
         {"cache", "search", "matrix", "add", "matrix_add1.txt", "matrix_add2.txt"},
         {"cache", "search", "image", "convert", "image_convert.bmp"},
         {"cache", "search", "image", "rotate", "image_rotate.bmp"},
         {"cache", "search", "hash", "crc32", "crc.txt"}
         };
-const char* f[][2] ={{"cache", "clear"}};
-        test(2, *(f));
-        for (int j = 0; j<2; ++j){
+    const char* f[][2] ={{"cache", "clear"}};
+    test(2, *(f));
+    for (int j = 0; j<2; ++j){
         for (unsigned int i = 0; i < 5; ++i) {
             test(length[i], *(argv + i));
             test(length[i]+1, *(search + i));
         }
-        }
-        cout << endl;
-
+    cout << endl;
+    }
 /*
     int length = 2;
     const char* argv[] = {"cache", "clear"};

@@ -37,7 +37,7 @@ public:
      */
     virtual string getOutputFileType() const = 0;
     /**
-     * @brief Get the Cache Code of the object (what the user writes to do the action).
+     * @brief Get the Cache Code of the object (the begining of the CacheString).
      * 
      * @return string 
      */
