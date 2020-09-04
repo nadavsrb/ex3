@@ -17,31 +17,22 @@ int main(int argc, char *argv[]) {
     int startIndex = 1;
     argc--;
 
-    // to few arguments
-    if (argc < 3 && !(argc == 2 && strcmp(argv[startIndex + 1], "clear") == 0)) {
-        throw NUMBER_OF_ARGUMENTS_ERROR;
-    }
-
-    bool isSearch = false;
-    bool isClear = false;
     unique_ptr<Operation> operation;
+    bool isSearch = CacheManager::isSearch(argc, argv + startIndex);
+    bool isClear = CacheManager::isClear(argc, argv + startIndex);
+
+    if (isSearch) {
+        // first two words are "cache search", moving on to the operation
+        startIndex += 2;
+        argc -= 2;
+    }
+    
     try {
-        // if the operation is a chace operation (search / clear):
-        if (strcmp(argv[startIndex], "cache") == 0) {
-            // search
-            if (strcmp(argv[startIndex + 1], "search") == 0) {
-                isSearch = true;
-                startIndex += 2; //index 0 = cache, index 1 = search - not important from now
-                argc -= 2;
-                if (argc < 3) {
-                    throw NUMBER_OF_ARGUMENTS_ERROR;
-                }
-            } else if (strcmp(argv[startIndex + 1], "clear") == 0) { // clear
-                isClear = true;
-            } else {
-                throw UNKNOWN_COMMAND;
-            }
+        // to few arguments
+        if (argc < 2 && !isClear) {
+            throw NUMBER_OF_ARGUMENTS_ERROR;
         }
+
         // regular operations
         if (!isClear) {
             // matrix operations

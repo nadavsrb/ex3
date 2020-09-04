@@ -96,7 +96,7 @@ uint32_t getCashFileIndex() {
     return std::stoi(line.substr(line.find("|") + 1)) + 1;
 }
 
-void CacheManager::performOperation(bool isSearched, bool isClear) {
+void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*= false*/) {
     checkCacheFileExists();
     if (isClear) {
         if (!std::filesystem::remove_all(CACHE_DIR)) {
@@ -183,4 +183,20 @@ string CacheManager::search() {
     }
 
     return ""; //didn't find
+}
+
+bool CacheManager::isSearch(int argc, const char* argv[]) {
+    // to few arguments
+    if (argc < 3) {
+        return false;
+    }
+    return strcmp(argv[0], "cache") == 0 && strcmp(argv[1], "search") == 0;
+}
+
+bool CacheManager::isClear(int argc, const char* argv[]) {
+    // only 2 arguments in this cache operation
+    if (argc != 2) {
+        return false;
+    }
+    return strcmp(argv[0], "cache") == 0 && strcmp(argv[1], "clear") == 0;
 }
