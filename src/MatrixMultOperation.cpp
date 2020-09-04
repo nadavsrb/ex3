@@ -11,7 +11,7 @@ MatrixMultOperation::MatrixMultOperation(const int argc, const char *argv[], boo
     }
 
     //exceptions
-    if (argsExpected != 3) {
+    if (argsExpected != 3) { // 2 input files & 1 output file
         throw NUMBER_OF_ARGUMENTS_ERROR;
     }
 
@@ -23,7 +23,7 @@ MatrixMultOperation::MatrixMultOperation(const int argc, const char *argv[], boo
     _inputFilesPath.push_back(copyToString(argv[START_INDEX]));
     _inputFilesPath.push_back(copyToString(argv[START_INDEX + 1]));
     if (!isSearched) { //is it's from searched operation ther isn't output file
-        if (typed(argv[2], "txt") || (copyToString(argv[START_INDEX + 2]).compare(PRINT) == 0)) {
+        if (typed(argv[START_INDEX + 2], "txt") || (copyToString(argv[START_INDEX + 2]).compare(PRINT) == 0)) {
             _outputFilePath = copyToString(argv[START_INDEX + 2]);
         } else {
             throw runtime_error("Matrix output file must be with type '.txt' or be 'stdout'.");
