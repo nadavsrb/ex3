@@ -3,8 +3,8 @@
 using namespace std;
 using namespace cache;
 
-CacheManager::CacheManager(unique_ptr<cache::operation::Operation>& op) {
-    _operation = move(op);
+CacheManager::CacheManager(shared_ptr<cache::operation::Operation> op) {
+    _operation = op;
 }
 
 /**

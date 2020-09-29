@@ -18,7 +18,7 @@ int main(int argc,const char *argv[]) {
     int startIndex = 1;
     --argc;
 
-    unique_ptr<cache::operation::Operation> operation;
+    shared_ptr<cache::operation::Operation> operation;
     bool isSearch = CacheManager::isSearch(argc, argv + startIndex);
     bool isClear = CacheManager::isClear(argc, argv + startIndex);
 
@@ -41,21 +41,21 @@ int main(int argc,const char *argv[]) {
             // matrix operations
             if (strcmp(argv[startIndex], "matrix") == 0) {
                 if (strcmp(argv[startIndex + 1], "multiply") == 0) { // matrix multiply
-                    operation =  make_unique<cache::operation::MatrixMultOperation>(argc - 2, &argv[startIndex + 2], isSearch);
+                    operation =  make_shared<cache::operation::MatrixMultOperation>(argc - 2, &argv[startIndex + 2], isSearch);
                 } else if (strcmp(argv[startIndex + 1], "add") == 0) { // matrix add
-                    operation =  make_unique<cache::operation::MatrixAddOperation>(argc - 2, &argv[startIndex + 2], isSearch);
+                    operation =  make_shared<cache::operation::MatrixAddOperation>(argc - 2, &argv[startIndex + 2], isSearch);
                 }
             // hash operations
             } else if (strcmp(argv[startIndex], "hash") == 0) {
                 if (strcmp(argv[startIndex + 1], "crc32") == 0) { // hash crc32
-                    operation =  make_unique<cache::operation::HashCrc32Operation>(argc - 2, &argv[startIndex + 2], isSearch);
+                    operation =  make_shared<cache::operation::HashCrc32Operation>(argc - 2, &argv[startIndex + 2], isSearch);
                 }
             // image operations
             } else if (strcmp(argv[startIndex], "image") == 0) {
                 if (strcmp(argv[startIndex + 1], "rotate") == 0) { // image rotate
-                    operation =  make_unique<cache::operation::ImageRotateOperation>(argc - 2, &argv[startIndex + 2], isSearch);
+                    operation =  make_shared<cache::operation::ImageRotateOperation>(argc - 2, &argv[startIndex + 2], isSearch);
                 } else if (strcmp(argv[startIndex + 1], "convert") == 0) { // image convert
-                    operation =  make_unique<cache::operation::ImageConvertOperation>(argc - 2, &argv[startIndex + 2], isSearch);
+                    operation =  make_shared<cache::operation::ImageConvertOperation>(argc - 2, &argv[startIndex + 2], isSearch);
                 }
             // an operation that doesn't exists
             } else {

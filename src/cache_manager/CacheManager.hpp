@@ -39,7 +39,7 @@ public:
      * 
      * @param op the operation that is given.
      */
-    CacheManager(std::unique_ptr<operation::Operation>& op);
+    CacheManager(std::shared_ptr<operation::Operation> op);
 
     /**
      * @brief Does an operation.
@@ -77,6 +77,6 @@ public:
     static bool isClear(int argc, const char* argv[]);
 
 private:
-    std::unique_ptr<operation::Operation> _operation;
+    std::shared_ptr<operation::Operation> _operation;
 };
 }
