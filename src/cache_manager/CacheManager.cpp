@@ -2,9 +2,7 @@
 
 using namespace cache;
 
-CacheManager::CacheManager(std::shared_ptr<cache::operation::Operation> op) {
-    m_operation = op;
-}
+CacheManager::CacheManager(std::shared_ptr<cache::operation::Operation> op) : m_operation(op) {}
 
 /**
  * @brief throws an error if the user added a file named like our cache file.
@@ -12,9 +10,14 @@ CacheManager::CacheManager(std::shared_ptr<cache::operation::Operation> op) {
  */
 void checkCacheFileExists() {
     //make the dir cache
-    mkdir(CacheManager::CACHE_DIR, 0777);
+    if (!std::filesystem::exists(CacheManager::CACHE_DIR) && mkdir(CacheManager::CACHE_DIR, 0777) < 0) {
+        throw std::system_error{errno, std::system_category()};
+    }
     //make the dir for the cache files
-    mkdir(CacheManager::CACHE_FILES_DIR, 0777);
+    if (!std::filesystem::exists(CacheManager::CACHE_FILES_DIR) && mkdir(CacheManager::CACHE_FILES_DIR, 0777) < 0) {
+        throw std::system_error{errno, std::system_category()};
+    }
+
     // opening the cache file
     const auto cachefd = open(CacheManager::CACHE_FILE, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
     if (cachefd < 0) {
@@ -50,7 +53,7 @@ void checkCacheFileExists() {
  * @param _operation the operation to make beckup file for.
  * @param index the index of the beckup file.
  */
-void createBeckupFile(const cache::operation::Operation& _operation, unsigned int index) {
+void createBeckupFile(const cache::operation::Operation& _operation, const unsigned int index) {
     //gets the files name.
     std::string fileName = "src/bin/cache/files/" + std::to_string(index) + "." + _operation.getOutputFileType();
 
