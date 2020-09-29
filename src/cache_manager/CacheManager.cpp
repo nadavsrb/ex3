@@ -137,14 +137,6 @@ void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*
         //writing the content from the beckup file to the output file.
         _operation->writeToOutputFile(files::readFileContent(fileName));
 
-        // changing the time & date
-        replace = cache::timeCounter::getTime() + '|' + std::to_string(index);
-
-        // replace the date (the whole line) in the cache file
-        string cache = files::readFileContent(CACHE_FILE);
-        cache.replace(cache.find(result), result.size(), replace);
-        files::writeFileContent(CACHE_FILE, cache);
-
         return;
     }
 
