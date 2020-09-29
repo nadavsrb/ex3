@@ -8,14 +8,6 @@ namespace cache{
 namespace operatorsHelpingFuncs {
 
 /**
- * @brief Copy a string from char* to std::string.
- * 
- * @param charArray - the string in char*.
- * @return string 
- */
-std::string copyToString(const char *charArray);
-
-/**
  * @brief Checks if a file is typed "type".
  * 
  * @param fileName - the name if the file.

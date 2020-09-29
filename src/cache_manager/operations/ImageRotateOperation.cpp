@@ -20,12 +20,12 @@ ImageRotateOperation::ImageRotateOperation(const int argc, const char *argv[], b
     }
 
     //saves the data from the command
-    m_inputFilesPath.push_back(copyToString(argv[START_INDEX]));
+    m_inputFilesPath.push_back(argv[START_INDEX]);
 
      //if not searched operatin intalize the output file.
     if (!isSearched) {
         if (typed(argv[START_INDEX + 1], "bmp")) {
-            m_outputFilePath = copyToString(argv[START_INDEX + 1]);
+            m_outputFilePath = argv[START_INDEX + 1];
         } else {
             throw std::runtime_error("Image files must be with type '.bmp'.");
         }

@@ -16,10 +16,10 @@ using namespace cache::operation;
         }
 
         //if not searched operatin intalize the output file.
-        m_inputFilesPath.push_back(copyToString(argv[START_INDEX]));
+        m_inputFilesPath.push_back(argv[START_INDEX]);
 
         if (!isSearched) {
-            m_outputFilePath = copyToString(argv[START_INDEX + 1]);
+            m_outputFilePath = argv[START_INDEX + 1];
             if(m_outputFilePath.find('.') == std::string::npos && m_outputFilePath.compare("stdout") != 0) {
                 throw std::runtime_error("Output file must have a type or be 'stdout'.");
             }

@@ -20,11 +20,12 @@ MatrixAddOperation::MatrixAddOperation(const int argc, const char *argv[], bool 
     }
     
     //saves the data from the command
-    m_inputFilesPath.push_back(copyToString(argv[START_INDEX]));
-    m_inputFilesPath.push_back(copyToString(argv[START_INDEX + 1]));
+    m_inputFilesPath.push_back((argv[START_INDEX]));
+    m_inputFilesPath.push_back(argv[START_INDEX + 1]);
     if (!isSearched) {//is it's from searched operation ther isn't output file
-        if (typed(argv[START_INDEX + 2], "txt") || (copyToString(argv[START_INDEX + 2]).compare(PRINT) == 0)) {
-            m_outputFilePath = copyToString(argv[START_INDEX + 2]);
+        std::string argv2Str = argv[START_INDEX + 2];
+        if (typed(argv[START_INDEX + 2], "txt") || (argv2Str.compare(PRINT) == 0)) {
+            m_outputFilePath = argv[START_INDEX + 2];
         } else {
             throw std::runtime_error("Matrix output file must be with type '.txt' or be 'stdout'.");
         }
