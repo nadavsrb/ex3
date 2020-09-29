@@ -1,7 +1,6 @@
 #include "MatrixAddOperation.hpp"
 
 using namespace cache::operatorsHelpingFuncs;
-using namespace std;
 using namespace cache::operation;
 
 MatrixAddOperation::MatrixAddOperation(const int argc, const char *argv[], bool isSearched /*= false*/){
@@ -17,7 +16,7 @@ MatrixAddOperation::MatrixAddOperation(const int argc, const char *argv[], bool 
     }
 
     if (!typed(argv[START_INDEX], "txt") || !typed(argv[START_INDEX + 1], "txt")) {
-        throw runtime_error("Matrix input files must be with type '.txt'.");
+        throw std::runtime_error("Matrix input files must be with type '.txt'.");
     }
     
     //saves the data from the command
@@ -27,7 +26,7 @@ MatrixAddOperation::MatrixAddOperation(const int argc, const char *argv[], bool 
         if (typed(argv[START_INDEX + 2], "txt") || (copyToString(argv[START_INDEX + 2]).compare(PRINT) == 0)) {
             m_outputFilePath = copyToString(argv[START_INDEX + 2]);
         } else {
-            throw runtime_error("Matrix output file must be with type '.txt' or be 'stdout'.");
+            throw std::runtime_error("Matrix output file must be with type '.txt' or be 'stdout'.");
         }
     }
 
@@ -54,14 +53,14 @@ void MatrixAddOperation::writeToFile(const string& fileName) const {
     }
 
     //creating the matrixes
-    auto matrix1 = make_unique<matrix::MatrixClass>(m_inputFilesPath.at(START_INDEX));
-    auto matrix2 = make_unique<matrix::MatrixClass>(m_inputFilesPath.at(START_INDEX + 1));
+    auto matrix1 = std::make_unique<matrix::MatrixClass>(m_inputFilesPath.at(START_INDEX));
+    auto matrix2 = std::make_unique<matrix::MatrixClass>(m_inputFilesPath.at(START_INDEX + 1));
 
     //calculating the operation
     *matrix1 += *matrix2;
 
     if (fileName.compare(PRINT) == 0) {//if output file is stdout
-        cout << *matrix1;
+        std::cout << *matrix1;
     } else {
         files::writeFileContent(fileName, matrix1->toString());
     }

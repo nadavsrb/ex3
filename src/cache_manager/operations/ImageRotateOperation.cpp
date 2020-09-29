@@ -1,7 +1,6 @@
 #include "ImageRotateOperation.hpp"
 
 using namespace cache::operatorsHelpingFuncs;
-using namespace std;
 using namespace cache::operation;
 
 ImageRotateOperation::ImageRotateOperation(const int argc, const char *argv[], bool isSearched /*= false*/){
@@ -17,7 +16,7 @@ ImageRotateOperation::ImageRotateOperation(const int argc, const char *argv[], b
     }
 
     if (!typed(argv[START_INDEX], "bmp")) {
-        throw runtime_error("Image files must be with type '.bmp'.");
+        throw std::runtime_error("Image files must be with type '.bmp'.");
     }
 
     //saves the data from the command
@@ -28,12 +27,12 @@ ImageRotateOperation::ImageRotateOperation(const int argc, const char *argv[], b
         if (typed(argv[START_INDEX + 1], "bmp")) {
             m_outputFilePath = copyToString(argv[START_INDEX + 1]);
         } else {
-            throw runtime_error("Image files must be with type '.bmp'.");
+            throw std::runtime_error("Image files must be with type '.bmp'.");
         }
     }
     
     //Calculating the _cacheString.
-    m_cacheString = getCacheCode() + " " + to_string(crc32::crc32(m_inputFilesPath.at(START_INDEX)));
+    m_cacheString = getCacheCode() + " " + std::to_string(crc32::crc32(m_inputFilesPath.at(START_INDEX)));
 }
 
 string ImageRotateOperation::getOutputFileType() const { return "bmp"; }

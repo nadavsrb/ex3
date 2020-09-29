@@ -1,9 +1,8 @@
 #include "CacheManager.hpp"
 
-using namespace std;
 using namespace cache;
 
-CacheManager::CacheManager(shared_ptr<cache::operation::Operation> op) {
+CacheManager::CacheManager(std::shared_ptr<cache::operation::Operation> op) {
     m_operation = op;
 }
 
@@ -19,7 +18,7 @@ void checkCacheFileExists() {
     // opening the cache file
     const auto cachefd = open(CacheManager::CACHE_FILE, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
     if (cachefd < 0) {
-        throw system_error{errno, system_category()};
+        throw std::system_error{errno, std::system_category()};
     }
 
     // to specify that we are in our cache manager file we make sure that the folowing line in the first one
@@ -32,14 +31,14 @@ void checkCacheFileExists() {
         int errorWriting = write(cachefd, CacheManager::CACHE_LINE, CacheManager::CACHE_LINE_LENGTH);
         if (errorWriting < 0) {
           close(cachefd);
-          throw system_error{errno, system_category()}; 
+          throw std::system_error{errno, std::system_category()}; 
         }
     } else if (errorID > 0 && (strcmp(cacheID, CacheManager::CACHE_LINE) != 0)) { // the file does not start with our line
         close(cachefd);
-        throw runtime_error("A file named 'Cache__DONT_TOUCH_THIS_FILE.txt' which is not a cache manager allready exists. Changed it's name and run the program again.");
+        throw std::runtime_error("A file named 'Cache__DONT_TOUCH_THIS_FILE.txt' which is not a cache manager allready exists. Changed it's name and run the program again.");
     } else if (errorID < 0) { // a system error
         close(cachefd);
-        throw system_error{errno, system_category()};
+        throw std::system_error{errno, std::system_category()};
     }
     close(cachefd);
 }
@@ -53,18 +52,18 @@ void checkCacheFileExists() {
  */
 void createBeckupFile(const cache::operation::Operation& _operation, unsigned int index) {
     //gets the files name.
-    string fileName = "src/bin/cache/files/" + std::to_string(index) + "." + _operation.getOutputFileType();
+    std::string fileName = "src/bin/cache/files/" + std::to_string(index) + "." + _operation.getOutputFileType();
 
     //opening (& creating if needed) the file.
     const auto cachefd = open(fileName.c_str(), O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
     if (cachefd < 0) {
-        throw system_error{errno, system_category()};
+        throw std::system_error{errno, std::system_category()};
     }
 
     //try to write the beckupfile.
     try{
         _operation.writeToFile(fileName);
-    } catch(const exception& e) {
+    } catch(const std::exception& e) {
         close(cachefd);
         throw e;
     }
@@ -79,14 +78,14 @@ void createBeckupFile(const cache::operation::Operation& _operation, unsigned in
  */
 uint32_t getCashFileIndex() {
     //opens the catche file
-    ifstream cacheFile;
+    std::ifstream cacheFile;
     cacheFile.open(CacheManager::CACHE_FILE);
     if (cacheFile.fail()) {
-        throw std::system_error(errno, system_category());
+        throw std::system_error(errno, std::system_category());
     }
 
     //helping varible
-    string line;
+    std::string line;
 
     //if not operation was done yet
     getline(cacheFile, line); //the title
@@ -108,31 +107,31 @@ void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*
     //if clear operation
     if (isClear) {
         if (!std::filesystem::remove_all(CACHE_DIR)) {
-            throw system_error(errno, system_category());
+            throw std::system_error(errno, std::system_category());
         }
         return;
     }
 
     //if search operation
     if (isSearched) {
-        string search = this->search();
+        std::string search = this->search();
         if (search == "") {
-             cout << "result wasn't found in cache" << endl;
+            std::cout << "result wasn't found in cache" << std::endl;
         } else {
-            cout << "result found in cache – saved on " << search.substr(0, cache::timeCounter::CurrentTime::TIME_STRING_LENGTH) << endl;
+            std::cout << "result found in cache – saved on " << search.substr(0, cache::timeCounter::CurrentTime::TIME_STRING_LENGTH) << std::endl;
         }
         return;
     }
 
     //searching for the operatin in the cache file. 
-    string result = search();
+    std::string result = search();
 
     //if found the operation
     if (result.compare("") != 0) {
         // first we will find the cache file that suits to the operation and copy it to our destination file
-        string replace, fileName;
+        std::string replace, fileName;
         unsigned int index = stoi(result.substr(result.find_last_of('|') + 1));
-        fileName = CACHE_FILES_DIR_ + to_string(index) + '.' + m_operation->getOutputFileType();
+        fileName = CACHE_FILES_DIR_ + std::to_string(index) + '.' + m_operation->getOutputFileType();
 
         //writing the content from the beckup file to the output file.
         m_operation->writeToOutputFile(files::readFileContent(fileName));
@@ -142,7 +141,7 @@ void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*
         replace = ct.getTime() + '|' + std::to_string(index);
 
         // replace the date (the whole line) in the cache file
-        string cache = files::readFileContent(CACHE_FILE);
+        std::string cache = files::readFileContent(CACHE_FILE);
         cache.replace(cache.find(result), result.size(), replace);
         files::writeFileContent(CACHE_FILE, cache);
 
@@ -155,11 +154,11 @@ void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*
     m_operation->writeToOutputFile();
 
     // writes the operation line into the cache file
-    string cacheCopy = "";
+    std::string cacheCopy = "";
     if (!isSearched) {
         cacheCopy += files::readFileContent(CACHE_FILE);
         cacheCopy.erase(0, CACHE_LINE_LENGTH);
-        string cache = CACHE_LINE + m_operation->getCacheString();
+        std::string cache = CACHE_LINE + m_operation->getCacheString();
         //adding the time & date
         cache += ",";
         cache::timeCounter::CurrentTime ct = cache::timeCounter::CurrentTime();
@@ -179,21 +178,21 @@ void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*
     }
 }
 
-string CacheManager::search() const {   
+std::string CacheManager::search() const {   
     //opens the catch file 
-    ifstream cacheFile;
+    std::ifstream cacheFile;
     cacheFile.open(CACHE_FILE);
     if (cacheFile.fail()) {
-        throw std::system_error(errno, system_category());
+        throw std::system_error(errno, std::system_category());
     }
 
     //exception
-    string line, operationLine;
+    std::string line, operationLine;
     if (m_operation != nullptr) {
         operationLine = m_operation->getCacheString();
     } else {
         cacheFile.close();
-        throw runtime_error(UNKNOWN_COMMAND);
+        throw std::runtime_error(UNKNOWN_COMMAND);
     }
 
     // checks if every begining of a line is similar to the CacheString of the operation

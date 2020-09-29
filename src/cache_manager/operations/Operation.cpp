@@ -1,6 +1,5 @@
 #include "Operation.hpp"
 
-using namespace std;
 
 using namespace cache::operation;
 
@@ -46,12 +45,12 @@ void Operation::writeToOutputFile() const {
     writeToFile(m_outputFilePath);
 }
 
-void Operation::writeToOutputFile(const string& content) const {
+void Operation::writeToOutputFile(const std::string& content) const {
     if(m_outputFilePath.compare(NOT_INITIALIZED) == 0) {//no output file
         return;
     }
     if (!m_outputFilePath.compare(PRINT)) {//if output is stdout
-        cout << content << endl;
+        std::cout << content << std::endl;
     } else {
         files::writeFileContent(m_outputFilePath, content);
     }

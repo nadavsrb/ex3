@@ -39,7 +39,7 @@ public:
      * 
      * @param op the operation that is given.
      */
-    CacheManager(std::shared_ptr<operation::Operation> op);
+    explicit CacheManager(std::shared_ptr<operation::Operation> op);
 
     /**
      * @brief Does an operation.
