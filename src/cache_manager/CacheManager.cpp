@@ -90,7 +90,7 @@ uint32_t getCashFileIndex() {
 
     //if not operation was done yet
     getline(cacheFile, line); //the title
-    if (cacheFile.peek() == std::ifstream::traits_type::eof()) {
+    if (cacheFile.eof()) {
         cacheFile.close();
         return 0;
     }
