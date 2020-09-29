@@ -8,7 +8,7 @@ ImageConvertOperation::ImageConvertOperation(const int argc, const char *argv[],
     //fixing the expected args if the operation is from search.
     int argsExpected = argc;
     if (isSearched) {
-        argsExpected++;
+        ++argsExpected;
     }
 
     //exceptions

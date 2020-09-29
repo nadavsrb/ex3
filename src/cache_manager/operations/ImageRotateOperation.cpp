@@ -8,7 +8,7 @@ ImageRotateOperation::ImageRotateOperation(const int argc, const char *argv[], b
     //fixing the expected args if the operation is from search.
     int argsExpected = argc;
     if (isSearched) {
-        argsExpected++;
+        ++argsExpected;
     }
 
     //exceptions
