@@ -119,7 +119,7 @@ void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*
         if (search == "") {
              cout << "result wasn't found in cache" << endl;
         } else {
-            cout << "result found in cache – saved on " << search.substr(0, cache::timeCounter::CurrentTime::TIME_STRING_LENGTH) << endl;
+            cout << "result found in cache – saved on " << search.substr(0, cache::timeCounter::TIME_STRING_LENGTH) << endl;
         }
         return;
     }
@@ -138,8 +138,7 @@ void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*
         _operation->writeToOutputFile(files::readFileContent(fileName));
 
         // changing the time & date
-        cache::timeCounter::CurrentTime ct = cache::timeCounter::CurrentTime();
-        replace = ct.getTime() + '|' + std::to_string(index);
+        replace = cache::timeCounter::getTime() + '|' + std::to_string(index);
 
         // replace the date (the whole line) in the cache file
         string cache = files::readFileContent(CACHE_FILE);
@@ -162,8 +161,7 @@ void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*
         string cache = CACHE_LINE + _operation->getCacheString();
         //adding the time & date
         cache += ",";
-        cache::timeCounter::CurrentTime ct = cache::timeCounter::CurrentTime();
-        cache += ct.getTime();
+        cache += cache::timeCounter::getTime();
 
         //adding the beckup file.
         unsigned int index = getCashFileIndex();
