@@ -77,6 +77,6 @@ public:
     static bool isClear(int argc, const char* argv[]);
 
 private:
-    std::shared_ptr<operation::Operation> _operation;
+    std::shared_ptr<operation::Operation> m_operation;
 };
 }

@@ -4,7 +4,7 @@ using namespace std;
 using namespace cache;
 
 CacheManager::CacheManager(shared_ptr<cache::operation::Operation> op) {
-    _operation = op;
+    m_operation = op;
 }
 
 /**
@@ -132,10 +132,10 @@ void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*
         // first we will find the cache file that suits to the operation and copy it to our destination file
         string replace, fileName;
         unsigned int index = stoi(result.substr(result.find_last_of('|') + 1));
-        fileName = CACHE_FILES_DIR_ + to_string(index) + '.' + _operation->getOutputFileType();
+        fileName = CACHE_FILES_DIR_ + to_string(index) + '.' + m_operation->getOutputFileType();
 
         //writing the content from the beckup file to the output file.
-        _operation->writeToOutputFile(files::readFileContent(fileName));
+        m_operation->writeToOutputFile(files::readFileContent(fileName));
 
         // changing the time & date
         cache::timeCounter::CurrentTime ct = cache::timeCounter::CurrentTime();
@@ -152,14 +152,14 @@ void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*
     //if the operation not in cache file.
 
     //writing the result to the output operation.
-    _operation->writeToOutputFile();
+    m_operation->writeToOutputFile();
 
     // writes the operation line into the cache file
     string cacheCopy = "";
     if (!isSearched) {
         cacheCopy += files::readFileContent(CACHE_FILE);
         cacheCopy.erase(0, CACHE_LINE_LENGTH);
-        string cache = CACHE_LINE + _operation->getCacheString();
+        string cache = CACHE_LINE + m_operation->getCacheString();
         //adding the time & date
         cache += ",";
         cache::timeCounter::CurrentTime ct = cache::timeCounter::CurrentTime();
@@ -175,7 +175,7 @@ void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*
 
         files::writeFileContent(CACHE_FILE, cache);
 
-        createBeckupFile(*_operation, index);
+        createBeckupFile(*m_operation, index);
     }
 }
 
@@ -189,8 +189,8 @@ string CacheManager::search() const {
 
     //exception
     string line, operationLine;
-    if (_operation != nullptr) {
-        operationLine = _operation->getCacheString();
+    if (m_operation != nullptr) {
+        operationLine = m_operation->getCacheString();
     } else {
         cacheFile.close();
         throw runtime_error(UNKNOWN_COMMAND);

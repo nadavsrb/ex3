@@ -110,9 +110,9 @@ public:
     virtual ~Operation() = default;
 
 protected:
-    std::string _cacheString = NOT_INITIALIZED;
-    std::vector<std::string> _inputFilesPath;
-    std::string _outputFilePath = NOT_INITIALIZED;//no output file
+    std::string m_cacheString = NOT_INITIALIZED;
+    std::vector<std::string> m_inputFilesPath;
+    std::string m_outputFilePath = NOT_INITIALIZED;//no output file
 };
 }
 }

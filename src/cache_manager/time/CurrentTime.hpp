@@ -27,7 +27,7 @@ public:
      */
     std::string getTime() const;
 private:
-    std::string _time = "";
+    std::string m_time = "";
 };
 }
 }

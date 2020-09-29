@@ -29,15 +29,15 @@ cache::timeCounter::CurrentTime::CurrentTime(){
    tm *ltm = localtime(&now);
 
     //calculating the time & date to string
-   _time += getString(ltm->tm_mday);
-   _time += "/";
-   _time += getString(ltm->tm_mon + 1);
-   _time += "/";
-   _time += std::to_string(ltm->tm_year).substr(1, 2); //the year is from 1900
-   _time += " ";
-   _time += getString(ltm->tm_hour);
-   _time += ":";
-   _time += getString(ltm->tm_min);
+   m_time += getString(ltm->tm_mday);
+   m_time += "/";
+   m_time += getString(ltm->tm_mon + 1);
+   m_time += "/";
+   m_time += std::to_string(ltm->tm_year).substr(1, 2); //the year is from 1900
+   m_time += " ";
+   m_time += getString(ltm->tm_hour);
+   m_time += ":";
+   m_time += getString(ltm->tm_min);
 }
 
-string cache::timeCounter::CurrentTime::getTime() const{ return _time; }
+string cache::timeCounter::CurrentTime::getTime() const{ return m_time; }

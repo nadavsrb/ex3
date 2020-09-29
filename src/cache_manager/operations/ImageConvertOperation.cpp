@@ -21,30 +21,30 @@ ImageConvertOperation::ImageConvertOperation(const int argc, const char *argv[],
     }
 
     //saves the data from the command
-    _inputFilesPath.push_back(copyToString(argv[START_INDEX]));
+    m_inputFilesPath.push_back(copyToString(argv[START_INDEX]));
 
     //if not searched operatin intalize the output file.
     if (!isSearched) {
         if (typed(argv[START_INDEX], "bmp")) {
-            _outputFilePath = copyToString(argv[START_INDEX + 1]);
+            m_outputFilePath = copyToString(argv[START_INDEX + 1]);
         } else {
             throw runtime_error("Image files must be with type '.bmp'.");
         }
     }
 
      //Calculating the _cacheString.
-    _cacheString = getCacheCode() + " " + to_string(crc32::crc32(_inputFilesPath.at(START_INDEX)));
+    m_cacheString = getCacheCode() + " " + to_string(crc32::crc32(m_inputFilesPath.at(START_INDEX)));
 }
 
 string ImageConvertOperation::getOutputFileType() const { return "bmp"; }
 
 string ImageConvertOperation::getCacheCode() const { return "image_convert"; }
 
-string ImageConvertOperation::getCacheString() const { return _cacheString; }
+string ImageConvertOperation::getCacheString() const { return m_cacheString; }
 
 void ImageConvertOperation::writeToFile(const string& fileName) const {
-    if(_outputFilePath.compare(NOT_INITIALIZED) == 0) {//no output file
+    if(m_outputFilePath.compare(NOT_INITIALIZED) == 0) {//no output file
         return;
     }
-    testing::bmp::convert_to_grayscale(_inputFilesPath.at(START_INDEX), fileName);
+    testing::bmp::convert_to_grayscale(m_inputFilesPath.at(START_INDEX), fileName);
 }
