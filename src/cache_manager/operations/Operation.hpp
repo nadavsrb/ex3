@@ -7,6 +7,7 @@
 #include <vector>
 #include <iostream>
 #include <stdexcept>
+#include <string_view>
 
 #define NUMBER_OF_ARGUMENTS_ERROR std::runtime_error("Invalid input! Number of arguments does not suit to the chosen operation.")
 #define UNKNOWN_COMMAND std::runtime_error("Invalid input! Unknown command.")
@@ -21,9 +22,9 @@ namespace cache{
 namespace operation{
 class Operation {
 public:
-    static constexpr int START_INDEX = 0;
-    static constexpr char PRINT[] = "stdout";
-    static constexpr char NOT_INITIALIZED[] = "";
+    static constexpr auto START_INDEX = 0;
+    static constexpr auto PRINT = "stdout";
+    static constexpr auto NOT_INITIALIZED = "";
 
     /**
      * @brief Construct a new Operation object.

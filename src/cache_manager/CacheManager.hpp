@@ -26,13 +26,13 @@ namespace cache{
 
 class CacheManager {
 public:
-    static constexpr char CACHE_FILE[] = "src/bin/cache/Cache__DONT_TOUCH_THIS_FILE.txt";
-    static constexpr char CACHE_LINE[] = "Cache Manager is running!\n";
-    static constexpr char CACHE_DIR[] = "src/bin/cache";
-    static constexpr char CACHE_FILES_DIR[] = "src/bin/cache/files";
-    static constexpr char CACHE_FILES_DIR_[] = "src/bin/cache/files/";
+    static constexpr auto CACHE_FILE = "src/bin/cache/Cache__DONT_TOUCH_THIS_FILE.txt";
+    static constexpr auto CACHE_LINE = "Cache Manager is running!\n";
+    static constexpr auto CACHE_DIR = "src/bin/cache";
+    static constexpr auto CACHE_FILES_DIR = "src/bin/cache/files";
+    static constexpr auto CACHE_FILES_DIR_ = "src/bin/cache/files/";
 
-    static constexpr int CACHE_LINE_LENGTH = 26;
+    static constexpr auto CACHE_LINE_LENGTH = 26;
 
     /**
      * @brief Construct a new Cache Manager object.
