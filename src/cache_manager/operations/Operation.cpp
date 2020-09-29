@@ -4,17 +4,11 @@ using namespace std;
 
 using namespace cache::operation;
 
-Operation::Operation(const Operation& op) : _cacheString(op._cacheString),
- _inputFilesPath(op._inputFilesPath), _outputFilePath(op._outputFilePath){}
-
-Operation& Operation::operator=(const Operation& op) {
-    //copying the data
+Operation::Operation(const Operation& op) {
     _cacheString = op._cacheString;
     _inputFilesPath = op._inputFilesPath;
     _outputFilePath = op._outputFilePath;
-
-    return *this;
-}
+ }
 
 Operation::Operation(Operation&& op) : _cacheString(op._cacheString),
  _inputFilesPath(op._inputFilesPath), _outputFilePath(op._outputFilePath){

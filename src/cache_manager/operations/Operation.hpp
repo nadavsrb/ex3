@@ -45,7 +45,7 @@ public:
      * @param op the operation to copy.
      * @return Operation& the copied operation.
      */
-    Operation& operator=(const Operation& op);
+    Operation& operator=(const Operation& op) = default;
 
     /**
      * @brief move Constructor.
