@@ -22,22 +22,23 @@ string getString(int num) {
     return s;
 }
 
-cache::timeCounter::CurrentTime::CurrentTime(){
+string cache::timeCounter::getTime() { 
     //current date/time based on current system
    time_t now = time(0);
 
    tm *ltm = localtime(&now);
 
     //calculating the time & date to string
-   m_time += getString(ltm->tm_mday);
-   m_time += "/";
-   m_time += getString(ltm->tm_mon + 1);
-   m_time += "/";
-   m_time += std::to_string(ltm->tm_year).substr(1, 2); //the year is from 1900
-   m_time += " ";
-   m_time += getString(ltm->tm_hour);
-   m_time += ":";
-   m_time += getString(ltm->tm_min);
-}
+   string time = "";
+   time += getString(ltm->tm_mday);
+   time += "/";
+   time += getString(ltm->tm_mon + 1);
+   time += "/";
+   time += std::to_string(ltm->tm_year).substr(1, 2); //the year is from 1900
+   time += " ";
+   time += getString(ltm->tm_hour);
+   time += ":";
+   time += getString(ltm->tm_min);
 
-string cache::timeCounter::CurrentTime::getTime() const{ return m_time; }
+   return time;
+ }

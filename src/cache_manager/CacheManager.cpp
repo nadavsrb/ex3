@@ -92,7 +92,7 @@ uint32_t getCashFileIndex() {
 
     //if not operation was done yet
     getline(cacheFile, line); //the title
-    if (cacheFile.peek() == std::ifstream::traits_type::eof()) {
+    if (cacheFile.eof()) {
         cacheFile.close();
         return 0;
     }
@@ -121,7 +121,11 @@ void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*
         if (search == "") {
             std::cout << "result wasn't found in cache" << std::endl;
         } else {
+<<<<<<< HEAD
+            cout << "result found in cache – saved on " << search.substr(0, cache::timeCounter::TIME_STRING_LENGTH) << endl;
+=======
             std::cout << "result found in cache – saved on " << search.substr(0, cache::timeCounter::CurrentTime::TIME_STRING_LENGTH) << std::endl;
+>>>>>>> b4f997cc53cbe11c2ef9b54c07328ab7891523b8
         }
         return;
     }
@@ -139,15 +143,6 @@ void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*
         //writing the content from the beckup file to the output file.
         m_operation->writeToOutputFile(files::readFileContent(fileName));
 
-        // changing the time & date
-        cache::timeCounter::CurrentTime ct = cache::timeCounter::CurrentTime();
-        replace = ct.getTime() + '|' + std::to_string(index);
-
-        // replace the date (the whole line) in the cache file
-        std::string cache = files::readFileContent(CACHE_FILE);
-        cache.replace(cache.find(result), result.size(), replace);
-        files::writeFileContent(CACHE_FILE, cache);
-
         return;
     }
 
@@ -164,8 +159,7 @@ void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*
         std::string cache = CACHE_LINE + m_operation->getCacheString();
         //adding the time & date
         cache += ",";
-        cache::timeCounter::CurrentTime ct = cache::timeCounter::CurrentTime();
-        cache += ct.getTime();
+        cache += cache::timeCounter::getTime();
 
         //adding the beckup file.
         unsigned int index = getCashFileIndex();

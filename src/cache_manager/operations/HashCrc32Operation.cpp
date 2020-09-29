@@ -7,7 +7,7 @@ using namespace cache::operation;
         //fixing the expected args if the operation is from search.
         int argsExpected = argc;
         if (isSearched) {
-            argsExpected++;
+            ++argsExpected;
         }
 
         //exceptions

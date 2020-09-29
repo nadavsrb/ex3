@@ -34,7 +34,7 @@ using namespace matrix;
 
     //checking how many rows & colums in the matrix
         getline(matrixFile,line);
-        numOfRow++; //the first row
+        ++numOfRow; //the first row
 
         //num of cols
         for (auto c: line) {
