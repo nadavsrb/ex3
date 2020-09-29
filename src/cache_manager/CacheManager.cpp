@@ -55,7 +55,7 @@ void checkCacheFileExists() {
  */
 void createBeckupFile(const cache::operation::Operation& _operation, const unsigned int index) {
     //gets the files name.
-    std::string fileName = CACHE_FILES_DIR_ + std::to_string(index) + "." + _operation.getOutputFileType();
+    std::string fileName = CacheManager::CACHE_FILES_DIR_ + std::to_string(index) + "." + _operation.getOutputFileType();
 
     //opening (& creating if needed) the file.
     const auto cachefd = open(fileName.c_str(), O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
