@@ -4,9 +4,9 @@
 using namespace cache::operation;
 
 Operation::Operation(const Operation& op) {
-    _cacheString = op._cacheString;
-    _inputFilesPath = op._inputFilesPath;
-    _outputFilePath = op._outputFilePath;
+    m_cacheString = op.m_cacheString;
+    m_inputFilesPath = op.m_inputFilesPath;
+    m_outputFilePath = op.m_outputFilePath;
  }
 
 Operation::Operation(Operation&& op) : m_cacheString(op.m_cacheString),

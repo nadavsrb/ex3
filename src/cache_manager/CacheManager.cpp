@@ -121,11 +121,7 @@ void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*
         if (search == "") {
             std::cout << "result wasn't found in cache" << std::endl;
         } else {
-<<<<<<< HEAD
-            cout << "result found in cache – saved on " << search.substr(0, cache::timeCounter::TIME_STRING_LENGTH) << endl;
-=======
-            std::cout << "result found in cache – saved on " << search.substr(0, cache::timeCounter::CurrentTime::TIME_STRING_LENGTH) << std::endl;
->>>>>>> b4f997cc53cbe11c2ef9b54c07328ab7891523b8
+            std::cout << "result found in cache – saved on " << search.substr(0, timeCounter::TIME_STRING_LENGTH) << std::endl;
         }
         return;
     }
