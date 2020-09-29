@@ -18,11 +18,12 @@
 #include <errno.h>
 #include <system_error>
 
-class Operation;
+namespace cache{
 
 /**
  * @brief this class stands for the cache.
  */
+
 class CacheManager {
 public:
     static constexpr char CACHE_FILE[] = "src/bin/cache/Cache__DONT_TOUCH_THIS_FILE.txt";
@@ -38,7 +39,7 @@ public:
      * 
      * @param op the operation that is given.
      */
-    CacheManager(std::unique_ptr<Operation>& op);
+    CacheManager(std::unique_ptr<operation::Operation>& op);
 
     /**
      * @brief Does an operation.
@@ -76,5 +77,6 @@ public:
     static bool isClear(int argc, const char* argv[]);
 
 private:
-    std::unique_ptr<Operation> _operation;
+    std::unique_ptr<operation::Operation> _operation;
 };
+}

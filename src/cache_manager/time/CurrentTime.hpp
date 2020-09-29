@@ -7,6 +7,8 @@
 /**
  * @brief this class is for calculating the corent time.
  */
+namespace cache{
+namespace timeCounter{
 class CurrentTime {
 public:
     static constexpr std::uint32_t TIME_STRING_LENGTH = 14;
@@ -27,3 +29,5 @@ public:
 private:
     std::string _time = "";
 };
+}
+}

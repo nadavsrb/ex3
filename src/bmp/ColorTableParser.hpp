@@ -11,6 +11,8 @@ using std::vector;
 using std::uint32_t;
 using std::uint16_t;
 
+
+namespace bmp{
 class ColorTableParser {
 
 	string _str;
@@ -70,3 +72,4 @@ public:
 	 */
 	~ColorTableParser();
 };
+}

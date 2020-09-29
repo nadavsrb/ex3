@@ -22,7 +22,7 @@ string getString(int num) {
     return s;
 }
 
-CurrentTime::CurrentTime(){
+cache::timeCounter::CurrentTime::CurrentTime(){
     //current date/time based on current system
    time_t now = time(0);
 
@@ -40,4 +40,4 @@ CurrentTime::CurrentTime(){
    _time += getString(ltm->tm_min);
 }
 
-string CurrentTime::getTime() const{ return _time; }
+string cache::timeCounter::CurrentTime::getTime() const{ return _time; }

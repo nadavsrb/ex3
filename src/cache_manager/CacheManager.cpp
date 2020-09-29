@@ -1,8 +1,9 @@
 #include "CacheManager.hpp"
 
 using namespace std;
+using namespace cache;
 
-CacheManager::CacheManager(unique_ptr<Operation>& op) {
+CacheManager::CacheManager(unique_ptr<cache::operation::Operation>& op) {
     _operation = move(op);
 }
 
@@ -50,7 +51,7 @@ void checkCacheFileExists() {
  * @param _operation the operation to make beckup file for.
  * @param index the index of the beckup file.
  */
-void createBeckupFile(const Operation& _operation, unsigned int index) {
+void createBeckupFile(const cache::operation::Operation& _operation, unsigned int index) {
     //gets the files name.
     string fileName = "src/bin/cache/files/" + std::to_string(index) + "." + _operation.getOutputFileType();
 
@@ -118,7 +119,7 @@ void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*
         if (search == "") {
              cout << "result wasn't found in cache" << endl;
         } else {
-            cout << "result found in cache – saved on " << search.substr(0, CurrentTime::TIME_STRING_LENGTH) << endl;
+            cout << "result found in cache – saved on " << search.substr(0, cache::timeCounter::CurrentTime::TIME_STRING_LENGTH) << endl;
         }
         return;
     }
@@ -134,16 +135,16 @@ void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*
         fileName = CACHE_FILES_DIR_ + to_string(index) + '.' + _operation->getOutputFileType();
 
         //writing the content from the beckup file to the output file.
-        _operation->writeToOutputFile(readFileContent(fileName));
+        _operation->writeToOutputFile(files::readFileContent(fileName));
 
         // changing the time & date
-        CurrentTime ct = CurrentTime();
+        cache::timeCounter::CurrentTime ct = cache::timeCounter::CurrentTime();
         replace = ct.getTime() + '|' + std::to_string(index);
 
         // replace the date (the whole line) in the cache file
-        string cache = readFileContent(CACHE_FILE);
+        string cache = files::readFileContent(CACHE_FILE);
         cache.replace(cache.find(result), result.size(), replace);
-        writeFileContent(CACHE_FILE, cache);
+        files::writeFileContent(CACHE_FILE, cache);
 
         return;
     }
@@ -156,12 +157,12 @@ void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*
     // writes the operation line into the cache file
     string cacheCopy = "";
     if (!isSearched) {
-        cacheCopy += readFileContent(CACHE_FILE);
+        cacheCopy += files::readFileContent(CACHE_FILE);
         cacheCopy.erase(0, CACHE_LINE_LENGTH);
         string cache = CACHE_LINE + _operation->getCacheString();
         //adding the time & date
         cache += ",";
-        CurrentTime ct = CurrentTime();
+        cache::timeCounter::CurrentTime ct = cache::timeCounter::CurrentTime();
         cache += ct.getTime();
 
         //adding the beckup file.
@@ -172,7 +173,7 @@ void CacheManager::performOperation(bool isSearched /*= false*/, bool isClear /*
         //adding the other cache
         cache += cacheCopy;
 
-        writeFileContent(CACHE_FILE, cache);
+        files::writeFileContent(CACHE_FILE, cache);
 
         createBeckupFile(*_operation, index);
     }

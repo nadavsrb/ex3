@@ -1,7 +1,8 @@
 #include "MatrixMultOperation.hpp"
 
-using namespace OperatorsHelpingFuncs;
+using namespace cache::operatorsHelpingFuncs;
 using namespace std;
+using namespace cache::operation;
 
 MatrixMultOperation::MatrixMultOperation(const int argc, const char *argv[], bool isSearched /*= false*/){
     //fixing the expected args if the operation is from search.
@@ -36,8 +37,8 @@ MatrixMultOperation::MatrixMultOperation(const int argc, const char *argv[], boo
     _cacheString = getCacheCode();
     for (auto file: _inputFilesPath) {
         _cacheString += " ";
-        MatrixClass matrix(file);
-        _cacheString += to_string(crc32FromString(matrix.toString())); //don't see " "
+        matrix::MatrixClass matrix(file);
+        _cacheString += to_string(crc32::crc32FromString(matrix.toString())); //don't see " "
     }
 }
     
@@ -53,8 +54,8 @@ void MatrixMultOperation::writeToFile(const string& fileName) const {
     }
 
     //creating the matrixes
-    auto matrix1 = make_unique<MatrixClass>(_inputFilesPath.at(START_INDEX));
-    auto matrix2 = make_unique<MatrixClass>(_inputFilesPath.at(START_INDEX + 1));
+    auto matrix1 = make_unique<matrix::MatrixClass>(_inputFilesPath.at(START_INDEX));
+    auto matrix2 = make_unique<matrix::MatrixClass>(_inputFilesPath.at(START_INDEX + 1));
 
     //calculating the operation
     *matrix1 *= *matrix2;
@@ -62,6 +63,6 @@ void MatrixMultOperation::writeToFile(const string& fileName) const {
     if (fileName.compare(PRINT) == 0) {//if output file is stdout
         cout << *matrix1;
     } else {
-        writeFileContent(fileName, matrix1->toString());
+        files::writeFileContent(fileName, matrix1->toString());
     }
 }

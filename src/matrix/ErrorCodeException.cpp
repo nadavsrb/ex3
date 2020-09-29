@@ -1,5 +1,7 @@
 #include "ErrorCodeException.hpp"
 
+using namespace matrix;
+
 //Implementing methods
 	ErrorCodeException::ErrorCodeException(const ErrorCode er) : _errorCode(er){}
 

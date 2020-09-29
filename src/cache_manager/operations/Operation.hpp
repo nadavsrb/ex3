@@ -17,6 +17,8 @@
  * to represent a part of a search operation that would
  * represent the operation we are locking for.
  */
+namespace cache{
+namespace operation{
 class Operation {
 public:
     static constexpr int START_INDEX = 0;
@@ -111,3 +113,5 @@ protected:
     std::vector<std::string> _inputFilesPath;
     std::string _outputFilePath = NOT_INITIALIZED;//no output file
 };
+}
+}

@@ -12,6 +12,8 @@ using std::uint32_t;
 #define NUM_BYTES_OF_SIZE_AND_OFFSET 4
 #define LOCATION_OF_SIZE 2
 #define LOCATION_OF_OFFSET 10
+
+namespace bmp{
 class BMPHeaderParser {
 
 //Fields
@@ -49,3 +51,4 @@ public:
 	 */
 	uint32_t getOffset() const;
 };
+}

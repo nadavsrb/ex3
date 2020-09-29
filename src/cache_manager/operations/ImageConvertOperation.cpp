@@ -1,7 +1,8 @@
 #include "ImageConvertOperation.hpp"
 
-using namespace OperatorsHelpingFuncs;
+using namespace cache::operatorsHelpingFuncs;
 using namespace std;
+using namespace cache::operation;
 
 ImageConvertOperation::ImageConvertOperation(const int argc, const char *argv[], bool isSearched /*= false*/){
     //fixing the expected args if the operation is from search.
@@ -32,7 +33,7 @@ ImageConvertOperation::ImageConvertOperation(const int argc, const char *argv[],
     }
 
      //Calculating the _cacheString.
-    _cacheString = getCacheCode() + " " + to_string(crc32(_inputFilesPath.at(START_INDEX)));
+    _cacheString = getCacheCode() + " " + to_string(crc32::crc32(_inputFilesPath.at(START_INDEX)));
 }
 
 string ImageConvertOperation::getOutputFileType() const { return "bmp"; }

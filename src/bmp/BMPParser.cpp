@@ -3,6 +3,8 @@
 #include <string>
 using std::string;
 
+using namespace bmp;
+
 BMPParser::BMPParser(const string& str) {
 	this->_str = str;
 	this->_BHparser = new BMPHeaderParser(str.substr(0, 14));

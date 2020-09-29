@@ -1,7 +1,8 @@
 #include "HashCrc32Operation.hpp"
 
-using namespace OperatorsHelpingFuncs;
+using namespace cache::operatorsHelpingFuncs;
 using namespace std;
+using namespace cache::operation;
 
     HashCrc32Operation::HashCrc32Operation(const int argc, const char *argv[], bool isSearched /*= false*/){
         //fixing the expected args if the operation is from search.
@@ -26,7 +27,7 @@ using namespace std;
         }
     
          //Calculating the _cacheString.
-        _cacheString = getCacheCode() + " " + std::to_string(crc32(_inputFilesPath.at(START_INDEX)));
+        _cacheString = getCacheCode() + " " + std::to_string(crc32::crc32(_inputFilesPath.at(START_INDEX)));
     }
     
     string HashCrc32Operation::getOutputFileType() const { return "txt"; }
@@ -40,11 +41,11 @@ using namespace std;
             return;
         }
         string result = "";
-        result += std::to_string(crc32(_inputFilesPath.at(START_INDEX)));
+        result += std::to_string(crc32::crc32(_inputFilesPath.at(START_INDEX)));
 
         if (fileName.compare(PRINT)  == 0) {
             cout << result << endl;
         } else {
-            writeFileContent(fileName, result);
+            files::writeFileContent(fileName, result);
         }
     }

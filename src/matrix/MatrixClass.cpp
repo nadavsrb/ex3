@@ -1,5 +1,7 @@
 #include "MatrixClass.hpp"
 
+using namespace matrix;
+
 //Implementing methods
 	MatrixClass::MatrixClass(uint32_t height, uint32_t width){
         //creating the matrix & throwing exception if needed
@@ -327,7 +329,7 @@
         }
         return s;
     }
-
+namespace matrix {
 //friends functins
     std::ostream& operator<<(std::ostream& stream, const MatrixClass& matrix){
         //var to use
@@ -351,3 +353,4 @@
     MatrixClass& operator*(double scalar, const MatrixClass& matrix) {
         return matrix * scalar;
     }
+}

@@ -1,5 +1,7 @@
 #include "DIBHeaderParser.hpp"
 
+using namespace bmp;
+
 DIBHeaderParser::DIBHeaderParser(const string& str) {
 	this->_str = str;
 

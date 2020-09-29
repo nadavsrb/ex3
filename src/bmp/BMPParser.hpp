@@ -18,6 +18,8 @@ using std::cout;
 using std::endl;
 using std::uint32_t;
 
+
+namespace bmp{
 class BMPParser {
 
 	string _str;
@@ -33,3 +35,4 @@ public:
 	void imageToGray();
 	void rotateImage();
 };
+}

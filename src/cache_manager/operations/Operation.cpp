@@ -2,6 +2,8 @@
 
 using namespace std;
 
+using namespace cache::operation;
+
 Operation::Operation(const Operation& op) : _cacheString(op._cacheString),
  _inputFilesPath(op._inputFilesPath), _outputFilePath(op._outputFilePath){}
 
@@ -51,6 +53,6 @@ void Operation::writeToOutputFile(const string& content) const {
     if (!_outputFilePath.compare(PRINT)) {//if output is stdout
         cout << content << endl;
     } else {
-        writeFileContent(_outputFilePath, content);
+        files::writeFileContent(_outputFilePath, content);
     }
 }

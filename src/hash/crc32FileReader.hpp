@@ -7,6 +7,7 @@
 #include <string>
 #include <algorithm>
 
+namespace crc32{
 /**
  * @brief Performs the crc32 algorithem on file.
  * 
@@ -22,3 +23,5 @@ std::uint32_t crc32(const std::string& filePath);
  * @return uint32_t the crc32 on the string.
  */
 std::uint32_t crc32FromString(const std::string& file);
+
+}
