@@ -1,14 +1,16 @@
 #include "MatrixClass.hpp"
 
+using namespace matrix;
+
 //Implementing methods
 	MatrixClass::MatrixClass(uint32_t height, uint32_t width){
         //creating the matrix & throwing exception if needed
-        ErrorCodeException::throwErrorIfNeeded(matrix_create(&_matrix, height, width));
+        ErrorCodeException::throwErrorIfNeeded(matrix_create(&m_matrix, height, width));
     }
 
     MatrixClass::MatrixClass(const MatrixClass& source){
         //copy the matrix & throwing excepstion if needed
-        ErrorCodeException::throwErrorIfNeeded(matrix_copy(&_matrix, source._matrix));
+        ErrorCodeException::throwErrorIfNeeded(matrix_copy(&m_matrix, source.m_matrix));
     }
 
     MatrixClass::MatrixClass(const string& filePath) {
@@ -32,7 +34,7 @@
 
     //checking how many rows & colums in the matrix
         getline(matrixFile,line);
-        numOfRow++; //the first row
+        ++numOfRow; //the first row
 
         //num of cols
         for (auto c: line) {
@@ -52,7 +54,7 @@
         
         //creating the matrix & throwing exception if needed
         try {
-            ErrorCodeException::throwErrorIfNeeded(matrix_create(&_matrix, numOfRow, numOfCol));
+            ErrorCodeException::throwErrorIfNeeded(matrix_create(&m_matrix, numOfRow, numOfCol));
         } catch (const ErrorCodeException& e){
             matrixFile.close();
             throw e;
@@ -76,7 +78,7 @@
 		        if (c == ',') {
                     //setting the value
                     if(valueInString == "") {
-                        matrix_destroy(_matrix);
+                        matrix_destroy(m_matrix);
                         matrixFile.close();
                         throw std::runtime_error("Found a ',' without a number before it. Can not convert into matrix.");
                     }
@@ -84,10 +86,10 @@
                     //setting var
                     try{
                         ErrorCodeException::throwErrorIfNeeded(
-                        matrix_setValue(_matrix, row, col, stod(valueInString)));
+                        matrix_setValue(m_matrix, row, col, stod(valueInString)));
                         ++numOfValuesPerRow;
                     } catch (const ErrorCodeException& e){
-                        matrix_destroy(_matrix);
+                        matrix_destroy(m_matrix);
                         matrixFile.close();
                         throw e;
                     }
@@ -99,7 +101,7 @@
 
                 // if we reached an unknown character
                 if (c != '.' && c != '-' && !(c >= '0' && c <= '9')) {
-                    matrix_destroy(_matrix);
+                    matrix_destroy(m_matrix);
                     matrixFile.close();
                     throw std::runtime_error("Found an unknown character in the file. Can not convert into matrix.");
                 }
@@ -112,14 +114,14 @@
                  valueInString[valueInString.length() - 1] <= '9') &&
                 !(valueInString[valueInString.length() - 2] >= '0' &&
                  valueInString[valueInString.length() - 2] <= '9')) {
-                    matrix_destroy(_matrix);
+                    matrix_destroy(m_matrix);
                     matrixFile.close();
                     throw std::runtime_error("Found unknown combination on characters. Can not convert into matrix.");
                 }
             }
             //setting the value of the last index in the line
             if(valueInString == "") {
-                matrix_destroy(_matrix);
+                matrix_destroy(m_matrix);
                 matrixFile.close();
                 throw std::runtime_error("Found a ',' without a number after it. Can not convert into matrix.");
             }
@@ -130,23 +132,23 @@
              valueInString[valueInString.length() - 1] <= '9') &&
             !(valueInString[valueInString.length() - 2] >= '0' &&
             valueInString[valueInString.length() - 2] <= '9')) {
-                matrix_destroy(_matrix);
+                matrix_destroy(m_matrix);
                 matrixFile.close();
                 throw std::runtime_error("Found unknown combination on characters. Can not convert into matrix.");
             }
             
             try{
                 ErrorCodeException::throwErrorIfNeeded(
-                matrix_setValue(_matrix, row, col, stod(valueInString)));
+                matrix_setValue(m_matrix, row, col, stod(valueInString)));
                 ++numOfValuesPerRow;
             }catch (const ErrorCodeException& e){
-                matrix_destroy(_matrix);
+                matrix_destroy(m_matrix);
                 matrixFile.close();
                 throw e;
             }
 
             if(numOfValuesPerRow < numOfCol){
-                matrix_destroy(_matrix);
+                matrix_destroy(m_matrix);
                 matrixFile.close();
                 throw std::runtime_error("Found a raw with less values than needed");
             }
@@ -157,10 +159,10 @@
     MatrixClass& MatrixClass::operator=(const MatrixClass& source){
 
         //Trying to destroy the matrix in the field (if not intalized yet would do nothing)
-        matrix_destroy(_matrix);
+        matrix_destroy(m_matrix);
 
         //creating copy of the matrix in the field & throwing exception if needed
-        ErrorCodeException::throwErrorIfNeeded(matrix_copy(&_matrix, source._matrix));
+        ErrorCodeException::throwErrorIfNeeded(matrix_copy(&m_matrix, source.m_matrix));
 
         return *this;
     }
@@ -169,7 +171,7 @@
         uint32_t height;
 
         //gets the height & throwing exception if needed
-        ErrorCodeException::throwErrorIfNeeded(matrix_getHeight(_matrix, &height));
+        ErrorCodeException::throwErrorIfNeeded(matrix_getHeight(m_matrix, &height));
 
         return height;
     }
@@ -178,7 +180,7 @@
         uint32_t width;
 
         //gets the width & throwing exception if needed
-        ErrorCodeException::throwErrorIfNeeded(matrix_getWidth(_matrix, &width));
+        ErrorCodeException::throwErrorIfNeeded(matrix_getWidth(m_matrix, &width));
 
         return width;
     }
@@ -187,7 +189,7 @@
                            double value) {
         //sets the value & throwing exception if needed
         ErrorCodeException::throwErrorIfNeeded(
-            matrix_setValue(_matrix, rowIndex, colIndex, value));
+            matrix_setValue(m_matrix, rowIndex, colIndex, value));
     }
 
     double MatrixClass::operator()(uint32_t rowIndex, uint32_t colIndex) const{
@@ -195,7 +197,7 @@
 
         //gets the value & throwing exception if needed
         ErrorCodeException::throwErrorIfNeeded(
-            matrix_getValue(_matrix, rowIndex, colIndex, &value));
+            matrix_getValue(m_matrix, rowIndex, colIndex, &value));
 
         return value;
     }
@@ -207,13 +209,13 @@
 
         //Calculating result matrix & throwing exception if needed
         ErrorCodeException::throwErrorIfNeeded(
-            matrix_add(&result, _matrix, other._matrix));
+            matrix_add(&result, m_matrix, other.m_matrix));
 
         //destroying the corrent matrix
-        matrix_destroy(_matrix);
+        matrix_destroy(m_matrix);
 
         //updating the matrix to the result
-        _matrix = result;
+        m_matrix = result;
 
         return *this;
     }
@@ -232,13 +234,13 @@
 
         //Calculating result matrix & throwing exception if needed
         ErrorCodeException::throwErrorIfNeeded(
-            matrix_multiplyMatrices(&result, _matrix, other._matrix));
+            matrix_multiplyMatrices(&result, m_matrix, other.m_matrix));
 
         //destroying the corrent matrix
-        matrix_destroy(_matrix);
+        matrix_destroy(m_matrix);
 
         //updating the matrix to the result
-        _matrix = result;
+        m_matrix = result;
 
         return *this;
     }
@@ -247,7 +249,7 @@
         //Multipling this matrix with the scalar into 
         //this matrix & throwing exception if needed
         ErrorCodeException::throwErrorIfNeeded(
-            matrix_multiplyWithScalar(_matrix, scalar));
+            matrix_multiplyWithScalar(m_matrix, scalar));
 
         return *this;
     }
@@ -258,7 +260,7 @@
 
     MatrixClass::~MatrixClass() {
         //destroying the corrent matrix
-        matrix_destroy(_matrix);
+        matrix_destroy(m_matrix);
     }
 
 //another operators. warning! they return new MatrixClass
@@ -268,7 +270,7 @@
 
         //Calculating result matrix & throwing exception if needed
         ErrorCodeException::throwErrorIfNeeded(
-            matrix_add(&result->_matrix, _matrix, other._matrix));
+            matrix_add(&result->m_matrix, m_matrix, other.m_matrix));
 
         return *result;
     }
@@ -286,7 +288,7 @@
 
         //Calculating result matrix & throwing exception if needed
         ErrorCodeException::throwErrorIfNeeded(
-            matrix_multiplyMatrices(&result->_matrix, _matrix, other._matrix));
+            matrix_multiplyMatrices(&result->m_matrix, m_matrix, other.m_matrix));
 
         return *result;
     }
@@ -298,7 +300,7 @@
         //Multipling this matrix with the scalar into 
         //this matrix & throwing exception if needed
         ErrorCodeException::throwErrorIfNeeded(
-            matrix_multiplyWithScalar(result->_matrix, scalar));
+            matrix_multiplyWithScalar(result->m_matrix, scalar));
 
         return *result;
     }
@@ -327,7 +329,7 @@
         }
         return s;
     }
-
+namespace matrix {
 //friends functins
     std::ostream& operator<<(std::ostream& stream, const MatrixClass& matrix){
         //var to use
@@ -351,3 +353,4 @@
     MatrixClass& operator*(double scalar, const MatrixClass& matrix) {
         return matrix * scalar;
     }
+}

@@ -1,11 +1,13 @@
 #include "BMArrayWithColorPattle.hpp"
 
+using namespace bmp;
+
 BMArrayWithColorPattle::BMArrayWithColorPattle(const string& str, uint32_t width,
         uint32_t height, ColorTableParser* colorTable){
     this->_str = str;
 	this->_width = width;
 	this->_height = height;
-	this->_matrix = new MatrixClass(height, width);
+	this->_matrix = new matrix::MatrixClass(height, width);
     this->_colorTable = colorTable;
 
 	//calculating how much padding for width *1 (=nub bits to pixel) to be 4*int
@@ -45,7 +47,7 @@ uint16_t BMArrayWithColorPattle::getbytesPeddingPerRow() const {
 	return this->_bytesPeddingPerRow;
 }
 
-MatrixClass& BMArrayWithColorPattle::getBitMap() const {
+matrix::MatrixClass& BMArrayWithColorPattle::getBitMap() const {
 	return *(this->_matrix);
 }
 
@@ -64,7 +66,7 @@ void BMArrayWithColorPattle::rotate() {
 	this->_height = width;
 	this->_width = height;
 
-	MatrixClass* newMatrix = new MatrixClass(this->_height, this->_width);
+	matrix::MatrixClass* newMatrix = new matrix::MatrixClass(this->_height, this->_width);
 
 	//Itarating on the old matrixes and intalizing the new ones.
 	for (uint32_t row = 0; row < this->_width; ++row) {

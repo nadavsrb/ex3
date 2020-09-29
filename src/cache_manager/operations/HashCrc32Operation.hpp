@@ -6,6 +6,8 @@
 /**
  * @brief This class stands for the "hash crc32" operation.
  */
+namespace cache {
+namespace operation{
 class HashCrc32Operation : public Operation {
 public:
     /**
@@ -23,3 +25,5 @@ public:
 
     void writeToFile(const std::string& fileName) const override;
 };
+}
+}

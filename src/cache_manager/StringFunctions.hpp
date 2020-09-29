@@ -4,15 +4,8 @@
  * @brief this namespace is a group of functions to
  * help in the operation and his sub classes. 
  */
-namespace OperatorsHelpingFuncs {
-
-/**
- * @brief Copy a string from char* to std::string.
- * 
- * @param charArray - the string in char*.
- * @return string 
- */
-std::string copyToString(const char *charArray);
+namespace cache{
+namespace operatorsHelpingFuncs {
 
 /**
  * @brief Checks if a file is typed "type".
@@ -22,4 +15,5 @@ std::string copyToString(const char *charArray);
  * @return true or false
  */
 bool typed(const std::string& fileName, const std::string& type);
+}
 }

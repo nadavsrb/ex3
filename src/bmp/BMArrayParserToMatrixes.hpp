@@ -8,6 +8,7 @@ using std::uint16_t;
 using std::uint32_t;
 using std::string;
 //for 24 bits pixels
+namespace bmp{
 class BMArrayParserToMatrixes {
 	//if we read a string that 
 	//represent 0 we will save her (writing 0 is special).
@@ -17,9 +18,9 @@ class BMArrayParserToMatrixes {
 	uint32_t _width;
 	uint32_t _height;
 	uint16_t _bytesPeddingPerRow; //max 3
-	MatrixClass* _Rmatrix;
-	MatrixClass* _Bmatrix;
-	MatrixClass* _Gmatrix;
+	matrix::MatrixClass* _Rmatrix;
+	matrix::MatrixClass* _Bmatrix;
+	matrix::MatrixClass* _Gmatrix;
 
 public:
 	/**
@@ -65,21 +66,21 @@ public:
 	 * 
 	 * @return MatrixClass& the R pixel'S value -matrix of the BitmapArray.
 	 */
-	MatrixClass& getBitMapR() const;
+	matrix::MatrixClass& getBitMapR() const;
 
 	/**
 	 * @brief Get the Bit Map G object.
 	 * 
 	 * @return MatrixClass& the G pixel'S value -matrix of the BitmapArray.
 	 */
-	MatrixClass& getBitMapG() const;
+	matrix::MatrixClass& getBitMapG() const;
 
 	/**
 	 * @brief Get the Bit Map B object.
 	 * 
 	 * @return MatrixClass& the B pixel'S value -matrix of the BitmapArray.
 	 */
-	MatrixClass& getBitMapB() const;
+	matrix::MatrixClass& getBitMapB() const;
 
 	/**
 	 * @brief Changes the matrixes to have
@@ -94,3 +95,4 @@ public:
  	*/
 	void rotate();
 };
+}

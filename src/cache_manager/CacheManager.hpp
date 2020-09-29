@@ -18,27 +18,28 @@
 #include <errno.h>
 #include <system_error>
 
-class Operation;
+namespace cache{
 
 /**
  * @brief this class stands for the cache.
  */
+
 class CacheManager {
 public:
-    static constexpr char CACHE_FILE[] = "src/bin/cache/Cache__DONT_TOUCH_THIS_FILE.txt";
-    static constexpr char CACHE_LINE[] = "Cache Manager is running!\n";
-    static constexpr char CACHE_DIR[] = "src/bin/cache";
-    static constexpr char CACHE_FILES_DIR[] = "src/bin/cache/files";
-    static constexpr char CACHE_FILES_DIR_[] = "src/bin/cache/files/";
+    static constexpr auto CACHE_FILE = "src/bin/cache/Cache__DONT_TOUCH_THIS_FILE.txt";
+    static constexpr auto CACHE_LINE = "Cache Manager is running!\n";
+    static constexpr auto CACHE_DIR = "src/bin/cache";
+    static constexpr auto CACHE_FILES_DIR = "src/bin/cache/files";
+    static constexpr auto CACHE_FILES_DIR_ = "src/bin/cache/files/";
 
-    static constexpr int CACHE_LINE_LENGTH = 26;
+    static constexpr auto CACHE_LINE_LENGTH = 26;
 
     /**
      * @brief Construct a new Cache Manager object.
      * 
      * @param op the operation that is given.
      */
-    CacheManager(std::unique_ptr<Operation>& op);
+    explicit CacheManager(std::shared_ptr<operation::Operation> op);
 
     /**
      * @brief Does an operation.
@@ -76,5 +77,6 @@ public:
     static bool isClear(int argc, const char* argv[]);
 
 private:
-    std::unique_ptr<Operation> _operation;
+    std::shared_ptr<operation::Operation> m_operation;
 };
+}

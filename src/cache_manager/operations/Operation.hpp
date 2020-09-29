@@ -7,6 +7,7 @@
 #include <vector>
 #include <iostream>
 #include <stdexcept>
+#include <string_view>
 
 #define NUMBER_OF_ARGUMENTS_ERROR std::runtime_error("Invalid input! Number of arguments does not suit to the chosen operation.")
 #define UNKNOWN_COMMAND std::runtime_error("Invalid input! Unknown command.")
@@ -17,11 +18,13 @@
  * to represent a part of a search operation that would
  * represent the operation we are locking for.
  */
+namespace cache{
+namespace operation{
 class Operation {
 public:
-    static constexpr int START_INDEX = 0;
-    static constexpr char PRINT[] = "stdout";
-    static constexpr char NOT_INITIALIZED[] = "";
+    static constexpr auto START_INDEX = 0;
+    static constexpr auto PRINT = "stdout";
+    static constexpr auto NOT_INITIALIZED = "";
 
     /**
      * @brief Construct a new Operation object.
@@ -42,7 +45,7 @@ public:
      * @param op the operation to copy.
      * @return Operation& the copied operation.
      */
-    Operation& operator=(const Operation& op);
+    Operation& operator=(const Operation& op) = default;
 
     /**
      * @brief move Constructor.
@@ -107,7 +110,9 @@ public:
     virtual ~Operation() = default;
 
 protected:
-    std::string _cacheString = NOT_INITIALIZED;
-    std::vector<std::string> _inputFilesPath;
-    std::string _outputFilePath = NOT_INITIALIZED;//no output file
+    std::string m_cacheString = NOT_INITIALIZED;
+    std::vector<std::string> m_inputFilesPath;
+    std::string m_outputFilePath = NOT_INITIALIZED;//no output file
 };
+}
+}

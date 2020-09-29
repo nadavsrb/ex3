@@ -3,6 +3,8 @@
 #include <cstdint>
 
 using std::uint16_t;
+
+namespace bmp{
 class Color {
 
 	uint16_t _R;
@@ -39,3 +41,4 @@ public:
 	 */
 	void toGray();
 };
+}

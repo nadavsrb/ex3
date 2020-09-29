@@ -7,9 +7,10 @@
 using std::endl;
 using std::cerr;
 
+namespace matrix{
 class ErrorCodeException{
 //Fields
-const ErrorCode _errorCode;
+const ErrorCode m_errorCode;
 
 //methods
 public:
@@ -47,3 +48,4 @@ public:
      */
     static void throwErrorIfNeeded(ErrorCode er);
 };
+}

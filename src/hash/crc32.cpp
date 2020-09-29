@@ -751,7 +751,7 @@ uint32_t calculate_crc32c(uint32_t crc32c,
 	}
 }
 
-uint32_t crc32(const void *buf, size_t size)
+uint32_t crc32::crc32(const void *buf, size_t size)
 {
  	const uint8_t *p = (uint8_t *)buf;
 	uint32_t crc;

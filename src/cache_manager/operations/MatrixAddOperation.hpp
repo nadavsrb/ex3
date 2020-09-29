@@ -9,6 +9,8 @@
 /**
  * @brief This class stands for the "matrix add" operation.
  */
+namespace cache {
+namespace operation{
 class MatrixAddOperation : public Operation {
 public:
     /**
@@ -26,3 +28,5 @@ public:
 
     void writeToFile(const string& fileName) const override;
 };
+}
+}

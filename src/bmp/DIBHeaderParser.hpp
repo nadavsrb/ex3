@@ -14,6 +14,9 @@ using std::uint16_t;
 #define LOCATION_OF_BITMAP_ARRAY_HEIGHT 8
 #define LOCATION_OF__BITS_PER_PIXEL 14
 #define LOCATION_OF_NUM_COLORS_IN_COLOR_PALETTE 32
+
+
+namespace bmp{
 class DIBHeaderParser {
 
 	string _str;
@@ -77,3 +80,4 @@ public:
 	 */
 	void switchHeightAndWidth();
 };
+}

@@ -12,9 +12,11 @@ using std::uint32_t;
 using std::string;
 using std::ifstream;
 
+namespace matrix{
+
 class MatrixClass{
 //Fields
-PMatrix _matrix;
+PMatrix m_matrix;
 
 //methods
 public:
@@ -217,5 +219,6 @@ public:
 	 * @param[in] scalar The scalar to multiply with.
 	 * @return MatrixClass& the new result matrix
 	 */
-	friend MatrixClass& operator*(double scalar, const MatrixClass& matrix);
+	friend MatrixClass& operator* (double scalar, const MatrixClass& matrix);
 };
+}

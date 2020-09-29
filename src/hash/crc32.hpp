@@ -3,6 +3,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+namespace crc32 {
 /**
  * @brief the fuction to calculat crc32.
  * 
@@ -11,3 +12,4 @@
  * @return uint32_t the crc32 from the buffer.
  */
 uint32_t crc32(const void *buf, size_t size);
+}

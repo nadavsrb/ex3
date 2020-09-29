@@ -1,5 +1,7 @@
 #include "BMPHeaderParser.hpp"
 
+using namespace bmp;
+
 BMPHeaderParser::BMPHeaderParser(const string& str) {
 	this->_str = str;
 

@@ -1,12 +1,14 @@
 #include "BMArrayParserToMatrixes.hpp"
 
+using namespace bmp;
+
 BMArrayParserToMatrixes::BMArrayParserToMatrixes(const string& str, uint32_t width, uint32_t height) {
 	this->_str = str;
 	this->_width = width;
 	this->_height = height;
-	this->_Rmatrix = new MatrixClass(height, width);
-	this->_Gmatrix = new MatrixClass(height, width);
-	this->_Bmatrix = new MatrixClass(height, width);
+	this->_Rmatrix = new matrix::MatrixClass(height, width);
+	this->_Gmatrix = new matrix::MatrixClass(height, width);
+	this->_Bmatrix = new matrix::MatrixClass(height, width);
 
 	//calculating how much padding for width *3 (=nub bits to pixel) to be 4*int
 	this->_bytesPeddingPerRow = (4 - ((width * 3) % 4))%4;
@@ -104,15 +106,15 @@ uint16_t BMArrayParserToMatrixes::getbytesPeddingPerRow() const {
 	return this->_bytesPeddingPerRow;
 }
 
-MatrixClass& BMArrayParserToMatrixes::getBitMapR() const {
+matrix::MatrixClass& BMArrayParserToMatrixes::getBitMapR() const {
 	return *(this->_Rmatrix);
 }
 
-MatrixClass& BMArrayParserToMatrixes::getBitMapG() const {
+matrix::MatrixClass& BMArrayParserToMatrixes::getBitMapG() const {
     return *(this->_Gmatrix);
 }
 
-MatrixClass& BMArrayParserToMatrixes::getBitMapB() const {
+matrix::MatrixClass& BMArrayParserToMatrixes::getBitMapB() const {
     return *(this->_Bmatrix);
 }
 
@@ -121,7 +123,7 @@ void BMArrayParserToMatrixes::changeToGray() {
 	*(this->_Gmatrix) *= 0.7152;
 	*(this->_Bmatrix) *= 0.0722;
 
-	MatrixClass gray(this->_height, this->_width);
+	matrix::MatrixClass gray(this->_height, this->_width);
 	gray += *(this->_Rmatrix);
 	gray += *(this->_Gmatrix);
 	gray += *(this->_Bmatrix);
@@ -138,9 +140,9 @@ void BMArrayParserToMatrixes::rotate() {
 	this->_height = width;
 	this->_width = height;
 
-	MatrixClass* newRmatrix = new MatrixClass(this->_height, this->_width);
-	MatrixClass*  newGmatrix = new MatrixClass(this->_height, this->_width);
-	MatrixClass*  newBmatrix = new MatrixClass(this->_height, this->_width);
+	matrix::MatrixClass* newRmatrix = new matrix::MatrixClass(this->_height, this->_width);
+	matrix::MatrixClass*  newGmatrix = new matrix::MatrixClass(this->_height, this->_width);
+	matrix::MatrixClass*  newBmatrix = new matrix::MatrixClass(this->_height, this->_width);
 
 	//Itarating on the old matrixes and intalizing the new ones.
 	for (uint32_t row = 0; row < this->_width; ++row) {

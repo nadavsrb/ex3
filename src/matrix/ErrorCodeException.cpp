@@ -1,15 +1,17 @@
 #include "ErrorCodeException.hpp"
 
+using namespace matrix;
+
 //Implementing methods
-	ErrorCodeException::ErrorCodeException(const ErrorCode er) : _errorCode(er){}
+	ErrorCodeException::ErrorCodeException(const ErrorCode er) : m_errorCode(er){}
 
   bool ErrorCodeException::isSuccess() const{
-    return error_isSuccess(_errorCode); 
+    return error_isSuccess(m_errorCode); 
   }
 
   void ErrorCodeException::printErrorMessage() const{
     //prints the error messege
-		cerr << error_getErrorMessage(_errorCode) << endl; 
+		cerr << error_getErrorMessage(m_errorCode) << endl; 
 	}
 
   void ErrorCodeException::throwErrorIfNeeded(ErrorCode er){

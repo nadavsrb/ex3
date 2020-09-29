@@ -1,5 +1,7 @@
 #include "Color.hpp"
 
+using namespace bmp;
+
 Color::Color(uint16_t R, uint16_t G, uint16_t B) {
 	this->_R = R;
 	this->_G = G;

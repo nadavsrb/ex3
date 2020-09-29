@@ -7,6 +7,8 @@
 /**
  * @brief This class stands for the "image convert" operation.
  */
+namespace cache {
+namespace operation{
 class ImageConvertOperation : public Operation {
 public:
     /**
@@ -24,3 +26,5 @@ public:
 
     void writeToFile(const string& fileName) const override;
 };
+}
+}
